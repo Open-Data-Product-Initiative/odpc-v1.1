@@ -47,6 +47,7 @@ Use ODPV when stable vocabulary terms or relationship names are needed.
 | [`product-reference.yaml`](/catalog/examples/product-reference.yaml) | YAML | Standalone ProductReference example |
 | [`use-case.yaml`](/catalog/examples/use-case.yaml) | YAML | Standalone UseCase example |
 | [`business-objective-with-kpis.yaml`](/catalog/examples/business-objective-with-kpis.yaml) | YAML | Standalone BusinessObjective example with nested KPIs |
+| [`odpg-placeholders.yaml`](/catalog/examples/odpg-placeholders.yaml) | YAML | Minimal top-level Domain, Dataset, API, Policy, Workflow, Agent, Capability, and StrategicOpportunity placeholders |
 | [`signal.yaml`](/catalog/examples/signal.yaml) | YAML | Standalone Signal example |
 
 Agent-oriented helper scripts are available in the source repository for maintaining and using the catalog artifacts.

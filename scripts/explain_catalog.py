@@ -6,6 +6,18 @@ from pathlib import Path
 import yaml
 
 
+ODPG_PLACEHOLDER_COLLECTIONS = (
+    ("domains", "Domains", "Domain"),
+    ("datasets", "Datasets", "Dataset"),
+    ("apis", "APIs", "API"),
+    ("policies", "Policies", "Policy"),
+    ("workflows", "Workflows", "Workflow"),
+    ("agents", "Agents", "Agent"),
+    ("capabilities", "Capabilities", "Capability"),
+    ("strategicOpportunities", "Strategic opportunities", "Strategic opportunity"),
+)
+
+
 class NoDatesSafeLoader(yaml.SafeLoader):
     pass
 
@@ -72,6 +84,11 @@ def render_summary(document, path):
         "Business objective ids": collect_ids(catalog.get("businessObjectives", [])),
         "Signal ids": collect_ids(catalog.get("signals", [])),
     }
+    for collection, label, singular in ODPG_PLACEHOLDER_COLLECTIONS:
+        count = count_items(catalog, collection)
+        if count:
+            lines.append(f"{label}: {count}")
+            ids[f"{singular} ids"] = collect_ids(catalog.get(collection, []))
     for label, values in ids.items():
         if values:
             lines.append(f"{label}: {', '.join(values)}")

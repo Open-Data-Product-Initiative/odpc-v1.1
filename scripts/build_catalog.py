@@ -17,8 +17,26 @@ OBJECT_COLLECTIONS = {
     "useCase": "useCases",
     "businessObjective": "businessObjectives",
     "signal": "signals",
+    "domain": "domains",
+    "dataset": "datasets",
+    "api": "apis",
+    "policy": "policies",
+    "workflow": "workflows",
+    "agent": "agents",
+    "capability": "capabilities",
+    "strategicOpportunity": "strategicOpportunities",
 }
 CATALOG_COLLECTIONS = tuple(OBJECT_COLLECTIONS.values())
+ODPG_PLACEHOLDER_COLLECTIONS = (
+    ("domains", "Domains"),
+    ("datasets", "Datasets"),
+    ("apis", "APIs"),
+    ("policies", "Policies"),
+    ("workflows", "Workflows"),
+    ("agents", "Agents"),
+    ("capabilities", "Capabilities"),
+    ("strategicOpportunities", "Strategic Opportunities"),
+)
 METADATA_KEYS = ("metadata", "catalogMetadata")
 HTML_PLACEHOLDERS = (
     "title",
@@ -28,6 +46,14 @@ HTML_PLACEHOLDERS = (
     "use_cases",
     "business_objectives",
     "signals",
+    "domains",
+    "datasets",
+    "apis",
+    "policies",
+    "workflows",
+    "agents",
+    "capabilities",
+    "strategic_opportunities",
 )
 
 
@@ -256,6 +282,12 @@ def render_section(title, items, fields):
     return f'<section class="odp-section"><h2>{html.escape(title)}</h2>{cards}</section>'
 
 
+def render_optional_section(title, items, fields):
+    if not isinstance(items, list) or not items:
+        return ""
+    return render_section(title, items, fields)
+
+
 def render_catalog_header(document):
     catalog = document.get("catalog", {})
     metadata = catalog.get("metadata", {}) if isinstance(catalog, dict) else {}
@@ -284,6 +316,7 @@ def render_summary(document):
         "Business Objectives": len(catalog.get("businessObjectives", [])),
         "Signals": len(catalog.get("signals", [])),
     }
+    counts.update({label: len(catalog.get(collection, [])) for collection, label in ODPG_PLACEHOLDER_COLLECTIONS})
     items = "".join(
         f'<li><span class="odp-count">{count}</span><span>{html.escape(label)}</span></li>'
         for label, count in counts.items()
@@ -317,6 +350,16 @@ def render_html_fragments(document):
             "Signals",
             catalog.get("signals", []),
             [("Type", "type"), ("Strength", "strength"), ("Confidence", "confidence"), ("Status", "status")],
+        ),
+        "domains": render_optional_section("Domains", catalog.get("domains", []), [("Reference", "$ref")]),
+        "datasets": render_optional_section("Datasets", catalog.get("datasets", []), [("Reference", "$ref")]),
+        "apis": render_optional_section("APIs", catalog.get("apis", []), [("Reference", "$ref")]),
+        "policies": render_optional_section("Policies", catalog.get("policies", []), [("Reference", "$ref")]),
+        "workflows": render_optional_section("Workflows", catalog.get("workflows", []), [("Reference", "$ref")]),
+        "agents": render_optional_section("Agents", catalog.get("agents", []), [("Reference", "$ref")]),
+        "capabilities": render_optional_section("Capabilities", catalog.get("capabilities", []), [("Reference", "$ref")]),
+        "strategic_opportunities": render_optional_section(
+            "Strategic Opportunities", catalog.get("strategicOpportunities", []), [("Reference", "$ref")]
         ),
     }
 
@@ -398,7 +441,15 @@ def main(argv=None):
         f"(productReferences={len(counts.get('productReferences', []))}, "
         f"useCases={len(counts.get('useCases', []))}, "
         f"businessObjectives={len(counts.get('businessObjectives', []))}, "
-        f"signals={len(counts.get('signals', []))})"
+        f"signals={len(counts.get('signals', []))}, "
+        f"domains={len(counts.get('domains', []))}, "
+        f"datasets={len(counts.get('datasets', []))}, "
+        f"apis={len(counts.get('apis', []))}, "
+        f"policies={len(counts.get('policies', []))}, "
+        f"workflows={len(counts.get('workflows', []))}, "
+        f"agents={len(counts.get('agents', []))}, "
+        f"capabilities={len(counts.get('capabilities', []))}, "
+        f"strategicOpportunities={len(counts.get('strategicOpportunities', []))})"
     )
     return 0
 

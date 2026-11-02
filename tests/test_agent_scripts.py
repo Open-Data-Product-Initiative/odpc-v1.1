@@ -79,6 +79,7 @@ class AgentScriptsTest(unittest.TestCase):
                 "use-case.yaml",
                 "business-objective-with-kpis.yaml",
                 "signal.yaml",
+                "odpg-placeholders.yaml",
             ):
                 source = ROOT / "source" / "catalog" / "examples" / example
                 (input_dir / example).write_text(source.read_text(encoding="utf-8"), encoding="utf-8")
@@ -104,6 +105,17 @@ class AgentScriptsTest(unittest.TestCase):
             self.assertEqual(len(generated["catalog"]["useCases"]), 1)
             self.assertEqual(len(generated["catalog"]["businessObjectives"]), 1)
             self.assertEqual(len(generated["catalog"]["signals"]), 1)
+            for collection in [
+                "domains",
+                "datasets",
+                "apis",
+                "policies",
+                "workflows",
+                "agents",
+                "capabilities",
+                "strategicOpportunities",
+            ]:
+                self.assertEqual(len(generated["catalog"][collection]), 1)
 
     def test_build_catalog_uses_metadata_file_and_full_catalog_inputs(self):
         with tempfile.TemporaryDirectory() as tmp_dir:

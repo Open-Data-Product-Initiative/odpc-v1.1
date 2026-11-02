@@ -14,9 +14,25 @@ EXPECTED_EXAMPLES = [
     "use-case.yaml",
     "business-objective-with-kpis.yaml",
     "signal.yaml",
+    "odpg-placeholders.yaml",
 ]
 
-EXPECTED_OBJECT_IDS = {"Catalog", "ProductReference", "UseCase", "BusinessObjective", "KPI", "Signal"}
+EXPECTED_OBJECT_IDS = {
+    "Catalog",
+    "ProductReference",
+    "UseCase",
+    "BusinessObjective",
+    "KPI",
+    "Signal",
+    "Domain",
+    "Dataset",
+    "API",
+    "Policy",
+    "Workflow",
+    "Agent",
+    "Capability",
+    "StrategicOpportunity",
+}
 
 
 def load_yaml(path):
@@ -79,7 +95,20 @@ def check_schema():
     assert graph_reference["required"] == ["standard", "version", "$ref"], "GraphReference must require $ref"
     assert "$ref" in graph_reference["properties"], "GraphReference must define $ref"
     assert "uri" not in graph_reference["properties"], "GraphReference must not define uri"
-    for collection in ["productReferences", "useCases", "businessObjectives", "signals"]:
+    for collection in [
+        "productReferences",
+        "useCases",
+        "businessObjectives",
+        "signals",
+        "domains",
+        "datasets",
+        "apis",
+        "policies",
+        "workflows",
+        "agents",
+        "capabilities",
+        "strategicOpportunities",
+    ]:
         assert collection in catalog["properties"], f"Catalog missing {collection}"
 
 
@@ -109,6 +138,22 @@ def check_examples():
     assert_named_object(full["useCases"][0], "UC-", "useCases[0]")
     assert_named_object(full["businessObjectives"][0], "BO-", "businessObjectives[0]")
     assert_named_object(full["signals"][0], "SIG-", "signals[0]")
+
+    placeholders = load_yaml(EXAMPLES_DIR / "odpg-placeholders.yaml")
+    expected = {
+        "domains": "DOM-",
+        "datasets": "DS-",
+        "apis": "API-",
+        "policies": "POL-",
+        "workflows": "WF-",
+        "agents": "AGENT-",
+        "capabilities": "CAP-",
+        "strategicOpportunities": "SO-",
+    }
+    for collection, prefix in expected.items():
+        assert collection in placeholders, f"Placeholder example missing {collection}"
+        assert_named_object(placeholders[collection][0], prefix, f"{collection}[0]")
+        assert "$ref" in placeholders[collection][0], f"{collection}[0] must include an authoritative reference"
 
 
 def check_objects_and_llms():

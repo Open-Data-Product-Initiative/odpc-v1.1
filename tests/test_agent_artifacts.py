@@ -59,6 +59,17 @@ class AgentArtifactsTest(unittest.TestCase):
         self.assertNotIn("uri", graph_reference["properties"])
         for collection in ["productReferences", "useCases", "businessObjectives", "signals"]:
             self.assertIn(collection, catalog["properties"])
+        for collection in [
+            "domains",
+            "datasets",
+            "apis",
+            "policies",
+            "workflows",
+            "agents",
+            "capabilities",
+            "strategicOpportunities",
+        ]:
+            self.assertIn(collection, catalog["properties"])
 
     def test_examples_cover_minimal_full_and_each_core_object(self):
         expected = [
@@ -132,7 +143,25 @@ class AgentArtifactsTest(unittest.TestCase):
         ]
 
         ids = {record["id"] for record in records}
-        self.assertEqual(ids, {"Catalog", "ProductReference", "UseCase", "BusinessObjective", "KPI", "Signal"})
+        self.assertEqual(
+            ids,
+            {
+                "Catalog",
+                "ProductReference",
+                "UseCase",
+                "BusinessObjective",
+                "KPI",
+                "Signal",
+                "Domain",
+                "Dataset",
+                "API",
+                "Policy",
+                "Workflow",
+                "Agent",
+                "Capability",
+                "StrategicOpportunity",
+            },
+        )
 
         for record in records:
             self.assertTrue(record["definition"])
@@ -142,6 +171,25 @@ class AgentArtifactsTest(unittest.TestCase):
 
         llms = (SOURCE / "llms.txt").read_text(encoding="utf-8")
         self.assertIn("/catalog/objects.jsonl", llms)
+
+    def test_odpg_placeholders_are_minimal_top_level_catalog_objects(self):
+        placeholders = load_yaml(SOURCE / "catalog" / "examples" / "odpg-placeholders.yaml")
+        expected = {
+            "domains": "DOM-",
+            "datasets": "DS-",
+            "apis": "API-",
+            "policies": "POL-",
+            "workflows": "WF-",
+            "agents": "AGENT-",
+            "capabilities": "CAP-",
+            "strategicOpportunities": "SO-",
+        }
+        for collection, prefix in expected.items():
+            self.assertIn(collection, placeholders)
+            self.assertEqual(len(placeholders[collection]), 1)
+            item = placeholders[collection][0]
+            assert_named_object(item, prefix)
+            self.assertIn("$ref", item)
 
 
 if __name__ == "__main__":

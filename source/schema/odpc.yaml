@@ -46,6 +46,66 @@ $defs:
       "^x-":
         description: Implementation-specific extension property.
 
+  ODPGNodePlaceholder:
+    type: object
+    description: >-
+      Minimal catalog placeholder for an ODPG core node type that ODPC does not
+      otherwise define. It provides discovery identity only; detailed semantics
+      and relationships belong to the referenced source and ODPG.
+    additionalProperties: false
+    required:
+      - id
+      - name
+      - description
+    properties:
+      id:
+        type: string
+        minLength: 1
+      name:
+        $ref: "#/$defs/LanguageString"
+      description:
+        $ref: "#/$defs/LanguageString"
+      "$ref":
+        type: string
+      tags:
+        type: array
+        items:
+          type: string
+    patternProperties:
+      "^x-": {}
+
+  Domain:
+    description: Placeholder for an ODPG Domain node.
+    $ref: "#/$defs/ODPGNodePlaceholder"
+
+  Dataset:
+    description: Placeholder for an ODPG Dataset node.
+    $ref: "#/$defs/ODPGNodePlaceholder"
+
+  API:
+    description: Placeholder for an ODPG API node.
+    $ref: "#/$defs/ODPGNodePlaceholder"
+
+  Policy:
+    description: Placeholder for an ODPG Policy node.
+    $ref: "#/$defs/ODPGNodePlaceholder"
+
+  Workflow:
+    description: Placeholder for an ODPG Workflow node.
+    $ref: "#/$defs/ODPGNodePlaceholder"
+
+  Agent:
+    description: Placeholder for an ODPG Agent node.
+    $ref: "#/$defs/ODPGNodePlaceholder"
+
+  Capability:
+    description: Placeholder for an ODPG Capability node.
+    $ref: "#/$defs/ODPGNodePlaceholder"
+
+  StrategicOpportunity:
+    description: Placeholder for an ODPG StrategicOpportunity node.
+    $ref: "#/$defs/ODPGNodePlaceholder"
+
   Owner:
     type: object
     additionalProperties: false
@@ -586,5 +646,37 @@ $defs:
         type: array
         items:
           $ref: "#/$defs/Signal"
+      domains:
+        type: array
+        items:
+          $ref: "#/$defs/Domain"
+      datasets:
+        type: array
+        items:
+          $ref: "#/$defs/Dataset"
+      apis:
+        type: array
+        items:
+          $ref: "#/$defs/API"
+      policies:
+        type: array
+        items:
+          $ref: "#/$defs/Policy"
+      workflows:
+        type: array
+        items:
+          $ref: "#/$defs/Workflow"
+      agents:
+        type: array
+        items:
+          $ref: "#/$defs/Agent"
+      capabilities:
+        type: array
+        items:
+          $ref: "#/$defs/Capability"
+      strategicOpportunities:
+        type: array
+        items:
+          $ref: "#/$defs/StrategicOpportunity"
     patternProperties:
       "^x-": {}

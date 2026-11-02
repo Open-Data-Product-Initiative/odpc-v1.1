@@ -2,7 +2,7 @@
 
 The Open Data Product Catalogs, ODPC, is a vendor-neutral, open-source, machine-readable model for cataloging data product portfolios.
 
-ODPC defines reusable portfolio objects around data products, including product references, use cases, business objectives, KPIs, signals, and catalog items.
+ODPC defines reusable portfolio objects around data products, including product references, use cases, business objectives, KPIs, signals, and catalog items. It also provides minimal top-level placeholders for the ODPG node types Domain, Dataset, API, Policy, Workflow, Agent, Capability, and StrategicOpportunity.
 
 It is designed to help organizations move from isolated data product descriptions to managed portfolios connected to business demand and measurable outcomes.
 
@@ -30,7 +30,7 @@ ODPC also supports other product models through product references and mapping p
 
 # Specification Aims
 
-* Catalog data products, use cases, business objectives, KPIs, and signals in a consistent way.
+* Catalog data products, use cases, business objectives, KPIs, signals, and ODPG-aligned placeholders in a consistent way.
 * Support portfolio-level data product management.
 * Connect data products to business objectives and measurable value.
 * Enable interoperability between catalogs, platforms, marketplaces, and tools.
