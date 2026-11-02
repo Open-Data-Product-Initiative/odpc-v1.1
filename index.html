@@ -375,6 +375,9 @@
                   <li>
                     <a href="#main-odpc-objects" class="toc-h2 toc-link" data-title="Main ODPC objects">Main ODPC objects</a>
                   </li>
+                  <li>
+                    <a href="#odpg-aligned-placeholders" class="toc-h2 toc-link" data-title="ODPG-aligned placeholders">ODPG-aligned placeholders</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -454,6 +457,9 @@
                     <a href="#optional-attributes-and-options" class="toc-h2 toc-link" data-title="Optional attributes and options">Optional attributes and options</a>
                   </li>
               </ul>
+          </li>
+          <li>
+            <a href="#odpg-aligned-placeholders" class="toc-h1 toc-link" data-title="ODPG-aligned placeholders">ODPG-aligned placeholders</a>
           </li>
           <li>
             <a href="#specification-extensions" class="toc-h1 toc-link" data-title="Specification extensions">Specification extensions</a>
@@ -616,6 +622,8 @@ ODPC should also not define graph traversal, graph analytics, or relationship se
 </ul>
 
 <p>These objects are designed to be reusable across catalogs, tools, AI workflows, and graph models.</p>
+<h2 id='odpg-aligned-placeholders'>ODPG-aligned placeholders</h2>
+<p>ODPC also provides deliberately minimal top-level placeholders for ODPG core node types that do not yet have a richer ODPC object model: Domain, Dataset, API, Policy, Workflow, Agent, Capability, and StrategicOpportunity. They support identity, discovery, and an optional reference to an authoritative source. Their detailed semantics and all relationships remain outside ODPC.</p>
 <h1 id='catalog-toolkit'>Catalog Toolkit</h1>
 <blockquote>
 <p>Snippet of YAML version:</p>
@@ -709,6 +717,11 @@ Use ODPV when stable vocabulary terms or relationship names are needed.
 <td>Standalone BusinessObjective example with nested KPIs</td>
 </tr>
 <tr>
+<td><a href="catalog/examples/odpg-placeholders.yaml"><code>odpg-placeholders.yaml</code></a></td>
+<td>YAML</td>
+<td>Minimal top-level Domain, Dataset, API, Policy, Workflow, Agent, Capability, and StrategicOpportunity placeholders</td>
+</tr>
+<tr>
 <td><a href="catalog/examples/signal.yaml"><code>signal.yaml</code></a></td>
 <td>YAML</td>
 <td>Standalone Signal example</td>
@@ -790,7 +803,7 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <li>detect portfolio gaps, such as use cases without products, objectives without supporting products, or signals without a response</li>
 <li>prepare graph-ready object records for ODPG or another graph implementation</li>
 <li>support governance review by finding missing owners, stale statuses, incomplete references, or inconsistent standards</li>
-<li>support portfolio planning by combining products, use cases, business objectives, KPIs, signals, and priorities</li>
+<li>support portfolio planning by combining products, use cases, business objectives, KPIs, signals, ODPG-aligned placeholders, and priorities</li>
 </ul>
 <h2 id='common-agent-workflows'>Common agent workflows</h2>
 <table><thead>
@@ -843,6 +856,8 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <li>Do not copy full ODPS product metadata into <code>ProductReference</code>.</li>
 <li>Do not invent graph relationship fields inside ODPC objects.</li>
 <li>Do not create top-level KPI objects; KPIs belong inside <code>BusinessObjective.kpis</code>.</li>
+<li>Treat Domain, Dataset, API, Policy, Workflow, Agent, Capability, and StrategicOpportunity objects as minimal discovery placeholders until ODPC defines richer schemas for them.</li>
+<li>Do not model relationships in a placeholder; use ODPG and the optional placeholder <code>$ref</code> to connect it to its authoritative source.</li>
 <li>Do not treat <code>Catalog.metadata.graph.$ref</code> as the graph itself; it points to a graph implementation.</li>
 <li>Do not assume every referenced product model is ODPS; use <code>productModel.standard</code>, <code>productModel.version</code>, <code>productModel.format</code>, and <code>productModel.$ref</code>.</li>
 <li>Do not make planning decisions from <code>portfolioPriority</code> alone; combine it with use cases, objectives, signals, governance context, and graph relationships when available.</li>
@@ -863,7 +878,7 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 
 <p>In ODPC, the <code>Catalog</code> object acts as the portfolio container. It helps organizations group related data products and demand-side objects around a domain, organization, geography, audience, or strategic theme.</p>
 
-<p>The <code>Catalog</code> object can include product references, use cases, business objectives, and signals directly as reusable catalog objects. It can also define where the catalog graph is implemented through the <code>metadata.graph</code> attribute.</p>
+<p>The <code>Catalog</code> object can include product references, use cases, business objectives, signals, and minimal ODPG-aligned placeholders directly as reusable catalog objects. It can also define where the catalog graph is implemented through the <code>metadata.graph</code> attribute.</p>
 
 <p>The <code>metadata.graph</code> attribute identifies the graph standard, version, and reference used for the catalog graph. The graph can be implemented with <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a> or another supported graph standard, such as <code>RDF</code>, <code>JSON-LD</code>, <code>GraphML</code>, <code>openCypher</code>, <code>GQL</code>, <code>Gremlin</code>, <code>GraphSON</code>, or <code>GeoSPARQL</code>.</p>
 
@@ -1157,6 +1172,54 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <td>array of objects</td>
 <td style="text-align: right"></td>
 <td>List of signals included in the catalog. Each item follows the <code>Signal</code> object schema.</td>
+</tr>
+<tr>
+<td><code>domains</code></td>
+<td>array of objects</td>
+<td style="text-align: right"></td>
+<td>Minimal placeholders for ODPG <code>Domain</code> nodes.</td>
+</tr>
+<tr>
+<td><code>datasets</code></td>
+<td>array of objects</td>
+<td style="text-align: right"></td>
+<td>Minimal placeholders for ODPG <code>Dataset</code> nodes.</td>
+</tr>
+<tr>
+<td><code>apis</code></td>
+<td>array of objects</td>
+<td style="text-align: right"></td>
+<td>Minimal placeholders for ODPG <code>API</code> nodes.</td>
+</tr>
+<tr>
+<td><code>policies</code></td>
+<td>array of objects</td>
+<td style="text-align: right"></td>
+<td>Minimal placeholders for ODPG <code>Policy</code> nodes.</td>
+</tr>
+<tr>
+<td><code>workflows</code></td>
+<td>array of objects</td>
+<td style="text-align: right"></td>
+<td>Minimal placeholders for ODPG <code>Workflow</code> nodes.</td>
+</tr>
+<tr>
+<td><code>agents</code></td>
+<td>array of objects</td>
+<td style="text-align: right"></td>
+<td>Minimal placeholders for ODPG <code>Agent</code> nodes.</td>
+</tr>
+<tr>
+<td><code>capabilities</code></td>
+<td>array of objects</td>
+<td style="text-align: right"></td>
+<td>Minimal placeholders for ODPG <code>Capability</code> nodes.</td>
+</tr>
+<tr>
+<td><code>strategicOpportunities</code></td>
+<td>array of objects</td>
+<td style="text-align: right"></td>
+<td>Minimal placeholders for ODPG <code>StrategicOpportunity</code> nodes.</td>
 </tr>
 </tbody></table>
 <h1 id='odpc-productreference'>ODPC ProductReference</h1>
@@ -2338,6 +2401,100 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <td>Keywords used to classify, search, or filter the signal.</td>
 </tr>
 </tbody></table>
+<h1 id='odpg-aligned-placeholders'>ODPG-aligned placeholders</h1>
+<p>ODPC defines minimal top-level placeholders for eight ODPG core node types that do not yet have a richer ODPC object model. They make those resources discoverable in a catalog without claiming to define their full semantics.</p>
+
+<p>Use these placeholders for identity, a short description, optional source reference, and local extensions. Use the referenced source for detailed metadata, and use <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a> for relationships, traversal, and graph reasoning.</p>
+
+<table><thead>
+<tr>
+<th>Catalog collection</th>
+<th>ODPG node type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>domains</code></td>
+<td><code>Domain</code></td>
+</tr>
+<tr>
+<td><code>datasets</code></td>
+<td><code>Dataset</code></td>
+</tr>
+<tr>
+<td><code>apis</code></td>
+<td><code>API</code></td>
+</tr>
+<tr>
+<td><code>policies</code></td>
+<td><code>Policy</code></td>
+</tr>
+<tr>
+<td><code>workflows</code></td>
+<td><code>Workflow</code></td>
+</tr>
+<tr>
+<td><code>agents</code></td>
+<td><code>Agent</code></td>
+</tr>
+<tr>
+<td><code>capabilities</code></td>
+<td><code>Capability</code></td>
+</tr>
+<tr>
+<td><code>strategicOpportunities</code></td>
+<td><code>StrategicOpportunity</code></td>
+</tr>
+</tbody></table>
+
+<p>Every placeholder uses the same minimal shape.</p>
+
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th style="text-align: right">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>id</code></td>
+<td>string</td>
+<td style="text-align: right">✓</td>
+<td>Stable identifier within the catalog.</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>language-tagged string</td>
+<td style="text-align: right">✓</td>
+<td>Human-readable name.</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>language-tagged string</td>
+<td style="text-align: right">✓</td>
+<td>Short discovery description.</td>
+</tr>
+<tr>
+<td><code>$ref</code></td>
+<td>string</td>
+<td style="text-align: right"></td>
+<td>Optional path or URI to the authoritative source record.</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>array of strings</td>
+<td style="text-align: right"></td>
+<td>Optional discovery labels.</td>
+</tr>
+<tr>
+<td><code>x-*</code></td>
+<td>any</td>
+<td style="text-align: right"></td>
+<td>Local implementation-specific metadata.</td>
+</tr>
+</tbody></table>
+
+<p>These are placeholders, not a substitute for API descriptions, policy definitions, workflow specifications, agent cards, or capability models. Do not add relationship fields to them; model connections in ODPG.</p>
 <h1 id='specification-extensions'>Specification extensions</h1>
 <p>While the Open Data Product Catalog Specification defines the core catalog objects and attributes, organizations may need to add implementation-specific metadata for local tools, internal workflows, or platform-specific requirements.</p>
 
@@ -2455,7 +2612,12 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <tr>
 <td>Domain</td>
 <td><code>Domain</code></td>
-<td>Used in ODPC <code>domains</code> and <code>scope.domains</code> fields for catalog grouping and filtering.</td>
+<td>Used as a string in product, use-case, and <code>scope.domains</code> grouping fields; the top-level <code>domains</code> collection contains minimal Domain placeholders.</td>
+</tr>
+<tr>
+<td>ODPG-aligned placeholder</td>
+<td><code>Domain</code>, <code>Dataset</code>, <code>API</code>, <code>Policy</code>, <code>Workflow</code>, <code>Agent</code>, <code>Capability</code>, or <code>StrategicOpportunity</code></td>
+<td>Minimal top-level ODPC discovery object for the matching ODPG core node type; detailed semantics remain in an authoritative external source.</td>
 </tr>
 </tbody></table>
 <h2 id='odpc-specific-usage-notes'>ODPC-specific usage notes</h2>
@@ -2467,7 +2629,7 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 </thead><tbody>
 <tr>
 <td><code>Catalog</code></td>
-<td>The ODPC object that implements an ODPV <code>DataProductCatalog</code>. It is the top-level portfolio container for product references, use cases, business objectives, signals, and catalog metadata such as ownership, scope, lifecycle status, tags, and graph implementation reference.</td>
+<td>The ODPC object that implements an ODPV <code>DataProductCatalog</code>. It is the top-level portfolio container for product references, use cases, business objectives, signals, ODPG-aligned placeholders, and catalog metadata such as ownership, scope, lifecycle status, tags, and graph implementation reference.</td>
 </tr>
 <tr>
 <td><code>ProductReference</code></td>
