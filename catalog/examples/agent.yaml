@@ -1,0 +1,7 @@
+agent:
+  id: AGENT-001
+  name:
+    en: Mobility Planning Assistant
+  description:
+    en: Automation actor that prepares planning recommendations.
+  $ref: https://example.org/agents/mobility-planning-assistant

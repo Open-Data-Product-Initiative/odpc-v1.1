@@ -1,6 +1,6 @@
 # Open Data Product Catalogs (ODPC)
 
-ODPC is a vendor-neutral, open-source, machine-readable catalog model for data product portfolios. It defines reusable portfolio objects around data products, including product references, use cases, business objectives, KPIs nested inside business objectives, signals, and catalogs. It also defines minimal top-level placeholders for eight ODPG core node types: Domain, Dataset, API, Policy, Workflow, Agent, Capability, and StrategicOpportunity.
+ODPC is a vendor-neutral, open-source, machine-readable catalog model for data product portfolios. It defines reusable portfolio objects around data products, including product references, use cases, business objectives, KPIs nested inside business objectives, signals, domains, datasets, APIs, policies, workflows, agents, capabilities, strategic opportunities, and catalogs.
 
 Base URL:
 - https://opendataproducts.org/odpc-v1.0
@@ -35,7 +35,14 @@ Example files:
 - /catalog/examples/use-case.yaml (https://opendataproducts.org/odpc-v1.0/catalog/examples/use-case.yaml)
 - /catalog/examples/business-objective-with-kpis.yaml (https://opendataproducts.org/odpc-v1.0/catalog/examples/business-objective-with-kpis.yaml)
 - /catalog/examples/signal.yaml (https://opendataproducts.org/odpc-v1.0/catalog/examples/signal.yaml)
-- /catalog/examples/odpg-placeholders.yaml (https://opendataproducts.org/odpc-v1.0/catalog/examples/odpg-placeholders.yaml)
+- /catalog/examples/domain.yaml (https://opendataproducts.org/odpc-v1.0/catalog/examples/domain.yaml)
+- /catalog/examples/dataset.yaml (https://opendataproducts.org/odpc-v1.0/catalog/examples/dataset.yaml)
+- /catalog/examples/api.yaml (https://opendataproducts.org/odpc-v1.0/catalog/examples/api.yaml)
+- /catalog/examples/policy.yaml (https://opendataproducts.org/odpc-v1.0/catalog/examples/policy.yaml)
+- /catalog/examples/workflow.yaml (https://opendataproducts.org/odpc-v1.0/catalog/examples/workflow.yaml)
+- /catalog/examples/agent.yaml (https://opendataproducts.org/odpc-v1.0/catalog/examples/agent.yaml)
+- /catalog/examples/capability.yaml (https://opendataproducts.org/odpc-v1.0/catalog/examples/capability.yaml)
+- /catalog/examples/strategic-opportunity.yaml (https://opendataproducts.org/odpc-v1.0/catalog/examples/strategic-opportunity.yaml)
 
 Agent-oriented source scripts:
 - scripts/check_agent_artifacts.py checks schema alignment, example files, object JSONL records, and llms.txt references.
@@ -57,7 +64,7 @@ Core ODPC objects:
 - UseCase: reusable demand-side object describing a business, operational, analytical, policy, or user need that data products may support.
 - BusinessObjective: reusable outcome object describing a higher-level business, operational, policy, or strategic objective. KPIs are nested inside BusinessObjective, not defined as top-level ODPC objects.
 - Signal: reusable observation or indicator that can inform catalog planning, prioritization, discovery, risk, opportunity, demand, or change.
-- Domain, Dataset, API, Policy, Workflow, Agent, Capability, and StrategicOpportunity: minimal top-level placeholders for the matching ODPG core node types. Use them for identity, discovery, and an optional authoritative reference only; detailed semantics and relationships belong to the referenced source and ODPG.
+- Domain, Dataset, API, Policy, Workflow, Agent, Capability, and StrategicOpportunity: independent top-level ODPC objects aligned with the matching ODPG core node types. Their initial schemas support identity, discovery, and an optional authoritative reference; each can evolve independently.
 
 File selection guidance:
 - Use the ODP Agent SDK when building implementation code, agents, or automation that should support the OpenDataProducts.org standards family across ODPS, ODPC, ODPG, and ODPV.
@@ -74,7 +81,7 @@ Recommended agent workflow:
 1. Fetch /llms.txt first to understand the standards-family context and available ODPC resources.
 2. Use the ODP Agent SDK for implementation work that spans ODPS, ODPC, ODPG, and ODPV.
 3. Load /catalog/objects.jsonl for object selection, retrieval, and lightweight lookup.
-4. Load /catalog/examples/*.yaml when generating ODPC catalog content, including odpg-placeholders.yaml when cataloging an ODPG-aligned placeholder.
+4. Load the matching /catalog/examples/*.yaml file when generating ODPC catalog content.
 5. Load the human-readable ODPC specification when you need object definitions, examples, or attribute-level guidance.
 6. Use /schema/odpc.yaml or /schema/odpc.json to validate ODPC catalog files.
 7. If working in the source repository, use scripts/build_catalog.py to combine a folder of ODPC YAML fragments into one catalog, add --html when the user needs a browser view, use scripts/search_objects.py for repeatable local object lookup, and scripts/validate_catalog.py for catalog validation.
@@ -83,7 +90,7 @@ Recommended agent workflow:
 10. Use UseCase for demand, user needs, business problems, analytical needs, or operational scenarios.
 11. Use BusinessObjective for strategic or operational outcomes, and nest KPIs inside BusinessObjective.
 12. Use Signal for demand signals, risk signals, opportunity signals, quality signals, performance signals, trend signals, or external change signals.
-13. Use the matching top-level placeholder collection for a Domain, Dataset, API, Policy, Workflow, Agent, Capability, or StrategicOpportunity when only minimal discovery metadata is available.
+13. Use the matching top-level object collection for a Domain, Dataset, API, Policy, Workflow, Agent, Capability, or StrategicOpportunity.
 14. Use [ODPG](https://opendataproducts.org/odpg-v1.0/), not ODPC, for explicit relationships between catalog objects.
 15. Use ODPV terms when stable shared ids, labels, definitions, or relationship names are needed.
 16. Include the ODPC version when generating structured catalog outputs.
@@ -96,7 +103,7 @@ Object selection guidance:
 - Use BusinessObjective when describing measurable strategic, policy, business, or operational outcomes.
 - Use KPI only inside BusinessObjective.kpis when measuring progress toward an objective.
 - Use Signal when describing evidence that may affect discovery, prioritization, risk assessment, opportunity detection, or portfolio planning.
-- Use `domains`, `datasets`, `apis`, `policies`, `workflows`, `agents`, `capabilities`, or `strategicOpportunities` only for the matching ODPG-aligned placeholder type. Keep it minimal and point to an authoritative source through `$ref` when one exists.
+- Use `domains`, `datasets`, `apis`, `policies`, `workflows`, `agents`, `capabilities`, or `strategicOpportunities` only for the matching top-level ODPC object type. Point to an authoritative source through `$ref` when one exists.
 - Use [ODPG](https://opendataproducts.org/odpg-v1.0/) relationships when connecting products, use cases, objectives, KPIs, signals, providers, consumers, or governance concepts.
 
 Modeling constraints:
@@ -116,7 +123,7 @@ Extension guidance:
 - Do not use extensions to replace official ODPC fields. If an official field exists, use it instead of an `x-` field.
 - Do not use extensions to change the meaning of official ODPC objects or fields. For example, do not use `x-use-case` to make a ProductReference behave like a UseCase.
 - Do not use extensions for graph relationships, relationship semantics, nodes, edges, traversal rules, or GraphRAG structures. Use [ODPG](https://opendataproducts.org/odpg-v1.0/) for those.
-- Do not treat a placeholder as a complete API, policy, workflow, agent, capability, dataset, domain, or strategic-opportunity definition.
+- Do not use extensions to redefine the core semantics of Domain, Dataset, API, Policy, Workflow, Agent, Capability, or StrategicOpportunity as their schemas evolve.
 - Do not use extensions to copy full ODPS product metadata into ProductReference. ProductReference should remain lightweight and point to the authoritative product model through `productModel`.
 - Do not use extensions for shared vocabulary terms or relationship names that should come from ODPV.
 - If an extension becomes broadly useful across catalogs or organizations, treat it as a candidate for a future ODPC field and propose it through GitHub issues instead of relying on a private meaning.

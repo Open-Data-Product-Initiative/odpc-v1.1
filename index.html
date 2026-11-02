@@ -375,9 +375,6 @@
                   <li>
                     <a href="#main-odpc-objects" class="toc-h2 toc-link" data-title="Main ODPC objects">Main ODPC objects</a>
                   </li>
-                  <li>
-                    <a href="#odpg-aligned-placeholders" class="toc-h2 toc-link" data-title="ODPG-aligned placeholders">ODPG-aligned placeholders</a>
-                  </li>
               </ul>
           </li>
           <li>
@@ -459,7 +456,68 @@
               </ul>
           </li>
           <li>
-            <a href="#odpg-aligned-placeholders" class="toc-h1 toc-link" data-title="ODPG-aligned placeholders">ODPG-aligned placeholders</a>
+            <a href="#odpc-domain" class="toc-h1 toc-link" data-title="ODPC Domain">ODPC Domain</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#mandatory-attributes-and-options" class="toc-h2 toc-link" data-title="Mandatory attributes and options">Mandatory attributes and options</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#odpc-dataset" class="toc-h1 toc-link" data-title="ODPC Dataset">ODPC Dataset</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#mandatory-attributes-and-options" class="toc-h2 toc-link" data-title="Mandatory attributes and options">Mandatory attributes and options</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#odpc-api" class="toc-h1 toc-link" data-title="ODPC API">ODPC API</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#mandatory-attributes-and-options" class="toc-h2 toc-link" data-title="Mandatory attributes and options">Mandatory attributes and options</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#odpc-policy" class="toc-h1 toc-link" data-title="ODPC Policy">ODPC Policy</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#mandatory-attributes-and-options" class="toc-h2 toc-link" data-title="Mandatory attributes and options">Mandatory attributes and options</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#odpc-workflow" class="toc-h1 toc-link" data-title="ODPC Workflow">ODPC Workflow</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#mandatory-attributes-and-options" class="toc-h2 toc-link" data-title="Mandatory attributes and options">Mandatory attributes and options</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#odpc-agent" class="toc-h1 toc-link" data-title="ODPC Agent">ODPC Agent</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#mandatory-attributes-and-options" class="toc-h2 toc-link" data-title="Mandatory attributes and options">Mandatory attributes and options</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#odpc-capability" class="toc-h1 toc-link" data-title="ODPC Capability">ODPC Capability</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#mandatory-attributes-and-options" class="toc-h2 toc-link" data-title="Mandatory attributes and options">Mandatory attributes and options</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#odpc-strategicopportunity" class="toc-h1 toc-link" data-title="ODPC StrategicOpportunity">ODPC StrategicOpportunity</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#mandatory-attributes-and-options" class="toc-h2 toc-link" data-title="Mandatory attributes and options">Mandatory attributes and options</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#specification-extensions" class="toc-h1 toc-link" data-title="Specification extensions">Specification extensions</a>
@@ -618,12 +676,20 @@ ODPC should also not define graph traversal, graph analytics, or relationship se
 <li>UseCase</li>
 <li>BusinessObjective</li>
 <li>Signal</li>
+<li>Domain</li>
+<li>Dataset</li>
+<li>API</li>
+<li>Policy</li>
+<li>Workflow</li>
+<li>Agent</li>
+<li>Capability</li>
+<li>StrategicOpportunity</li>
 <li>Catalog</li>
 </ul>
 
 <p>These objects are designed to be reusable across catalogs, tools, AI workflows, and graph models.</p>
-<h2 id='odpg-aligned-placeholders'>ODPG-aligned placeholders</h2>
-<p>ODPC also provides deliberately minimal top-level placeholders for ODPG core node types that do not yet have a richer ODPC object model: Domain, Dataset, API, Policy, Workflow, Agent, Capability, and StrategicOpportunity. They support identity, discovery, and an optional reference to an authoritative source. Their detailed semantics and all relationships remain outside ODPC.</p>
+
+<p>The initial definitions of Domain, Dataset, API, Policy, Workflow, Agent, Capability, and StrategicOpportunity intentionally focus on identity, discovery, and authoritative references. Each is an independent ODPC object and can evolve its own fields in later versions.</p>
 <h1 id='catalog-toolkit'>Catalog Toolkit</h1>
 <blockquote>
 <p>Snippet of YAML version:</p>
@@ -717,9 +783,44 @@ Use ODPV when stable vocabulary terms or relationship names are needed.
 <td>Standalone BusinessObjective example with nested KPIs</td>
 </tr>
 <tr>
-<td><a href="catalog/examples/odpg-placeholders.yaml"><code>odpg-placeholders.yaml</code></a></td>
+<td><a href="catalog/examples/domain.yaml"><code>domain.yaml</code></a></td>
 <td>YAML</td>
-<td>Minimal top-level Domain, Dataset, API, Policy, Workflow, Agent, Capability, and StrategicOpportunity placeholders</td>
+<td>Standalone Domain example</td>
+</tr>
+<tr>
+<td><a href="catalog/examples/dataset.yaml"><code>dataset.yaml</code></a></td>
+<td>YAML</td>
+<td>Standalone Dataset example</td>
+</tr>
+<tr>
+<td><a href="catalog/examples/api.yaml"><code>api.yaml</code></a></td>
+<td>YAML</td>
+<td>Standalone API example</td>
+</tr>
+<tr>
+<td><a href="catalog/examples/policy.yaml"><code>policy.yaml</code></a></td>
+<td>YAML</td>
+<td>Standalone Policy example</td>
+</tr>
+<tr>
+<td><a href="catalog/examples/workflow.yaml"><code>workflow.yaml</code></a></td>
+<td>YAML</td>
+<td>Standalone Workflow example</td>
+</tr>
+<tr>
+<td><a href="catalog/examples/agent.yaml"><code>agent.yaml</code></a></td>
+<td>YAML</td>
+<td>Standalone Agent example</td>
+</tr>
+<tr>
+<td><a href="catalog/examples/capability.yaml"><code>capability.yaml</code></a></td>
+<td>YAML</td>
+<td>Standalone Capability example</td>
+</tr>
+<tr>
+<td><a href="catalog/examples/strategic-opportunity.yaml"><code>strategic-opportunity.yaml</code></a></td>
+<td>YAML</td>
+<td>Standalone StrategicOpportunity example</td>
 </tr>
 <tr>
 <td><a href="catalog/examples/signal.yaml"><code>signal.yaml</code></a></td>
@@ -803,7 +904,7 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <li>detect portfolio gaps, such as use cases without products, objectives without supporting products, or signals without a response</li>
 <li>prepare graph-ready object records for ODPG or another graph implementation</li>
 <li>support governance review by finding missing owners, stale statuses, incomplete references, or inconsistent standards</li>
-<li>support portfolio planning by combining products, use cases, business objectives, KPIs, signals, ODPG-aligned placeholders, and priorities</li>
+<li>support portfolio planning by combining products, use cases, business objectives, KPIs, signals, domains, datasets, APIs, policies, workflows, agents, capabilities, strategic opportunities, and priorities</li>
 </ul>
 <h2 id='common-agent-workflows'>Common agent workflows</h2>
 <table><thead>
@@ -856,8 +957,8 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <li>Do not copy full ODPS product metadata into <code>ProductReference</code>.</li>
 <li>Do not invent graph relationship fields inside ODPC objects.</li>
 <li>Do not create top-level KPI objects; KPIs belong inside <code>BusinessObjective.kpis</code>.</li>
-<li>Treat Domain, Dataset, API, Policy, Workflow, Agent, Capability, and StrategicOpportunity objects as minimal discovery placeholders until ODPC defines richer schemas for them.</li>
-<li>Do not model relationships in a placeholder; use ODPG and the optional placeholder <code>$ref</code> to connect it to its authoritative source.</li>
+<li>Treat Domain, Dataset, API, Policy, Workflow, Agent, Capability, and StrategicOpportunity as independent top-level ODPC objects. Their initial schemas are intentionally minimal and can evolve separately.</li>
+<li>Do not model relationships directly in those objects; use ODPG and the optional <code>$ref</code> to connect them to authoritative sources.</li>
 <li>Do not treat <code>Catalog.metadata.graph.$ref</code> as the graph itself; it points to a graph implementation.</li>
 <li>Do not assume every referenced product model is ODPS; use <code>productModel.standard</code>, <code>productModel.version</code>, <code>productModel.format</code>, and <code>productModel.$ref</code>.</li>
 <li>Do not make planning decisions from <code>portfolioPriority</code> alone; combine it with use cases, objectives, signals, governance context, and graph relationships when available.</li>
@@ -878,7 +979,7 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 
 <p>In ODPC, the <code>Catalog</code> object acts as the portfolio container. It helps organizations group related data products and demand-side objects around a domain, organization, geography, audience, or strategic theme.</p>
 
-<p>The <code>Catalog</code> object can include product references, use cases, business objectives, signals, and minimal ODPG-aligned placeholders directly as reusable catalog objects. It can also define where the catalog graph is implemented through the <code>metadata.graph</code> attribute.</p>
+<p>The <code>Catalog</code> object can include product references, use cases, business objectives, signals, domains, datasets, APIs, policies, workflows, agents, capabilities, and strategic opportunities directly as reusable catalog objects. It can also define where the catalog graph is implemented through the <code>metadata.graph</code> attribute.</p>
 
 <p>The <code>metadata.graph</code> attribute identifies the graph standard, version, and reference used for the catalog graph. The graph can be implemented with <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a> or another supported graph standard, such as <code>RDF</code>, <code>JSON-LD</code>, <code>GraphML</code>, <code>openCypher</code>, <code>GQL</code>, <code>Gremlin</code>, <code>GraphSON</code>, or <code>GeoSPARQL</code>.</p>
 
@@ -1177,49 +1278,49 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <td><code>domains</code></td>
 <td>array of objects</td>
 <td style="text-align: right"></td>
-<td>Minimal placeholders for ODPG <code>Domain</code> nodes.</td>
+<td>List of top-level ODPC <code>Domain</code> objects.</td>
 </tr>
 <tr>
 <td><code>datasets</code></td>
 <td>array of objects</td>
 <td style="text-align: right"></td>
-<td>Minimal placeholders for ODPG <code>Dataset</code> nodes.</td>
+<td>List of top-level ODPC <code>Dataset</code> objects.</td>
 </tr>
 <tr>
 <td><code>apis</code></td>
 <td>array of objects</td>
 <td style="text-align: right"></td>
-<td>Minimal placeholders for ODPG <code>API</code> nodes.</td>
+<td>List of top-level ODPC <code>API</code> objects.</td>
 </tr>
 <tr>
 <td><code>policies</code></td>
 <td>array of objects</td>
 <td style="text-align: right"></td>
-<td>Minimal placeholders for ODPG <code>Policy</code> nodes.</td>
+<td>List of top-level ODPC <code>Policy</code> objects.</td>
 </tr>
 <tr>
 <td><code>workflows</code></td>
 <td>array of objects</td>
 <td style="text-align: right"></td>
-<td>Minimal placeholders for ODPG <code>Workflow</code> nodes.</td>
+<td>List of top-level ODPC <code>Workflow</code> objects.</td>
 </tr>
 <tr>
 <td><code>agents</code></td>
 <td>array of objects</td>
 <td style="text-align: right"></td>
-<td>Minimal placeholders for ODPG <code>Agent</code> nodes.</td>
+<td>List of top-level ODPC <code>Agent</code> objects.</td>
 </tr>
 <tr>
 <td><code>capabilities</code></td>
 <td>array of objects</td>
 <td style="text-align: right"></td>
-<td>Minimal placeholders for ODPG <code>Capability</code> nodes.</td>
+<td>List of top-level ODPC <code>Capability</code> objects.</td>
 </tr>
 <tr>
 <td><code>strategicOpportunities</code></td>
 <td>array of objects</td>
 <td style="text-align: right"></td>
-<td>Minimal placeholders for ODPG <code>StrategicOpportunity</code> nodes.</td>
+<td>List of top-level ODPC <code>StrategicOpportunity</code> objects.</td>
 </tr>
 </tbody></table>
 <h1 id='odpc-productreference'>ODPC ProductReference</h1>
@@ -2401,53 +2502,15 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <td>Keywords used to classify, search, or filter the signal.</td>
 </tr>
 </tbody></table>
-<h1 id='odpg-aligned-placeholders'>ODPG-aligned placeholders</h1>
-<p>ODPC defines minimal top-level placeholders for eight ODPG core node types that do not yet have a richer ODPC object model. They make those resources discoverable in a catalog without claiming to define their full semantics.</p>
-
-<p>Use these placeholders for identity, a short description, optional source reference, and local extensions. Use the referenced source for detailed metadata, and use <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a> for relationships, traversal, and graph reasoning.</p>
-
-<table><thead>
-<tr>
-<th>Catalog collection</th>
-<th>ODPG node type</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code>domains</code></td>
-<td><code>Domain</code></td>
-</tr>
-<tr>
-<td><code>datasets</code></td>
-<td><code>Dataset</code></td>
-</tr>
-<tr>
-<td><code>apis</code></td>
-<td><code>API</code></td>
-</tr>
-<tr>
-<td><code>policies</code></td>
-<td><code>Policy</code></td>
-</tr>
-<tr>
-<td><code>workflows</code></td>
-<td><code>Workflow</code></td>
-</tr>
-<tr>
-<td><code>agents</code></td>
-<td><code>Agent</code></td>
-</tr>
-<tr>
-<td><code>capabilities</code></td>
-<td><code>Capability</code></td>
-</tr>
-<tr>
-<td><code>strategicOpportunities</code></td>
-<td><code>StrategicOpportunity</code></td>
-</tr>
-</tbody></table>
-
-<p>Every placeholder uses the same minimal shape.</p>
-
+<h1 id='odpc-domain'>ODPC Domain</h1>
+<p>The <code>Domain</code> object defines a reusable business, organizational, technical, or data domain in an ODPC catalog. It aligns with the ODPG <code>Domain</code> node type.</p>
+<h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">domain</span><span class="pi">:</span>
+  <span class="na">id</span><span class="pi">:</span> <span class="s">DOM-001</span>
+  <span class="na">name</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Urban Mobility</span>
+  <span class="na">description</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Business and operational domain for city transportation services.</span>
+</code></pre></div>
 <table><thead>
 <tr>
 <th>Attribute</th>
@@ -2457,44 +2520,436 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 </tr>
 </thead><tbody>
 <tr>
+<td><code>domain</code></td>
+<td>object</td>
+<td style="text-align: right">✓</td>
+<td>Top-level ODPC Domain object.</td>
+</tr>
+<tr>
 <td><code>id</code></td>
 <td>string</td>
 <td style="text-align: right">✓</td>
-<td>Stable identifier within the catalog.</td>
+<td>Stable domain identifier.</td>
 </tr>
 <tr>
 <td><code>name</code></td>
 <td>language-tagged string</td>
 <td style="text-align: right">✓</td>
-<td>Human-readable name.</td>
+<td>Human-readable domain name.</td>
 </tr>
 <tr>
 <td><code>description</code></td>
 <td>language-tagged string</td>
 <td style="text-align: right">✓</td>
-<td>Short discovery description.</td>
+<td>Domain purpose and scope.</td>
 </tr>
 <tr>
 <td><code>$ref</code></td>
 <td>string</td>
 <td style="text-align: right"></td>
-<td>Optional path or URI to the authoritative source record.</td>
+<td>Authoritative domain definition.</td>
 </tr>
 <tr>
 <td><code>tags</code></td>
 <td>array of strings</td>
 <td style="text-align: right"></td>
-<td>Optional discovery labels.</td>
-</tr>
-<tr>
-<td><code>x-*</code></td>
-<td>any</td>
-<td style="text-align: right"></td>
-<td>Local implementation-specific metadata.</td>
+<td>Discovery and filtering labels.</td>
 </tr>
 </tbody></table>
 
-<p>These are placeholders, not a substitute for API descriptions, policy definitions, workflow specifications, agent cards, or capability models. Do not add relationship fields to them; model connections in ODPG.</p>
+<p>Relationships between domains and other objects belong in <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a>.</p>
+<h1 id='odpc-dataset'>ODPC Dataset</h1>
+<p>The <code>Dataset</code> object defines a reusable dataset resource in an ODPC catalog. It aligns with the ODPG <code>Dataset</code> node type and does not replace a full dataset specification.</p>
+<h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">dataset</span><span class="pi">:</span>
+  <span class="na">id</span><span class="pi">:</span> <span class="s">DS-001</span>
+  <span class="na">name</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Traffic Sensor Observations</span>
+  <span class="na">description</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Time-stamped observations from roadside traffic sensors.</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th style="text-align: right">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>dataset</code></td>
+<td>object</td>
+<td style="text-align: right">✓</td>
+<td>Top-level ODPC Dataset object.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>string</td>
+<td style="text-align: right">✓</td>
+<td>Stable dataset identifier.</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>language-tagged string</td>
+<td style="text-align: right">✓</td>
+<td>Human-readable dataset name.</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>language-tagged string</td>
+<td style="text-align: right">✓</td>
+<td>Dataset discovery description.</td>
+</tr>
+<tr>
+<td><code>$ref</code></td>
+<td>string</td>
+<td style="text-align: right"></td>
+<td>Authoritative dataset definition.</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>array of strings</td>
+<td style="text-align: right"></td>
+<td>Discovery and filtering labels.</td>
+</tr>
+</tbody></table>
+
+<p>Relationships between datasets and other objects belong in <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a>.</p>
+<h1 id='odpc-api'>ODPC API</h1>
+<p>The <code>API</code> object defines a reusable service interface in an ODPC catalog. It aligns with the ODPG <code>API</code> node type and should point to an authoritative API definition when one exists.</p>
+<h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">api</span><span class="pi">:</span>
+  <span class="na">id</span><span class="pi">:</span> <span class="s">API-001</span>
+  <span class="na">name</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Traffic Conditions API</span>
+  <span class="na">description</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Service interface for current traffic conditions.</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th style="text-align: right">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>api</code></td>
+<td>object</td>
+<td style="text-align: right">✓</td>
+<td>Top-level ODPC API object.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>string</td>
+<td style="text-align: right">✓</td>
+<td>Stable API identifier.</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>language-tagged string</td>
+<td style="text-align: right">✓</td>
+<td>Human-readable API name.</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>language-tagged string</td>
+<td style="text-align: right">✓</td>
+<td>API discovery description.</td>
+</tr>
+<tr>
+<td><code>$ref</code></td>
+<td>string</td>
+<td style="text-align: right"></td>
+<td>Authoritative API definition, such as OpenAPI.</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>array of strings</td>
+<td style="text-align: right"></td>
+<td>Discovery and filtering labels.</td>
+</tr>
+</tbody></table>
+
+<p>Relationships between APIs and other objects belong in <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a>.</p>
+<h1 id='odpc-policy'>ODPC Policy</h1>
+<p>The <code>Policy</code> object defines a reusable governance, compliance, security, or quality policy in an ODPC catalog. It aligns with the ODPG <code>Policy</code> node type.</p>
+<h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">policy</span><span class="pi">:</span>
+  <span class="na">id</span><span class="pi">:</span> <span class="s">POL-001</span>
+  <span class="na">name</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Mobility Data Retention Policy</span>
+  <span class="na">description</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Policy governing retention of mobility data.</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th style="text-align: right">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>policy</code></td>
+<td>object</td>
+<td style="text-align: right">✓</td>
+<td>Top-level ODPC Policy object.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>string</td>
+<td style="text-align: right">✓</td>
+<td>Stable policy identifier.</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>language-tagged string</td>
+<td style="text-align: right">✓</td>
+<td>Human-readable policy name.</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>language-tagged string</td>
+<td style="text-align: right">✓</td>
+<td>Policy discovery description.</td>
+</tr>
+<tr>
+<td><code>$ref</code></td>
+<td>string</td>
+<td style="text-align: right"></td>
+<td>Authoritative policy definition.</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>array of strings</td>
+<td style="text-align: right"></td>
+<td>Discovery and filtering labels.</td>
+</tr>
+</tbody></table>
+
+<p>Relationships between policies and other objects belong in <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a>.</p>
+<h1 id='odpc-workflow'>ODPC Workflow</h1>
+<p>The <code>Workflow</code> object defines a reusable business or technical workflow in an ODPC catalog. It aligns with the ODPG <code>Workflow</code> node type.</p>
+<h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">workflow</span><span class="pi">:</span>
+  <span class="na">id</span><span class="pi">:</span> <span class="s">WF-001</span>
+  <span class="na">name</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Incident Response Workflow</span>
+  <span class="na">description</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Operational workflow for responding to major traffic incidents.</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th style="text-align: right">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>workflow</code></td>
+<td>object</td>
+<td style="text-align: right">✓</td>
+<td>Top-level ODPC Workflow object.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>string</td>
+<td style="text-align: right">✓</td>
+<td>Stable workflow identifier.</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>language-tagged string</td>
+<td style="text-align: right">✓</td>
+<td>Human-readable workflow name.</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>language-tagged string</td>
+<td style="text-align: right">✓</td>
+<td>Workflow discovery description.</td>
+</tr>
+<tr>
+<td><code>$ref</code></td>
+<td>string</td>
+<td style="text-align: right"></td>
+<td>Authoritative workflow definition.</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>array of strings</td>
+<td style="text-align: right"></td>
+<td>Discovery and filtering labels.</td>
+</tr>
+</tbody></table>
+
+<p>Relationships between workflows and other objects belong in <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a>.</p>
+<h1 id='odpc-agent'>ODPC Agent</h1>
+<p>The <code>Agent</code> object defines a reusable AI agent or automation actor in an ODPC catalog. It aligns with the ODPG <code>Agent</code> node type.</p>
+<h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">agent</span><span class="pi">:</span>
+  <span class="na">id</span><span class="pi">:</span> <span class="s">AGENT-001</span>
+  <span class="na">name</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Mobility Planning Assistant</span>
+  <span class="na">description</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Automation actor that prepares planning recommendations.</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th style="text-align: right">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>agent</code></td>
+<td>object</td>
+<td style="text-align: right">✓</td>
+<td>Top-level ODPC Agent object.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>string</td>
+<td style="text-align: right">✓</td>
+<td>Stable agent identifier.</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>language-tagged string</td>
+<td style="text-align: right">✓</td>
+<td>Human-readable agent name.</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>language-tagged string</td>
+<td style="text-align: right">✓</td>
+<td>Agent discovery description.</td>
+</tr>
+<tr>
+<td><code>$ref</code></td>
+<td>string</td>
+<td style="text-align: right"></td>
+<td>Authoritative agent definition.</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>array of strings</td>
+<td style="text-align: right"></td>
+<td>Discovery and filtering labels.</td>
+</tr>
+</tbody></table>
+
+<p>Relationships between agents and other objects belong in <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a>.</p>
+<h1 id='odpc-capability'>ODPC Capability</h1>
+<p>The <code>Capability</code> object defines a reusable business or technical capability in an ODPC catalog. It aligns with the ODPG <code>Capability</code> node type.</p>
+<h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">capability</span><span class="pi">:</span>
+  <span class="na">id</span><span class="pi">:</span> <span class="s">CAP-001</span>
+  <span class="na">name</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Traffic Demand Forecasting</span>
+  <span class="na">description</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Capability to forecast traffic demand from historical and current signals.</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th style="text-align: right">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>capability</code></td>
+<td>object</td>
+<td style="text-align: right">✓</td>
+<td>Top-level ODPC Capability object.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>string</td>
+<td style="text-align: right">✓</td>
+<td>Stable capability identifier.</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>language-tagged string</td>
+<td style="text-align: right">✓</td>
+<td>Human-readable capability name.</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>language-tagged string</td>
+<td style="text-align: right">✓</td>
+<td>Capability discovery description.</td>
+</tr>
+<tr>
+<td><code>$ref</code></td>
+<td>string</td>
+<td style="text-align: right"></td>
+<td>Authoritative capability definition.</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>array of strings</td>
+<td style="text-align: right"></td>
+<td>Discovery and filtering labels.</td>
+</tr>
+</tbody></table>
+
+<p>Relationships between capabilities and other objects belong in <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a>.</p>
+<h1 id='odpc-strategicopportunity'>ODPC StrategicOpportunity</h1>
+<p>The <code>StrategicOpportunity</code> object defines a reusable declared or inferred strategic opportunity in an ODPC catalog. It aligns with the ODPG <code>StrategicOpportunity</code> node type.</p>
+<h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">strategicOpportunity</span><span class="pi">:</span>
+  <span class="na">id</span><span class="pi">:</span> <span class="s">SO-001</span>
+  <span class="na">name</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Event-aware Mobility Planning</span>
+  <span class="na">description</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Opportunity to improve mobility planning using event demand signals.</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th style="text-align: right">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>strategicOpportunity</code></td>
+<td>object</td>
+<td style="text-align: right">✓</td>
+<td>Top-level ODPC StrategicOpportunity object.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>string</td>
+<td style="text-align: right">✓</td>
+<td>Stable opportunity identifier.</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>language-tagged string</td>
+<td style="text-align: right">✓</td>
+<td>Human-readable opportunity name.</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>language-tagged string</td>
+<td style="text-align: right">✓</td>
+<td>Opportunity discovery description.</td>
+</tr>
+<tr>
+<td><code>$ref</code></td>
+<td>string</td>
+<td style="text-align: right"></td>
+<td>Authoritative opportunity definition.</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>array of strings</td>
+<td style="text-align: right"></td>
+<td>Discovery and filtering labels.</td>
+</tr>
+</tbody></table>
+
+<p>Relationships between strategic opportunities and other objects belong in <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a>.</p>
 <h1 id='specification-extensions'>Specification extensions</h1>
 <p>While the Open Data Product Catalog Specification defines the core catalog objects and attributes, organizations may need to add implementation-specific metadata for local tools, internal workflows, or platform-specific requirements.</p>
 
@@ -2612,12 +3067,12 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <tr>
 <td>Domain</td>
 <td><code>Domain</code></td>
-<td>Used as a string in product, use-case, and <code>scope.domains</code> grouping fields; the top-level <code>domains</code> collection contains minimal Domain placeholders.</td>
+<td>Used as a string in product, use-case, and <code>scope.domains</code> grouping fields; the top-level <code>domains</code> collection contains reusable ODPC Domain objects.</td>
 </tr>
 <tr>
-<td>ODPG-aligned placeholder</td>
+<td>ODPC top-level object</td>
 <td><code>Domain</code>, <code>Dataset</code>, <code>API</code>, <code>Policy</code>, <code>Workflow</code>, <code>Agent</code>, <code>Capability</code>, or <code>StrategicOpportunity</code></td>
-<td>Minimal top-level ODPC discovery object for the matching ODPG core node type; detailed semantics remain in an authoritative external source.</td>
+<td>Independent ODPC object aligned with the matching ODPG core node type.</td>
 </tr>
 </tbody></table>
 <h2 id='odpc-specific-usage-notes'>ODPC-specific usage notes</h2>
@@ -2629,7 +3084,7 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 </thead><tbody>
 <tr>
 <td><code>Catalog</code></td>
-<td>The ODPC object that implements an ODPV <code>DataProductCatalog</code>. It is the top-level portfolio container for product references, use cases, business objectives, signals, ODPG-aligned placeholders, and catalog metadata such as ownership, scope, lifecycle status, tags, and graph implementation reference.</td>
+<td>The ODPC object that implements an ODPV <code>DataProductCatalog</code>. It is the top-level portfolio container for product references, use cases, business objectives, signals, domains, datasets, APIs, policies, workflows, agents, capabilities, strategic opportunities, and catalog metadata such as ownership, scope, lifecycle status, tags, and graph implementation reference.</td>
 </tr>
 <tr>
 <td><code>ProductReference</code></td>

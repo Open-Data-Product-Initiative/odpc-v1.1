@@ -1,0 +1,7 @@
+dataset:
+  id: DS-001
+  name:
+    en: Traffic Sensor Observations
+  description:
+    en: Time-stamped observations from roadside traffic sensors.
+  $ref: https://example.org/datasets/traffic-sensor-observations
