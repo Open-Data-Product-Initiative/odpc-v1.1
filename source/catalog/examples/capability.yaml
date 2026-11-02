@@ -1,0 +1,7 @@
+capability:
+  id: CAP-001
+  name:
+    en: Traffic Demand Forecasting
+  description:
+    en: Capability to forecast traffic demand from historical and current signals.
+  $ref: https://example.org/capabilities/traffic-demand-forecasting

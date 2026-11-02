@@ -1,0 +1,7 @@
+workflow:
+  id: WF-001
+  name:
+    en: Incident Response Workflow
+  description:
+    en: Operational workflow for responding to major traffic incidents.
+  $ref: https://example.org/workflows/incident-response

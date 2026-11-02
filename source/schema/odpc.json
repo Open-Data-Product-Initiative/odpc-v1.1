@@ -60,9 +60,9 @@
         }
       }
     },
-    "ODPGNodePlaceholder": {
+    "Domain": {
       "type": "object",
-      "description": "Minimal catalog placeholder for an ODPG core node type that ODPC does not otherwise define. It provides discovery identity only; detailed semantics and relationships belong to the referenced source and ODPG.",
+      "description": "Reusable ODPC domain object aligned with an ODPG Domain node.",
       "additionalProperties": false,
       "required": [
         "id",
@@ -94,37 +94,243 @@
         "^x-": {}
       }
     },
-    "Domain": {
-      "description": "Placeholder for an ODPG Domain node.",
-      "$ref": "#/$defs/ODPGNodePlaceholder"
-    },
     "Dataset": {
-      "description": "Placeholder for an ODPG Dataset node.",
-      "$ref": "#/$defs/ODPGNodePlaceholder"
+      "type": "object",
+      "description": "Reusable ODPC dataset object aligned with an ODPG Dataset node.",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "description"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "$ref": "#/$defs/LanguageString"
+        },
+        "description": {
+          "$ref": "#/$defs/LanguageString"
+        },
+        "$ref": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "patternProperties": {
+        "^x-": {}
+      }
     },
     "API": {
-      "description": "Placeholder for an ODPG API node.",
-      "$ref": "#/$defs/ODPGNodePlaceholder"
+      "type": "object",
+      "description": "Reusable ODPC API object aligned with an ODPG API node.",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "description"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "$ref": "#/$defs/LanguageString"
+        },
+        "description": {
+          "$ref": "#/$defs/LanguageString"
+        },
+        "$ref": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "patternProperties": {
+        "^x-": {}
+      }
     },
     "Policy": {
-      "description": "Placeholder for an ODPG Policy node.",
-      "$ref": "#/$defs/ODPGNodePlaceholder"
+      "type": "object",
+      "description": "Reusable ODPC policy object aligned with an ODPG Policy node.",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "description"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "$ref": "#/$defs/LanguageString"
+        },
+        "description": {
+          "$ref": "#/$defs/LanguageString"
+        },
+        "$ref": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "patternProperties": {
+        "^x-": {}
+      }
     },
     "Workflow": {
-      "description": "Placeholder for an ODPG Workflow node.",
-      "$ref": "#/$defs/ODPGNodePlaceholder"
+      "type": "object",
+      "description": "Reusable ODPC workflow object aligned with an ODPG Workflow node.",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "description"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "$ref": "#/$defs/LanguageString"
+        },
+        "description": {
+          "$ref": "#/$defs/LanguageString"
+        },
+        "$ref": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "patternProperties": {
+        "^x-": {}
+      }
     },
     "Agent": {
-      "description": "Placeholder for an ODPG Agent node.",
-      "$ref": "#/$defs/ODPGNodePlaceholder"
+      "type": "object",
+      "description": "Reusable ODPC agent object aligned with an ODPG Agent node.",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "description"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "$ref": "#/$defs/LanguageString"
+        },
+        "description": {
+          "$ref": "#/$defs/LanguageString"
+        },
+        "$ref": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "patternProperties": {
+        "^x-": {}
+      }
     },
     "Capability": {
-      "description": "Placeholder for an ODPG Capability node.",
-      "$ref": "#/$defs/ODPGNodePlaceholder"
+      "type": "object",
+      "description": "Reusable ODPC capability object aligned with an ODPG Capability node.",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "description"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "$ref": "#/$defs/LanguageString"
+        },
+        "description": {
+          "$ref": "#/$defs/LanguageString"
+        },
+        "$ref": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "patternProperties": {
+        "^x-": {}
+      }
     },
     "StrategicOpportunity": {
-      "description": "Placeholder for an ODPG StrategicOpportunity node.",
-      "$ref": "#/$defs/ODPGNodePlaceholder"
+      "type": "object",
+      "description": "Reusable ODPC strategic opportunity object aligned with an ODPG StrategicOpportunity node.",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "description"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "$ref": "#/$defs/LanguageString"
+        },
+        "description": {
+          "$ref": "#/$defs/LanguageString"
+        },
+        "$ref": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "patternProperties": {
+        "^x-": {}
+      }
     },
     "Owner": {
       "type": "object",

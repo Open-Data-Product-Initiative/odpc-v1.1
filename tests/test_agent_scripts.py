@@ -79,7 +79,14 @@ class AgentScriptsTest(unittest.TestCase):
                 "use-case.yaml",
                 "business-objective-with-kpis.yaml",
                 "signal.yaml",
-                "odpg-placeholders.yaml",
+                "domain.yaml",
+                "dataset.yaml",
+                "api.yaml",
+                "policy.yaml",
+                "workflow.yaml",
+                "agent.yaml",
+                "capability.yaml",
+                "strategic-opportunity.yaml",
             ):
                 source = ROOT / "source" / "catalog" / "examples" / example
                 (input_dir / example).write_text(source.read_text(encoding="utf-8"), encoding="utf-8")

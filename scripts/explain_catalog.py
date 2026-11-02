@@ -6,7 +6,7 @@ from pathlib import Path
 import yaml
 
 
-ODPG_PLACEHOLDER_COLLECTIONS = (
+ODPG_CORE_COLLECTIONS = (
     ("domains", "Domains", "Domain"),
     ("datasets", "Datasets", "Dataset"),
     ("apis", "APIs", "API"),
@@ -84,7 +84,7 @@ def render_summary(document, path):
         "Business objective ids": collect_ids(catalog.get("businessObjectives", [])),
         "Signal ids": collect_ids(catalog.get("signals", [])),
     }
-    for collection, label, singular in ODPG_PLACEHOLDER_COLLECTIONS:
+    for collection, label, singular in ODPG_CORE_COLLECTIONS:
         count = count_items(catalog, collection)
         if count:
             lines.append(f"{label}: {count}")

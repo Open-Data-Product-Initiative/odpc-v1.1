@@ -1,0 +1,7 @@
+domain:
+  id: DOM-001
+  name:
+    en: Urban Mobility
+  description:
+    en: Business and operational domain for city transportation services.
+  $ref: https://example.org/domains/urban-mobility

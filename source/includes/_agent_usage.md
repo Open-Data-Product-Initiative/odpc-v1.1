@@ -25,7 +25,7 @@ Agents can use ODPC to:
 * detect portfolio gaps, such as use cases without products, objectives without supporting products, or signals without a response
 * prepare graph-ready object records for ODPG or another graph implementation
 * support governance review by finding missing owners, stale statuses, incomplete references, or inconsistent standards
-* support portfolio planning by combining products, use cases, business objectives, KPIs, signals, ODPG-aligned placeholders, and priorities
+* support portfolio planning by combining products, use cases, business objectives, KPIs, signals, domains, datasets, APIs, policies, workflows, agents, capabilities, strategic opportunities, and priorities
 
 ## Common agent workflows
 
@@ -48,8 +48,8 @@ Agents using ODPC should keep object boundaries clear:
 * Do not copy full ODPS product metadata into `ProductReference`.
 * Do not invent graph relationship fields inside ODPC objects.
 * Do not create top-level KPI objects; KPIs belong inside `BusinessObjective.kpis`.
-* Treat Domain, Dataset, API, Policy, Workflow, Agent, Capability, and StrategicOpportunity objects as minimal discovery placeholders until ODPC defines richer schemas for them.
-* Do not model relationships in a placeholder; use ODPG and the optional placeholder `$ref` to connect it to its authoritative source.
+* Treat Domain, Dataset, API, Policy, Workflow, Agent, Capability, and StrategicOpportunity as independent top-level ODPC objects. Their initial schemas are intentionally minimal and can evolve separately.
+* Do not model relationships directly in those objects; use ODPG and the optional `$ref` to connect them to authoritative sources.
 * Do not treat `Catalog.metadata.graph.$ref` as the graph itself; it points to a graph implementation.
 * Do not assume every referenced product model is ODPS; use `productModel.standard`, `productModel.version`, `productModel.format`, and `productModel.$ref`.
 * Do not make planning decisions from `portfolioPriority` alone; combine it with use cases, objectives, signals, governance context, and graph relationships when available.

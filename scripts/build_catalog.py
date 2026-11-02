@@ -27,7 +27,7 @@ OBJECT_COLLECTIONS = {
     "strategicOpportunity": "strategicOpportunities",
 }
 CATALOG_COLLECTIONS = tuple(OBJECT_COLLECTIONS.values())
-ODPG_PLACEHOLDER_COLLECTIONS = (
+ODPG_CORE_COLLECTIONS = (
     ("domains", "Domains"),
     ("datasets", "Datasets"),
     ("apis", "APIs"),
@@ -316,7 +316,7 @@ def render_summary(document):
         "Business Objectives": len(catalog.get("businessObjectives", [])),
         "Signals": len(catalog.get("signals", [])),
     }
-    counts.update({label: len(catalog.get(collection, [])) for collection, label in ODPG_PLACEHOLDER_COLLECTIONS})
+    counts.update({label: len(catalog.get(collection, [])) for collection, label in ODPG_CORE_COLLECTIONS})
     items = "".join(
         f'<li><span class="odp-count">{count}</span><span>{html.escape(label)}</span></li>'
         for label, count in counts.items()

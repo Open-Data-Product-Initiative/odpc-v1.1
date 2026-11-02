@@ -1,0 +1,7 @@
+api:
+  id: API-001
+  name:
+    en: Traffic Conditions API
+  description:
+    en: Service interface for current traffic conditions.
+  $ref: https://example.org/apis/traffic-conditions/openapi.yaml

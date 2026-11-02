@@ -6,7 +6,7 @@ The `Catalog` object defines a reusable ODPC catalog. It provides the top-level 
 
 In ODPC, the `Catalog` object acts as the portfolio container. It helps organizations group related data products and demand-side objects around a domain, organization, geography, audience, or strategic theme.
 
-The `Catalog` object can include product references, use cases, business objectives, signals, and minimal ODPG-aligned placeholders directly as reusable catalog objects. It can also define where the catalog graph is implemented through the `metadata.graph` attribute.
+The `Catalog` object can include product references, use cases, business objectives, signals, domains, datasets, APIs, policies, workflows, agents, capabilities, and strategic opportunities directly as reusable catalog objects. It can also define where the catalog graph is implemented through the `metadata.graph` attribute.
 
 The `metadata.graph` attribute identifies the graph standard, version, and reference used for the catalog graph. The graph can be implemented with [ODPG](https://opendataproducts.org/odpg-v1.0/) or another supported graph standard, such as `RDF`, `JSON-LD`, `GraphML`, `openCypher`, `GQL`, `Gremlin`, `GraphSON`, or `GeoSPARQL`.
 
@@ -151,11 +151,11 @@ catalog:
 | `useCases` | array of objects |  | List of use cases included in the catalog. Each item follows the `UseCase` object schema. |
 | `businessObjectives` | array of objects |  | List of business objectives included in the catalog. Each item follows the `BusinessObjective` object schema. |
 | `signals` | array of objects |  | List of signals included in the catalog. Each item follows the `Signal` object schema. |
-| `domains` | array of objects |  | Minimal placeholders for ODPG `Domain` nodes. |
-| `datasets` | array of objects |  | Minimal placeholders for ODPG `Dataset` nodes. |
-| `apis` | array of objects |  | Minimal placeholders for ODPG `API` nodes. |
-| `policies` | array of objects |  | Minimal placeholders for ODPG `Policy` nodes. |
-| `workflows` | array of objects |  | Minimal placeholders for ODPG `Workflow` nodes. |
-| `agents` | array of objects |  | Minimal placeholders for ODPG `Agent` nodes. |
-| `capabilities` | array of objects |  | Minimal placeholders for ODPG `Capability` nodes. |
-| `strategicOpportunities` | array of objects |  | Minimal placeholders for ODPG `StrategicOpportunity` nodes. |
+| `domains` | array of objects |  | List of top-level ODPC `Domain` objects. |
+| `datasets` | array of objects |  | List of top-level ODPC `Dataset` objects. |
+| `apis` | array of objects |  | List of top-level ODPC `API` objects. |
+| `policies` | array of objects |  | List of top-level ODPC `Policy` objects. |
+| `workflows` | array of objects |  | List of top-level ODPC `Workflow` objects. |
+| `agents` | array of objects |  | List of top-level ODPC `Agent` objects. |
+| `capabilities` | array of objects |  | List of top-level ODPC `Capability` objects. |
+| `strategicOpportunities` | array of objects |  | List of top-level ODPC `StrategicOpportunity` objects. |

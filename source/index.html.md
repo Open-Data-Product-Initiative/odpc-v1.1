@@ -17,7 +17,14 @@ includes:
 - usecase
 - businessobjective
 - signal
-- odpg_placeholders
+- domain
+- dataset
+- api
+- policy
+- workflow
+- agent
+- capability
+- strategicopportunity
 - extensions
 - contributors
 - terms
@@ -151,10 +158,16 @@ The first version of ODPC focuses on these objects:
 * UseCase
 * BusinessObjective
 * Signal
+* Domain
+* Dataset
+* API
+* Policy
+* Workflow
+* Agent
+* Capability
+* StrategicOpportunity
 * Catalog
 
 These objects are designed to be reusable across catalogs, tools, AI workflows, and graph models.
 
-## ODPG-aligned placeholders
-
-ODPC also provides deliberately minimal top-level placeholders for ODPG core node types that do not yet have a richer ODPC object model: Domain, Dataset, API, Policy, Workflow, Agent, Capability, and StrategicOpportunity. They support identity, discovery, and an optional reference to an authoritative source. Their detailed semantics and all relationships remain outside ODPC.
+The initial definitions of Domain, Dataset, API, Policy, Workflow, Agent, Capability, and StrategicOpportunity intentionally focus on identity, discovery, and authoritative references. Each is an independent ODPC object and can evolve its own fields in later versions.

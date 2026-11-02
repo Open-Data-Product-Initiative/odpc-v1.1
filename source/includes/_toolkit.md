@@ -47,7 +47,14 @@ Use ODPV when stable vocabulary terms or relationship names are needed.
 | [`product-reference.yaml`](/catalog/examples/product-reference.yaml) | YAML | Standalone ProductReference example |
 | [`use-case.yaml`](/catalog/examples/use-case.yaml) | YAML | Standalone UseCase example |
 | [`business-objective-with-kpis.yaml`](/catalog/examples/business-objective-with-kpis.yaml) | YAML | Standalone BusinessObjective example with nested KPIs |
-| [`odpg-placeholders.yaml`](/catalog/examples/odpg-placeholders.yaml) | YAML | Minimal top-level Domain, Dataset, API, Policy, Workflow, Agent, Capability, and StrategicOpportunity placeholders |
+| [`domain.yaml`](/catalog/examples/domain.yaml) | YAML | Standalone Domain example |
+| [`dataset.yaml`](/catalog/examples/dataset.yaml) | YAML | Standalone Dataset example |
+| [`api.yaml`](/catalog/examples/api.yaml) | YAML | Standalone API example |
+| [`policy.yaml`](/catalog/examples/policy.yaml) | YAML | Standalone Policy example |
+| [`workflow.yaml`](/catalog/examples/workflow.yaml) | YAML | Standalone Workflow example |
+| [`agent.yaml`](/catalog/examples/agent.yaml) | YAML | Standalone Agent example |
+| [`capability.yaml`](/catalog/examples/capability.yaml) | YAML | Standalone Capability example |
+| [`strategic-opportunity.yaml`](/catalog/examples/strategic-opportunity.yaml) | YAML | Standalone StrategicOpportunity example |
 | [`signal.yaml`](/catalog/examples/signal.yaml) | YAML | Standalone Signal example |
 
 Agent-oriented helper scripts are available in the source repository for maintaining and using the catalog artifacts.

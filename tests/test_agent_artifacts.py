@@ -79,6 +79,14 @@ class AgentArtifactsTest(unittest.TestCase):
             "use-case.yaml",
             "business-objective-with-kpis.yaml",
             "signal.yaml",
+            "domain.yaml",
+            "dataset.yaml",
+            "api.yaml",
+            "policy.yaml",
+            "workflow.yaml",
+            "agent.yaml",
+            "capability.yaml",
+            "strategic-opportunity.yaml",
         ]
 
         for filename in expected:
@@ -172,22 +180,19 @@ class AgentArtifactsTest(unittest.TestCase):
         llms = (SOURCE / "llms.txt").read_text(encoding="utf-8")
         self.assertIn("/catalog/objects.jsonl", llms)
 
-    def test_odpg_placeholders_are_minimal_top_level_catalog_objects(self):
-        placeholders = load_yaml(SOURCE / "catalog" / "examples" / "odpg-placeholders.yaml")
+    def test_odpg_core_objects_have_independent_top_level_examples(self):
         expected = {
-            "domains": "DOM-",
-            "datasets": "DS-",
-            "apis": "API-",
-            "policies": "POL-",
-            "workflows": "WF-",
-            "agents": "AGENT-",
-            "capabilities": "CAP-",
-            "strategicOpportunities": "SO-",
+            "domain.yaml": ("domain", "DOM-"),
+            "dataset.yaml": ("dataset", "DS-"),
+            "api.yaml": ("api", "API-"),
+            "policy.yaml": ("policy", "POL-"),
+            "workflow.yaml": ("workflow", "WF-"),
+            "agent.yaml": ("agent", "AGENT-"),
+            "capability.yaml": ("capability", "CAP-"),
+            "strategic-opportunity.yaml": ("strategicOpportunity", "SO-"),
         }
-        for collection, prefix in expected.items():
-            self.assertIn(collection, placeholders)
-            self.assertEqual(len(placeholders[collection]), 1)
-            item = placeholders[collection][0]
+        for filename, (object_name, prefix) in expected.items():
+            item = load_yaml(SOURCE / "catalog" / "examples" / filename)[object_name]
             assert_named_object(item, prefix)
             self.assertIn("$ref", item)
 

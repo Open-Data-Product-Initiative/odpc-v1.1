@@ -14,7 +14,14 @@ EXPECTED_EXAMPLES = [
     "use-case.yaml",
     "business-objective-with-kpis.yaml",
     "signal.yaml",
-    "odpg-placeholders.yaml",
+    "domain.yaml",
+    "dataset.yaml",
+    "api.yaml",
+    "policy.yaml",
+    "workflow.yaml",
+    "agent.yaml",
+    "capability.yaml",
+    "strategic-opportunity.yaml",
 ]
 
 EXPECTED_OBJECT_IDS = {
@@ -139,21 +146,20 @@ def check_examples():
     assert_named_object(full["businessObjectives"][0], "BO-", "businessObjectives[0]")
     assert_named_object(full["signals"][0], "SIG-", "signals[0]")
 
-    placeholders = load_yaml(EXAMPLES_DIR / "odpg-placeholders.yaml")
-    expected = {
-        "domains": "DOM-",
-        "datasets": "DS-",
-        "apis": "API-",
-        "policies": "POL-",
-        "workflows": "WF-",
-        "agents": "AGENT-",
-        "capabilities": "CAP-",
-        "strategicOpportunities": "SO-",
+    examples = {
+        "domain.yaml": ("domain", "DOM-"),
+        "dataset.yaml": ("dataset", "DS-"),
+        "api.yaml": ("api", "API-"),
+        "policy.yaml": ("policy", "POL-"),
+        "workflow.yaml": ("workflow", "WF-"),
+        "agent.yaml": ("agent", "AGENT-"),
+        "capability.yaml": ("capability", "CAP-"),
+        "strategic-opportunity.yaml": ("strategicOpportunity", "SO-"),
     }
-    for collection, prefix in expected.items():
-        assert collection in placeholders, f"Placeholder example missing {collection}"
-        assert_named_object(placeholders[collection][0], prefix, f"{collection}[0]")
-        assert "$ref" in placeholders[collection][0], f"{collection}[0] must include an authoritative reference"
+    for filename, (object_name, prefix) in examples.items():
+        item = load_yaml(EXAMPLES_DIR / filename)[object_name]
+        assert_named_object(item, prefix, object_name)
+        assert "$ref" in item, f"{object_name} must include an authoritative reference"
 
 
 def check_objects_and_llms():

@@ -1,0 +1,7 @@
+policy:
+  id: POL-001
+  name:
+    en: Mobility Data Retention Policy
+  description:
+    en: Policy governing retention of mobility data.
+  $ref: https://example.org/policies/mobility-data-retention

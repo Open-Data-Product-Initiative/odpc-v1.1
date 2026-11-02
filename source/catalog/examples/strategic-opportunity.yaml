@@ -1,0 +1,7 @@
+strategicOpportunity:
+  id: SO-001
+  name:
+    en: Event-aware Mobility Planning
+  description:
+    en: Opportunity to improve mobility planning using event demand signals.
+  $ref: https://example.org/opportunities/event-aware-mobility-planning
