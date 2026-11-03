@@ -49,3 +49,17 @@ The `domain`, `dataset`, `api`, `policy`, `workflow`, `agent`, `capability`, and
 | `status` | string | Catalog lifecycle: `draft`, `active`, `deprecated`, or `retired`. |
 | `$ref` | string | Authoritative external definition. |
 | `tags` | array of strings | Search and filtering labels. |
+
+## Cross-object attribute patterns
+
+ODPC uses the same shape for repeated catalog concepts wherever their meaning is the same. This avoids making tools interpret equivalent metadata differently across object kinds.
+
+| Attribute pattern | Shared shape | Notes |
+| --- | --- | --- |
+| `owner` | `organization`, `team`, `role` | Used for catalog, product, objective, and supported ODPG-aligned node ownership. |
+| `tags` | array of strings | Used for catalog discovery and filtering. |
+| `$ref` | local path or URI string | Used for an authoritative external definition. `metadata.graph.$ref` remains URI-only because a graph declaration must be remotely resolvable. |
+| `priority` | `low`, `medium`, `high`, `critical` | Used by product references, use cases, and business objectives. |
+| lifecycle `status` | context-specific controlled value | Catalog and new ODPG-aligned nodes use `draft`, `active`, `deprecated`, and `retired`. Use cases and objectives retain `paused` and `completed`; signals retain their evidence-review states. |
+
+The `version` attribute identifies the version of the object or contract in the context where it appears. It does not replace the ODPC specification `version` at the catalog root.

@@ -118,7 +118,8 @@ class AgentArtifactsTest(unittest.TestCase):
         self.assertEqual(product_model["required"], ["standard", "version", "format", "$ref"])
         self.assertIn("$ref", product_model["properties"])
         self.assertNotIn("uri", product_model["properties"])
-        self.assertEqual(product_model["properties"]["$ref"]["type"], "string")
+        self.assertEqual(product_model["properties"]["$ref"]["$ref"], "#/$defs/Reference")
+        self.assertEqual(schema["$defs"]["Reference"]["type"], "string")
 
         use_case = load_yaml(SOURCE / "catalog" / "examples" / "use-case.yaml")["node"]
         self.assertEqual(use_case["kind"], "useCase")
@@ -217,8 +218,14 @@ class AgentArtifactsTest(unittest.TestCase):
         }
 
         self.assertEqual(
-            schema["$defs"]["CatalogNodeStatus"]["enum"],
+            schema["$defs"]["LifecycleStatus"]["enum"],
             ["draft", "active", "deprecated", "retired"],
+        )
+        self.assertEqual(schema["$defs"]["TagList"]["items"]["type"], "string")
+        self.assertEqual(schema["$defs"]["Priority"]["enum"], ["low", "medium", "high", "critical"])
+        self.assertEqual(
+            schema["$defs"]["WorkItemStatus"]["enum"],
+            ["draft", "active", "paused", "completed", "retired"],
         )
 
         for definition, fields in expected.items():
