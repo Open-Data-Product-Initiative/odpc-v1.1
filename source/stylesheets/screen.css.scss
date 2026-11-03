@@ -283,6 +283,42 @@ html, body {
   }
 }
 
+// Release-state notice shown above every documentation page. It is deliberately
+// outside .content so source pages cannot accidentally omit it.
+.draft-banner {
+  position: relative;
+  z-index: 40;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 20px $examples-width 0 0;
+  padding: 14px $main-padding;
+  border-left: 5px solid #b45309;
+  border-bottom: 1px solid #f1c27d;
+  background: #fff3cd;
+  color: #4a2a00;
+  font-size: 14px;
+  line-height: 1.4;
+
+  &__label {
+    flex: 0 0 auto;
+    padding: 2px 7px;
+    border-radius: 2px;
+    background: #9a3412;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    line-height: 1.4;
+  }
+
+  &__message {
+    strong, span {
+      display: block;
+    }
+  }
+}
+
 .lang-selector {
   display: flex;
   background-color: $lang-select-bg;
@@ -617,6 +653,10 @@ html, body {
 
   .page-wrapper .lang-selector {
     visibility: hidden;
+  }
+
+  .draft-banner {
+    margin-right: 0;
   }
 
   %right-col {
