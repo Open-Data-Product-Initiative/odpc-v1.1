@@ -2725,7 +2725,22 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <td>Domain purpose and scope.</td>
 </tr>
 </tbody></table>
-<h2 id='optional-attributes-and-options'>Optional attributes and options</h2>
+<h2 id='optional-attributes-and-options'>Optional attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">domain</span>
+  <span class="na">id</span><span class="pi">:</span> <span class="s">DOM-001</span>
+  <span class="na">name</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Urban Mobility</span>
+  <span class="na">description</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Business and operational domain for city transportation services.</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">business</span>
+  <span class="na">owner</span><span class="pi">:</span>
+    <span class="na">organization</span><span class="pi">:</span> <span class="s">Example Transport Authority</span>
+    <span class="na">team</span><span class="pi">:</span> <span class="s">Urban Mobility</span>
+    <span class="na">role</span><span class="pi">:</span> <span class="s">Domain Owner</span>
+  <span class="na">status</span><span class="pi">:</span> <span class="s">active</span>
+  <span class="s">$ref</span><span class="pi">:</span> <span class="s">https://example.org/domains/urban-mobility</span>
+  <span class="na">tags</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">mobility</span><span class="pi">,</span> <span class="nv">transport</span><span class="pi">]</span>
+</code></pre></div>
 <table><thead>
 <tr>
 <th>Attribute</th>
@@ -2814,7 +2829,25 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <td>Dataset discovery description.</td>
 </tr>
 </tbody></table>
-<h2 id='optional-attributes-and-options'>Optional attributes and options</h2>
+<h2 id='optional-attributes-and-options'>Optional attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">dataset</span>
+  <span class="na">id</span><span class="pi">:</span> <span class="s">DS-001</span>
+  <span class="na">name</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Traffic Sensor Observations</span>
+  <span class="na">description</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Time-stamped observations from roadside traffic sensors.</span>
+  <span class="na">version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">2.1.0"</span>
+  <span class="na">frequency</span><span class="pi">:</span> <span class="s">realTime</span>
+  <span class="na">classification</span><span class="pi">:</span> <span class="s">internal</span>
+  <span class="na">access</span><span class="pi">:</span> <span class="s">authenticated</span>
+  <span class="na">owner</span><span class="pi">:</span>
+    <span class="na">organization</span><span class="pi">:</span> <span class="s">Example Transport Authority</span>
+    <span class="na">team</span><span class="pi">:</span> <span class="s">Traffic Operations</span>
+    <span class="na">role</span><span class="pi">:</span> <span class="s">Data Steward</span>
+  <span class="na">status</span><span class="pi">:</span> <span class="s">active</span>
+  <span class="s">$ref</span><span class="pi">:</span> <span class="s">https://example.org/datasets/traffic-sensor-observations</span>
+  <span class="na">tags</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">traffic</span><span class="pi">,</span> <span class="nv">sensors</span><span class="pi">]</span>
+</code></pre></div>
 <table><thead>
 <tr>
 <th>Attribute</th>
@@ -2921,7 +2954,25 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <td>API discovery description.</td>
 </tr>
 </tbody></table>
-<h2 id='optional-attributes-and-options'>Optional attributes and options</h2>
+<h2 id='optional-attributes-and-options'>Optional attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">api</span>
+  <span class="na">id</span><span class="pi">:</span> <span class="s">API-001</span>
+  <span class="na">name</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Traffic Conditions API</span>
+  <span class="na">description</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Service interface for current traffic conditions.</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">rest</span>
+  <span class="na">version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">1.4.0"</span>
+  <span class="na">endpoint</span><span class="pi">:</span> <span class="s">https://api.example.org/traffic/v1</span>
+  <span class="na">access</span><span class="pi">:</span> <span class="s">authenticated</span>
+  <span class="na">owner</span><span class="pi">:</span>
+    <span class="na">organization</span><span class="pi">:</span> <span class="s">Example Transport Authority</span>
+    <span class="na">team</span><span class="pi">:</span> <span class="s">Digital Services</span>
+    <span class="na">role</span><span class="pi">:</span> <span class="s">API Owner</span>
+  <span class="na">status</span><span class="pi">:</span> <span class="s">active</span>
+  <span class="s">$ref</span><span class="pi">:</span> <span class="s">https://example.org/apis/traffic-conditions/openapi.yaml</span>
+  <span class="na">tags</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">traffic</span><span class="pi">,</span> <span class="nv">conditions</span><span class="pi">]</span>
+</code></pre></div>
 <table><thead>
 <tr>
 <th>Attribute</th>
@@ -3028,7 +3079,25 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <td>Policy discovery description.</td>
 </tr>
 </tbody></table>
-<h2 id='optional-attributes-and-options'>Optional attributes and options</h2>
+<h2 id='optional-attributes-and-options'>Optional attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">policy</span>
+  <span class="na">id</span><span class="pi">:</span> <span class="s">POL-001</span>
+  <span class="na">name</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Mobility Data Retention Policy</span>
+  <span class="na">description</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Policy governing retention of mobility data.</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">retention</span>
+  <span class="na">effectiveFrom</span><span class="pi">:</span> <span class="s2">"</span><span class="s">2026-01-01"</span>
+  <span class="na">effectiveTo</span><span class="pi">:</span> <span class="s2">"</span><span class="s">2028-12-31"</span>
+  <span class="na">enforcement</span><span class="pi">:</span> <span class="s">automated</span>
+  <span class="na">owner</span><span class="pi">:</span>
+    <span class="na">organization</span><span class="pi">:</span> <span class="s">Example Transport Authority</span>
+    <span class="na">team</span><span class="pi">:</span> <span class="s">Data Governance</span>
+    <span class="na">role</span><span class="pi">:</span> <span class="s">Policy Owner</span>
+  <span class="na">status</span><span class="pi">:</span> <span class="s">active</span>
+  <span class="s">$ref</span><span class="pi">:</span> <span class="s">https://example.org/policies/mobility-data-retention</span>
+  <span class="na">tags</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">retention</span><span class="pi">,</span> <span class="nv">governance</span><span class="pi">]</span>
+</code></pre></div>
 <table><thead>
 <tr>
 <th>Attribute</th>
@@ -3135,7 +3204,24 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <td>Workflow discovery description.</td>
 </tr>
 </tbody></table>
-<h2 id='optional-attributes-and-options'>Optional attributes and options</h2>
+<h2 id='optional-attributes-and-options'>Optional attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">workflow</span>
+  <span class="na">id</span><span class="pi">:</span> <span class="s">WF-001</span>
+  <span class="na">name</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Incident Response Workflow</span>
+  <span class="na">description</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Operational workflow for responding to major traffic incidents.</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">operational</span>
+  <span class="na">trigger</span><span class="pi">:</span> <span class="s">event</span>
+  <span class="na">version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">3.0.0"</span>
+  <span class="na">owner</span><span class="pi">:</span>
+    <span class="na">organization</span><span class="pi">:</span> <span class="s">Example Transport Authority</span>
+    <span class="na">team</span><span class="pi">:</span> <span class="s">Traffic Operations</span>
+    <span class="na">role</span><span class="pi">:</span> <span class="s">Workflow Owner</span>
+  <span class="na">status</span><span class="pi">:</span> <span class="s">active</span>
+  <span class="s">$ref</span><span class="pi">:</span> <span class="s">https://example.org/workflows/incident-response</span>
+  <span class="na">tags</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">incident-response</span><span class="pi">,</span> <span class="nv">traffic</span><span class="pi">]</span>
+</code></pre></div>
 <table><thead>
 <tr>
 <th>Attribute</th>
@@ -3236,7 +3322,24 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <td>Agent discovery description.</td>
 </tr>
 </tbody></table>
-<h2 id='optional-attributes-and-options'>Optional attributes and options</h2>
+<h2 id='optional-attributes-and-options'>Optional attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">agent</span>
+  <span class="na">id</span><span class="pi">:</span> <span class="s">AGENT-001</span>
+  <span class="na">name</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Mobility Planning Assistant</span>
+  <span class="na">description</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Automation actor that prepares planning recommendations.</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">ai</span>
+  <span class="na">version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">0.8.0"</span>
+  <span class="na">autonomy</span><span class="pi">:</span> <span class="s">supervised</span>
+  <span class="na">owner</span><span class="pi">:</span>
+    <span class="na">organization</span><span class="pi">:</span> <span class="s">Example Transport Authority</span>
+    <span class="na">team</span><span class="pi">:</span> <span class="s">Urban Analytics</span>
+    <span class="na">role</span><span class="pi">:</span> <span class="s">Agent Owner</span>
+  <span class="na">status</span><span class="pi">:</span> <span class="s">active</span>
+  <span class="s">$ref</span><span class="pi">:</span> <span class="s">https://example.org/agents/mobility-planning-assistant</span>
+  <span class="na">tags</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">planning</span><span class="pi">,</span> <span class="nv">recommendations</span><span class="pi">]</span>
+</code></pre></div>
 <table><thead>
 <tr>
 <th>Attribute</th>
@@ -3337,7 +3440,23 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <td>Capability discovery description.</td>
 </tr>
 </tbody></table>
-<h2 id='optional-attributes-and-options'>Optional attributes and options</h2>
+<h2 id='optional-attributes-and-options'>Optional attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">capability</span>
+  <span class="na">id</span><span class="pi">:</span> <span class="s">CAP-001</span>
+  <span class="na">name</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Traffic Demand Forecasting</span>
+  <span class="na">description</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Capability to forecast traffic demand from historical and current signals.</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">ai</span>
+  <span class="na">maturity</span><span class="pi">:</span> <span class="s">emerging</span>
+  <span class="na">owner</span><span class="pi">:</span>
+    <span class="na">organization</span><span class="pi">:</span> <span class="s">Example Transport Authority</span>
+    <span class="na">team</span><span class="pi">:</span> <span class="s">Urban Analytics</span>
+    <span class="na">role</span><span class="pi">:</span> <span class="s">Capability Owner</span>
+  <span class="na">status</span><span class="pi">:</span> <span class="s">active</span>
+  <span class="s">$ref</span><span class="pi">:</span> <span class="s">https://example.org/capabilities/traffic-demand-forecasting</span>
+  <span class="na">tags</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">forecasting</span><span class="pi">,</span> <span class="nv">mobility</span><span class="pi">]</span>
+</code></pre></div>
 <table><thead>
 <tr>
 <th>Attribute</th>
@@ -3432,7 +3551,28 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <td>Opportunity discovery description.</td>
 </tr>
 </tbody></table>
-<h2 id='optional-attributes-and-options'>Optional attributes and options</h2>
+<h2 id='optional-attributes-and-options'>Optional attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">strategicOpportunity</span>
+  <span class="na">id</span><span class="pi">:</span> <span class="s">SO-001</span>
+  <span class="na">name</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Event-aware Mobility Planning</span>
+  <span class="na">description</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Opportunity to improve mobility planning using event demand signals.</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">efficiency</span>
+  <span class="na">stage</span><span class="pi">:</span> <span class="s">assessed</span>
+  <span class="na">confidence</span><span class="pi">:</span> <span class="s">high</span>
+  <span class="na">impact</span><span class="pi">:</span>
+    <span class="na">valuePotential</span><span class="pi">:</span> <span class="s">high</span>
+    <span class="na">urgency</span><span class="pi">:</span> <span class="s">medium</span>
+  <span class="na">timeHorizon</span><span class="pi">:</span> <span class="s">mediumTerm</span>
+  <span class="na">owner</span><span class="pi">:</span>
+    <span class="na">organization</span><span class="pi">:</span> <span class="s">Example Transport Authority</span>
+    <span class="na">team</span><span class="pi">:</span> <span class="s">Business Analytics</span>
+    <span class="na">role</span><span class="pi">:</span> <span class="s">Opportunity Owner</span>
+  <span class="na">status</span><span class="pi">:</span> <span class="s">active</span>
+  <span class="s">$ref</span><span class="pi">:</span> <span class="s">https://example.org/opportunities/event-aware-mobility-planning</span>
+  <span class="na">tags</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">mobility</span><span class="pi">,</span> <span class="nv">events</span><span class="pi">]</span>
+</code></pre></div>
 <table><thead>
 <tr>
 <th>Attribute</th>
