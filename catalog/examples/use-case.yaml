@@ -1,4 +1,5 @@
-useCase:
+node:
+  kind: useCase
   id: UC-001
   name:
     en: Event Demand Forecasting

@@ -1,4 +1,5 @@
-dataset:
+node:
+  kind: dataset
   id: DS-001
   name:
     en: Traffic Sensor Observations

@@ -1,4 +1,5 @@
-agent:
+node:
+  kind: agent
   id: AGENT-001
   name:
     en: Mobility Planning Assistant

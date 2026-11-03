@@ -409,6 +409,9 @@
               </ul>
           </li>
           <li>
+            <a href="#odpc-node" class="toc-h1 toc-link" data-title="ODPC Node">ODPC Node</a>
+          </li>
+          <li>
             <a href="#odpc-productreference" class="toc-h1 toc-link" data-title="ODPC ProductReference">ODPC ProductReference</a>
               <ul class="toc-list-h2">
                   <li>
@@ -668,6 +671,7 @@ ODPC should also not define graph traversal, graph analytics, or relationship se
       <span class="na">standard</span><span class="pi">:</span> <span class="s">ODPG</span>
       <span class="na">version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">1.0"</span>
       <span class="s">$ref</span><span class="pi">:</span> <span class="s">https://example.org/graphs/urban-mobility.graph.yaml</span>
+  <span class="na">nodes</span><span class="pi">:</span> <span class="pi">[]</span>
 </code></pre></div>
 <p>The first version of ODPC focuses on these objects:</p>
 
@@ -770,17 +774,17 @@ Use ODPV when stable vocabulary terms or relationship names are needed.
 <tr>
 <td><a href="catalog/examples/product-reference.yaml"><code>product-reference.yaml</code></a></td>
 <td>YAML</td>
-<td>Standalone ProductReference example</td>
+<td>Standalone <code>node</code> with <code>kind: productReference</code></td>
 </tr>
 <tr>
 <td><a href="catalog/examples/use-case.yaml"><code>use-case.yaml</code></a></td>
 <td>YAML</td>
-<td>Standalone UseCase example</td>
+<td>Standalone <code>node</code> with <code>kind: useCase</code></td>
 </tr>
 <tr>
 <td><a href="catalog/examples/business-objective-with-kpis.yaml"><code>business-objective-with-kpis.yaml</code></a></td>
 <td>YAML</td>
-<td>Standalone BusinessObjective example with nested KPIs</td>
+<td>Standalone <code>node</code> with <code>kind: businessObjective</code> and nested KPIs</td>
 </tr>
 <tr>
 <td><a href="catalog/examples/domain.yaml"><code>domain.yaml</code></a></td>
@@ -835,7 +839,8 @@ Use ODPV when stable vocabulary terms or relationship names are needed.
 When working from the source repository, use scripts/search_objects.py for repeatable local ODPC object lookup.
 Use scripts/search_objects.py --json when another tool or agent will consume the result.
 Use scripts/validate_catalog.py to validate ODPC YAML or JSON catalog files against source/schema/odpc.yaml.
-Use scripts/build_catalog.py to generate one ODPC catalog from a folder of standalone ProductReference, UseCase, BusinessObjective, Signal, metadata, ODPS product, or full catalog YAML files.
+Use scripts/build_catalog.py to generate one ODPC catalog with a unified `catalog.nodes` array from standalone node, metadata, ODPS product, or full catalog YAML files.
+Use scripts/migrate_catalog_nodes.py to migrate a legacy collection-based catalog into the unified node structure.
 Use scripts/build_catalog.py --html to also generate a standalone browser-viewable catalog page; use --html-template to apply a custom editable HTML template.
 Use scripts/check_agent_artifacts.py in CI or review workflows to detect drift between schema, catalog artifacts, examples, and llms.txt.
 Use scripts/generate_catalog_artifacts.py after editing source/schema/odpc.yaml to regenerate source/schema/odpc.json; use --check in CI or review workflows.
@@ -979,7 +984,7 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 
 <p>In ODPC, the <code>Catalog</code> object acts as the portfolio container. It helps organizations group related data products and demand-side objects around a domain, organization, geography, audience, or strategic theme.</p>
 
-<p>The <code>Catalog</code> object can include product references, use cases, business objectives, signals, domains, datasets, APIs, policies, workflows, agents, capabilities, and strategic opportunities directly as reusable catalog objects. It can also define where the catalog graph is implemented through the <code>metadata.graph</code> attribute.</p>
+<p>The <code>Catalog</code> object stores every reusable catalog item in one <code>nodes</code> array. Each node declares its object type through <code>kind</code>; the catalog can therefore include product references, use cases, business objectives, signals, domains, datasets, APIs, policies, workflows, agents, capabilities, and strategic opportunities in a uniform structure.</p>
 
 <p>The <code>metadata.graph</code> attribute identifies the graph standard, version, and reference used for the catalog graph. The graph can be implemented with <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a> or another supported graph standard, such as <code>RDF</code>, <code>JSON-LD</code>, <code>GraphML</code>, <code>openCypher</code>, <code>GQL</code>, <code>Gremlin</code>, <code>GraphSON</code>, or <code>GeoSPARQL</code>.</p>
 
@@ -1001,6 +1006,7 @@ Use ODPV for stable shared vocabulary terms and relationship names.
     <span class="na">description</span><span class="pi">:</span>
       <span class="na">en</span><span class="pi">:</span> <span class="s">Catalog of data products, use cases, objectives,</span> 
           <span class="s">and signals related to urban mobility.</span>
+  <span class="na">nodes</span><span class="pi">:</span> <span class="pi">[]</span>
 </code></pre></div>
 <table><thead>
 <tr>
@@ -1070,6 +1076,12 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <td style="text-align: right">✓</td>
 <td>English catalog description.</td>
 </tr>
+<tr>
+<td><code>nodes</code></td>
+<td>array of objects</td>
+<td style="text-align: right">✓</td>
+<td>Unified catalog items, each selected by its <code>kind</code>.</td>
+</tr>
 </tbody></table>
 <h2 id='optional-attributes-and-options'>Optional attributes and options</h2>
 <blockquote>
@@ -1111,8 +1123,9 @@ Use ODPV for stable shared vocabulary terms and relationship names.
       <span class="pi">-</span> <span class="s">mobility</span>
       <span class="pi">-</span> <span class="s">events</span>
 
-  <span class="na">productReferences</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="na">id</span><span class="pi">:</span> <span class="s">DP-001</span>
+  <span class="na">nodes</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">kind</span><span class="pi">:</span> <span class="s">productReference</span>
+      <span class="na">id</span><span class="pi">:</span> <span class="s">DP-001</span>
       <span class="na">productID</span><span class="pi">:</span> <span class="s">urbanpulse-events</span>
       <span class="na">productVersion</span><span class="pi">:</span> <span class="s2">"</span><span class="s">1.0.0"</span>
       <span class="na">name</span><span class="pi">:</span>
@@ -1126,16 +1139,16 @@ Use ODPV for stable shared vocabulary terms and relationship names.
         <span class="na">format</span><span class="pi">:</span> <span class="s">yaml</span>
         <span class="s">$ref</span><span class="pi">:</span> <span class="s">./products/urba/odps.yaml</span>
 
-  <span class="na">useCases</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="na">id</span><span class="pi">:</span> <span class="s">UC-001</span>
+    <span class="pi">-</span> <span class="na">kind</span><span class="pi">:</span> <span class="s">useCase</span>
+      <span class="na">id</span><span class="pi">:</span> <span class="s">UC-001</span>
       <span class="na">name</span><span class="pi">:</span>
         <span class="na">en</span><span class="pi">:</span> <span class="s">Event Demand Forecasting</span>
       <span class="na">description</span><span class="pi">:</span>
         <span class="na">en</span><span class="pi">:</span> <span class="s">Forecast event-related demand to improve</span> 
             <span class="s">mobility planning and citizen services.</span>
 
-  <span class="na">businessObjectives</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="na">id</span><span class="pi">:</span> <span class="s">BO-001</span>
+    <span class="pi">-</span> <span class="na">kind</span><span class="pi">:</span> <span class="s">businessObjective</span>
+      <span class="na">id</span><span class="pi">:</span> <span class="s">BO-001</span>
       <span class="na">name</span><span class="pi">:</span>
         <span class="na">en</span><span class="pi">:</span> <span class="s">Improve Urban Mobility Efficiency</span>
       <span class="na">description</span><span class="pi">:</span>
@@ -1143,8 +1156,8 @@ Use ODPV for stable shared vocabulary terms and relationship names.
             <span class="s">across the city through better data-driven</span> 
             <span class="s">planning and operations.</span>
 
-  <span class="na">signals</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="na">id</span><span class="pi">:</span> <span class="s">SIG-001</span>
+    <span class="pi">-</span> <span class="na">kind</span><span class="pi">:</span> <span class="s">signal</span>
+      <span class="na">id</span><span class="pi">:</span> <span class="s">SIG-001</span>
       <span class="na">name</span><span class="pi">:</span>
         <span class="na">en</span><span class="pi">:</span> <span class="s">Increasing Event Demand</span>
       <span class="na">description</span><span class="pi">:</span>
@@ -1251,78 +1264,86 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <td>Keywords used for search, grouping, filtering, and portfolio analysis.</td>
 </tr>
 <tr>
-<td><code>productReferences</code></td>
+<td><code>nodes</code></td>
 <td>array of objects</td>
-<td style="text-align: right"></td>
-<td>List of data product references included in the catalog. Each item follows the <code>ProductReference</code> object schema.</td>
-</tr>
-<tr>
-<td><code>useCases</code></td>
-<td>array of objects</td>
-<td style="text-align: right"></td>
-<td>List of use cases included in the catalog. Each item follows the <code>UseCase</code> object schema.</td>
-</tr>
-<tr>
-<td><code>businessObjectives</code></td>
-<td>array of objects</td>
-<td style="text-align: right"></td>
-<td>List of business objectives included in the catalog. Each item follows the <code>BusinessObjective</code> object schema.</td>
-</tr>
-<tr>
-<td><code>signals</code></td>
-<td>array of objects</td>
-<td style="text-align: right"></td>
-<td>List of signals included in the catalog. Each item follows the <code>Signal</code> object schema.</td>
-</tr>
-<tr>
-<td><code>domains</code></td>
-<td>array of objects</td>
-<td style="text-align: right"></td>
-<td>List of top-level ODPC <code>Domain</code> objects.</td>
-</tr>
-<tr>
-<td><code>datasets</code></td>
-<td>array of objects</td>
-<td style="text-align: right"></td>
-<td>List of top-level ODPC <code>Dataset</code> objects.</td>
-</tr>
-<tr>
-<td><code>apis</code></td>
-<td>array of objects</td>
-<td style="text-align: right"></td>
-<td>List of top-level ODPC <code>API</code> objects.</td>
-</tr>
-<tr>
-<td><code>policies</code></td>
-<td>array of objects</td>
-<td style="text-align: right"></td>
-<td>List of top-level ODPC <code>Policy</code> objects.</td>
-</tr>
-<tr>
-<td><code>workflows</code></td>
-<td>array of objects</td>
-<td style="text-align: right"></td>
-<td>List of top-level ODPC <code>Workflow</code> objects.</td>
-</tr>
-<tr>
-<td><code>agents</code></td>
-<td>array of objects</td>
-<td style="text-align: right"></td>
-<td>List of top-level ODPC <code>Agent</code> objects.</td>
-</tr>
-<tr>
-<td><code>capabilities</code></td>
-<td>array of objects</td>
-<td style="text-align: right"></td>
-<td>List of top-level ODPC <code>Capability</code> objects.</td>
-</tr>
-<tr>
-<td><code>strategicOpportunities</code></td>
-<td>array of objects</td>
-<td style="text-align: right"></td>
-<td>List of top-level ODPC <code>StrategicOpportunity</code> objects.</td>
+<td style="text-align: right">✓</td>
+<td>Unified catalog items. Each node uses <code>kind</code> to select its object schema.</td>
 </tr>
 </tbody></table>
+<h1 id='odpc-node'>ODPC Node</h1>
+<p>Every catalog item is an ODPC <code>node</code>. The <code>kind</code> attribute selects its object schema, so catalog tools can read one <code>catalog.nodes</code> array rather than separate type-specific collections.</p>
+<div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">productReference</span>
+  <span class="na">id</span><span class="pi">:</span> <span class="s">DP-001</span>
+  <span class="na">productID</span><span class="pi">:</span> <span class="s">urbanpulse-events</span>
+  <span class="na">productVersion</span><span class="pi">:</span> <span class="s2">"</span><span class="s">1.0.0"</span>
+  <span class="na">name</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">UrbanPulse Events Data Product</span>
+  <span class="na">description</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Data product providing event information for urban analytics and citizen services.</span>
+  <span class="na">productModel</span><span class="pi">:</span>
+    <span class="na">standard</span><span class="pi">:</span> <span class="s">ODPS</span>
+    <span class="na">version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">4.1"</span>
+    <span class="na">format</span><span class="pi">:</span> <span class="s">yaml</span>
+    <span class="s">$ref</span><span class="pi">:</span> <span class="s">./odps.yaml</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th><code>kind</code> value</th>
+<th>Object schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>productReference</code></td>
+<td>ProductReference</td>
+</tr>
+<tr>
+<td><code>useCase</code></td>
+<td>UseCase</td>
+</tr>
+<tr>
+<td><code>businessObjective</code></td>
+<td>BusinessObjective</td>
+</tr>
+<tr>
+<td><code>signal</code></td>
+<td>Signal</td>
+</tr>
+<tr>
+<td><code>domain</code></td>
+<td>Domain</td>
+</tr>
+<tr>
+<td><code>dataset</code></td>
+<td>Dataset</td>
+</tr>
+<tr>
+<td><code>api</code></td>
+<td>API</td>
+</tr>
+<tr>
+<td><code>policy</code></td>
+<td>Policy</td>
+</tr>
+<tr>
+<td><code>workflow</code></td>
+<td>Workflow</td>
+</tr>
+<tr>
+<td><code>agent</code></td>
+<td>Agent</td>
+</tr>
+<tr>
+<td><code>capability</code></td>
+<td>Capability</td>
+</tr>
+<tr>
+<td><code>strategicOpportunity</code></td>
+<td>StrategicOpportunity</td>
+</tr>
+</tbody></table>
+
+<p>Standalone catalog-item files use a root <code>node</code> object. Inside a full catalog, use the same object directly in <code>catalog.nodes</code> without the extra root wrapper.</p>
 <h1 id='odpc-productreference'>ODPC ProductReference</h1>
 <p>The <code>ProductReference</code> object defines a lightweight catalog reference to a data product. It identifies the product, provides the key information needed for catalog discovery, and points to the authoritative product definition through <code>productModel</code>.</p>
 
@@ -1341,7 +1362,8 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <blockquote>
 <p>Example of productReference object usage:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight yaml"><code><span class="na">productReference</span><span class="pi">:</span>
+<div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">productReference</span>
   <span class="na">id</span><span class="pi">:</span> <span class="s">DP-001</span>
   <span class="na">productID</span><span class="pi">:</span> <span class="s">urbanpulse-events</span>
   <span class="na">productVersion</span><span class="pi">:</span> <span class="s2">"</span><span class="s">1.0.0"</span>
@@ -1365,10 +1387,16 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 </tr>
 </thead><tbody>
 <tr>
-<td><code>productReference</code></td>
+<td><code>node</code></td>
 <td>object</td>
 <td>required</td>
-<td>Top-level object that defines a lightweight catalog reference to a data product.</td>
+<td>Top-level standalone node wrapper.</td>
+</tr>
+<tr>
+<td><code>kind</code></td>
+<td>string</td>
+<td>required</td>
+<td><code>productReference</code>.</td>
 </tr>
 <tr>
 <td><code>id</code></td>
@@ -1447,7 +1475,8 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <blockquote>
 <p>Example of productReference object usage:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight yaml"><code><span class="na">productReference</span><span class="pi">:</span>
+<div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">productReference</span>
   <span class="na">id</span><span class="pi">:</span> <span class="s">DP-001</span>
   <span class="na">productID</span><span class="pi">:</span> <span class="s">urbanpulse-events</span>
   <span class="na">productVersion</span><span class="pi">:</span> <span class="s2">"</span><span class="s">1.0.0"</span>
@@ -1632,7 +1661,8 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <blockquote>
 <p>Example of useCase object usage:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight yaml"><code><span class="na">useCase</span><span class="pi">:</span>
+<div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">useCase</span>
   <span class="na">id</span><span class="pi">:</span> <span class="s">UC-001</span>
   <span class="na">name</span><span class="pi">:</span>
     <span class="na">en</span><span class="pi">:</span> <span class="s">Predictive Maintenance for Aircraft Fleet</span>
@@ -1649,10 +1679,16 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 </tr>
 </thead><tbody>
 <tr>
-<td><code>useCase</code></td>
+<td><code>node</code></td>
 <td>object</td>
 <td>required</td>
-<td>Top-level object that defines a use case in ODPC.</td>
+<td>Top-level standalone node wrapper.</td>
+</tr>
+<tr>
+<td><code>kind</code></td>
+<td>string</td>
+<td>required</td>
+<td><code>useCase</code>.</td>
 </tr>
 <tr>
 <td><code>id</code></td>
@@ -1689,7 +1725,8 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <blockquote>
 <p>Example of useCase object usage:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight yaml"><code><span class="na">useCase</span><span class="pi">:</span>
+<div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">useCase</span>
   <span class="na">id</span><span class="pi">:</span> <span class="s">UC-001</span>
   <span class="na">name</span><span class="pi">:</span>
     <span class="na">en</span><span class="pi">:</span> <span class="s">Predictive Maintenance for Healthcare Revenue Growth</span>
@@ -1918,7 +1955,8 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <blockquote>
 <p>Example of BusinessObjective object usage:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight yaml"><code><span class="na">businessObjective</span><span class="pi">:</span>
+<div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">businessObjective</span>
   <span class="na">id</span><span class="pi">:</span> <span class="s">BO-001</span>
   <span class="na">name</span><span class="pi">:</span>
     <span class="na">en</span><span class="pi">:</span> <span class="s">Improve Urban Mobility Efficiency</span>
@@ -1975,7 +2013,8 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <blockquote>
 <p>Example of BusinessObjective object usage:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight yaml"><code><span class="na">businessObjective</span><span class="pi">:</span>
+<div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">businessObjective</span>
   <span class="na">id</span><span class="pi">:</span> <span class="s">BO-001</span>
   <span class="na">name</span><span class="pi">:</span>
     <span class="na">en</span><span class="pi">:</span> <span class="s">Improve Urban Mobility Efficiency</span>
@@ -2183,7 +2222,8 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <blockquote>
 <p>Example of catalog object usage:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight yaml"><code><span class="na">signal</span><span class="pi">:</span>
+<div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">signal</span>
   <span class="na">id</span><span class="pi">:</span> <span class="s">SIG-001</span>
   <span class="na">name</span><span class="pi">:</span>
     <span class="na">en</span><span class="pi">:</span> <span class="s">Competitors expanding real-time event intelligence</span>
@@ -2206,10 +2246,16 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 </tr>
 </thead><tbody>
 <tr>
-<td><code>signal</code></td>
+<td><code>node</code></td>
 <td>object</td>
 <td style="text-align: right">✓</td>
-<td>Top-level object that defines an ODPC signal.</td>
+<td>Top-level standalone node wrapper.</td>
+</tr>
+<tr>
+<td><code>kind</code></td>
+<td>string</td>
+<td style="text-align: right">✓</td>
+<td><code>signal</code>.</td>
 </tr>
 <tr>
 <td><code>id</code></td>
@@ -2324,7 +2370,8 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <blockquote>
 <p>Example of catalog object usage:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight yaml"><code><span class="na">signal</span><span class="pi">:</span>
+<div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">signal</span>
   <span class="na">id</span><span class="pi">:</span> <span class="s">SIG-TRAFFIC-CONGESTION-001</span>
   <span class="na">name</span><span class="pi">:</span>
     <span class="na">en</span><span class="pi">:</span> <span class="s">Increasing Traffic Congestion During Peak Hours</span>
@@ -2504,7 +2551,8 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 </tbody></table>
 <h1 id='odpc-domain'>ODPC Domain</h1>
 <p>The <code>Domain</code> object defines a reusable business, organizational, technical, or data domain in an ODPC catalog. It aligns with the ODPG <code>Domain</code> node type.</p>
-<h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">domain</span><span class="pi">:</span>
+<h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">domain</span>
   <span class="na">id</span><span class="pi">:</span> <span class="s">DOM-001</span>
   <span class="na">name</span><span class="pi">:</span>
     <span class="na">en</span><span class="pi">:</span> <span class="s">Urban Mobility</span>
@@ -2520,10 +2568,16 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 </tr>
 </thead><tbody>
 <tr>
-<td><code>domain</code></td>
+<td><code>node</code></td>
 <td>object</td>
 <td style="text-align: right">✓</td>
-<td>Top-level ODPC Domain object.</td>
+<td>Top-level standalone node wrapper.</td>
+</tr>
+<tr>
+<td><code>kind</code></td>
+<td>string</td>
+<td style="text-align: right">✓</td>
+<td><code>domain</code>.</td>
 </tr>
 <tr>
 <td><code>id</code></td>
@@ -2560,7 +2614,8 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <p>Relationships between domains and other objects belong in <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a>.</p>
 <h1 id='odpc-dataset'>ODPC Dataset</h1>
 <p>The <code>Dataset</code> object defines a reusable dataset resource in an ODPC catalog. It aligns with the ODPG <code>Dataset</code> node type and does not replace a full dataset specification.</p>
-<h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">dataset</span><span class="pi">:</span>
+<h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">dataset</span>
   <span class="na">id</span><span class="pi">:</span> <span class="s">DS-001</span>
   <span class="na">name</span><span class="pi">:</span>
     <span class="na">en</span><span class="pi">:</span> <span class="s">Traffic Sensor Observations</span>
@@ -2576,10 +2631,16 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 </tr>
 </thead><tbody>
 <tr>
-<td><code>dataset</code></td>
+<td><code>node</code></td>
 <td>object</td>
 <td style="text-align: right">✓</td>
-<td>Top-level ODPC Dataset object.</td>
+<td>Top-level standalone node wrapper.</td>
+</tr>
+<tr>
+<td><code>kind</code></td>
+<td>string</td>
+<td style="text-align: right">✓</td>
+<td><code>dataset</code>.</td>
 </tr>
 <tr>
 <td><code>id</code></td>
@@ -2616,7 +2677,8 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <p>Relationships between datasets and other objects belong in <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a>.</p>
 <h1 id='odpc-api'>ODPC API</h1>
 <p>The <code>API</code> object defines a reusable service interface in an ODPC catalog. It aligns with the ODPG <code>API</code> node type and should point to an authoritative API definition when one exists.</p>
-<h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">api</span><span class="pi">:</span>
+<h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">api</span>
   <span class="na">id</span><span class="pi">:</span> <span class="s">API-001</span>
   <span class="na">name</span><span class="pi">:</span>
     <span class="na">en</span><span class="pi">:</span> <span class="s">Traffic Conditions API</span>
@@ -2632,10 +2694,16 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 </tr>
 </thead><tbody>
 <tr>
-<td><code>api</code></td>
+<td><code>node</code></td>
 <td>object</td>
 <td style="text-align: right">✓</td>
-<td>Top-level ODPC API object.</td>
+<td>Top-level standalone node wrapper.</td>
+</tr>
+<tr>
+<td><code>kind</code></td>
+<td>string</td>
+<td style="text-align: right">✓</td>
+<td><code>api</code>.</td>
 </tr>
 <tr>
 <td><code>id</code></td>
@@ -2672,7 +2740,8 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <p>Relationships between APIs and other objects belong in <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a>.</p>
 <h1 id='odpc-policy'>ODPC Policy</h1>
 <p>The <code>Policy</code> object defines a reusable governance, compliance, security, or quality policy in an ODPC catalog. It aligns with the ODPG <code>Policy</code> node type.</p>
-<h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">policy</span><span class="pi">:</span>
+<h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">policy</span>
   <span class="na">id</span><span class="pi">:</span> <span class="s">POL-001</span>
   <span class="na">name</span><span class="pi">:</span>
     <span class="na">en</span><span class="pi">:</span> <span class="s">Mobility Data Retention Policy</span>
@@ -2688,10 +2757,16 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 </tr>
 </thead><tbody>
 <tr>
-<td><code>policy</code></td>
+<td><code>node</code></td>
 <td>object</td>
 <td style="text-align: right">✓</td>
-<td>Top-level ODPC Policy object.</td>
+<td>Top-level standalone node wrapper.</td>
+</tr>
+<tr>
+<td><code>kind</code></td>
+<td>string</td>
+<td style="text-align: right">✓</td>
+<td><code>policy</code>.</td>
 </tr>
 <tr>
 <td><code>id</code></td>
@@ -2728,7 +2803,8 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <p>Relationships between policies and other objects belong in <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a>.</p>
 <h1 id='odpc-workflow'>ODPC Workflow</h1>
 <p>The <code>Workflow</code> object defines a reusable business or technical workflow in an ODPC catalog. It aligns with the ODPG <code>Workflow</code> node type.</p>
-<h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">workflow</span><span class="pi">:</span>
+<h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">workflow</span>
   <span class="na">id</span><span class="pi">:</span> <span class="s">WF-001</span>
   <span class="na">name</span><span class="pi">:</span>
     <span class="na">en</span><span class="pi">:</span> <span class="s">Incident Response Workflow</span>
@@ -2744,10 +2820,16 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 </tr>
 </thead><tbody>
 <tr>
-<td><code>workflow</code></td>
+<td><code>node</code></td>
 <td>object</td>
 <td style="text-align: right">✓</td>
-<td>Top-level ODPC Workflow object.</td>
+<td>Top-level standalone node wrapper.</td>
+</tr>
+<tr>
+<td><code>kind</code></td>
+<td>string</td>
+<td style="text-align: right">✓</td>
+<td><code>workflow</code>.</td>
 </tr>
 <tr>
 <td><code>id</code></td>
@@ -2784,7 +2866,8 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <p>Relationships between workflows and other objects belong in <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a>.</p>
 <h1 id='odpc-agent'>ODPC Agent</h1>
 <p>The <code>Agent</code> object defines a reusable AI agent or automation actor in an ODPC catalog. It aligns with the ODPG <code>Agent</code> node type.</p>
-<h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">agent</span><span class="pi">:</span>
+<h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">agent</span>
   <span class="na">id</span><span class="pi">:</span> <span class="s">AGENT-001</span>
   <span class="na">name</span><span class="pi">:</span>
     <span class="na">en</span><span class="pi">:</span> <span class="s">Mobility Planning Assistant</span>
@@ -2800,10 +2883,16 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 </tr>
 </thead><tbody>
 <tr>
-<td><code>agent</code></td>
+<td><code>node</code></td>
 <td>object</td>
 <td style="text-align: right">✓</td>
-<td>Top-level ODPC Agent object.</td>
+<td>Top-level standalone node wrapper.</td>
+</tr>
+<tr>
+<td><code>kind</code></td>
+<td>string</td>
+<td style="text-align: right">✓</td>
+<td><code>agent</code>.</td>
 </tr>
 <tr>
 <td><code>id</code></td>
@@ -2840,7 +2929,8 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <p>Relationships between agents and other objects belong in <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a>.</p>
 <h1 id='odpc-capability'>ODPC Capability</h1>
 <p>The <code>Capability</code> object defines a reusable business or technical capability in an ODPC catalog. It aligns with the ODPG <code>Capability</code> node type.</p>
-<h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">capability</span><span class="pi">:</span>
+<h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">capability</span>
   <span class="na">id</span><span class="pi">:</span> <span class="s">CAP-001</span>
   <span class="na">name</span><span class="pi">:</span>
     <span class="na">en</span><span class="pi">:</span> <span class="s">Traffic Demand Forecasting</span>
@@ -2856,10 +2946,16 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 </tr>
 </thead><tbody>
 <tr>
-<td><code>capability</code></td>
+<td><code>node</code></td>
 <td>object</td>
 <td style="text-align: right">✓</td>
-<td>Top-level ODPC Capability object.</td>
+<td>Top-level standalone node wrapper.</td>
+</tr>
+<tr>
+<td><code>kind</code></td>
+<td>string</td>
+<td style="text-align: right">✓</td>
+<td><code>capability</code>.</td>
 </tr>
 <tr>
 <td><code>id</code></td>
@@ -2896,7 +2992,8 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <p>Relationships between capabilities and other objects belong in <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a>.</p>
 <h1 id='odpc-strategicopportunity'>ODPC StrategicOpportunity</h1>
 <p>The <code>StrategicOpportunity</code> object defines a reusable declared or inferred strategic opportunity in an ODPC catalog. It aligns with the ODPG <code>StrategicOpportunity</code> node type.</p>
-<h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">strategicOpportunity</span><span class="pi">:</span>
+<h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">strategicOpportunity</span>
   <span class="na">id</span><span class="pi">:</span> <span class="s">SO-001</span>
   <span class="na">name</span><span class="pi">:</span>
     <span class="na">en</span><span class="pi">:</span> <span class="s">Event-aware Mobility Planning</span>
@@ -2912,10 +3009,16 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 </tr>
 </thead><tbody>
 <tr>
-<td><code>strategicOpportunity</code></td>
+<td><code>node</code></td>
 <td>object</td>
 <td style="text-align: right">✓</td>
-<td>Top-level ODPC StrategicOpportunity object.</td>
+<td>Top-level standalone node wrapper.</td>
+</tr>
+<tr>
+<td><code>kind</code></td>
+<td>string</td>
+<td style="text-align: right">✓</td>
+<td><code>strategicOpportunity</code>.</td>
 </tr>
 <tr>
 <td><code>id</code></td>
@@ -3067,7 +3170,7 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <tr>
 <td>Domain</td>
 <td><code>Domain</code></td>
-<td>Used as a string in product, use-case, and <code>scope.domains</code> grouping fields; the top-level <code>domains</code> collection contains reusable ODPC Domain objects.</td>
+<td>Used as a string in product, use-case, and <code>scope.domains</code> grouping fields; Domain nodes are reusable ODPC catalog objects.</td>
 </tr>
 <tr>
 <td>ODPC top-level object</td>
@@ -3084,7 +3187,7 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 </thead><tbody>
 <tr>
 <td><code>Catalog</code></td>
-<td>The ODPC object that implements an ODPV <code>DataProductCatalog</code>. It is the top-level portfolio container for product references, use cases, business objectives, signals, domains, datasets, APIs, policies, workflows, agents, capabilities, strategic opportunities, and catalog metadata such as ownership, scope, lifecycle status, tags, and graph implementation reference.</td>
+<td>The ODPC object that implements an ODPV <code>DataProductCatalog</code>. It is the top-level portfolio container for metadata and a unified <code>nodes</code> array of reusable catalog objects.</td>
 </tr>
 <tr>
 <td><code>ProductReference</code></td>

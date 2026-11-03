@@ -1,4 +1,5 @@
-policy:
+node:
+  kind: policy
   id: POL-001
   name:
     en: Mobility Data Retention Policy

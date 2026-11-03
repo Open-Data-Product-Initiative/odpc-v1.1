@@ -1,4 +1,5 @@
-productReference:
+node:
+  kind: productReference
   id: DP-001
   productID: urbanpulse-events
   productVersion: "1.0.0"

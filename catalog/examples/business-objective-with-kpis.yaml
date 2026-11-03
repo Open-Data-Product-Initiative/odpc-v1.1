@@ -1,4 +1,5 @@
-businessObjective:
+node:
+  kind: businessObjective
   id: BO-001
   name:
     en: Improve Urban Mobility Efficiency

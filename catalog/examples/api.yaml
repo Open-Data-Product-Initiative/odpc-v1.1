@@ -1,4 +1,5 @@
-api:
+node:
+  kind: api
   id: API-001
   name:
     en: Traffic Conditions API
