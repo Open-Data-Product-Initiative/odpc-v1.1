@@ -5,4 +5,14 @@ node:
     en: Traffic Demand Forecasting
   description:
     en: Capability to forecast traffic demand from historical and current signals.
+  type: ai
+  maturity: emerging
+  owner:
+    organization: Example Transport Authority
+    team: Urban Analytics
+    role: Capability Owner
+  status: active
   $ref: https://example.org/capabilities/traffic-demand-forecasting
+  tags:
+    - forecasting
+    - mobility

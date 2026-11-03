@@ -1,6 +1,6 @@
 # ODPC Policy
 
-The `Policy` object defines a reusable governance, compliance, security, or quality policy in an ODPC catalog. It aligns with the ODPG `Policy` node type.
+The `Policy` object defines a reusable governance, compliance, security, or quality policy in an ODPC catalog. It aligns with the ODPG `Policy` node type. Policy rules, targets, duties, and governed objects belong in the authoritative policy definition and ODPG.
 
 ## Mandatory attributes and options
 
@@ -21,7 +21,16 @@ node:
 | `id` | string | ✓ | Stable policy identifier. |
 | `name` | language-tagged string | ✓ | Human-readable policy name. |
 | `description` | language-tagged string | ✓ | Policy discovery description. |
-| `$ref` | string |  | Authoritative policy definition. |
-| `tags` | array of strings |  | Discovery and filtering labels. |
 
-Relationships between policies and other objects belong in [ODPG](https://opendataproducts.org/odpg-v1.0/).
+## Optional attributes and options
+
+| Attribute | Type | Options | Description |
+| --- | --- | --- | --- |
+| `type` | string | `access`, `privacy`, `security`, `retention`, `quality`, `usage`, `compliance` | Primary policy concern. |
+| `effectiveFrom` | date | optional | Date from which the policy applies. |
+| `effectiveTo` | date | optional | Date after which the policy no longer applies. |
+| `enforcement` | string | `manual`, `automated`, `mixed` | How the policy is enforced. |
+| `owner` | object | optional | Accountable organization, team, and role. |
+| `status` | string | `draft`, `active`, `deprecated`, `retired` | Catalog lifecycle status. |
+| `$ref` | string | optional | Authoritative policy definition. |
+| `tags` | array of strings | optional | Discovery and filtering labels. |

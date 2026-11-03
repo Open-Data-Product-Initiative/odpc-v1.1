@@ -115,6 +115,10 @@ class AgentScriptsTest(unittest.TestCase):
                 "api", "policy", "workflow", "agent", "capability", "strategicOpportunity",
             })
 
+            validation = run_script("scripts/validate_catalog.py", str(output_path))
+            if validation.returncode != 2:
+                self.assertEqual(validation.returncode, 0, validation.stderr + validation.stdout)
+
     def test_build_catalog_uses_metadata_file_and_full_catalog_inputs(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
             input_dir = Path(tmp_dir)

@@ -1,6 +1,6 @@
 # ODPC API
 
-The `API` object defines a reusable service interface in an ODPC catalog. It aligns with the ODPG `API` node type and should point to an authoritative API definition when one exists.
+The `API` object defines a reusable service interface in an ODPC catalog. It aligns with the ODPG `API` node type and should point to an authoritative API definition when one exists. Operations, schemas, authentication details, and service-to-dataset relationships remain in that definition or ODPG.
 
 ## Mandatory attributes and options
 
@@ -21,7 +21,16 @@ node:
 | `id` | string | ✓ | Stable API identifier. |
 | `name` | language-tagged string | ✓ | Human-readable API name. |
 | `description` | language-tagged string | ✓ | API discovery description. |
-| `$ref` | string |  | Authoritative API definition, such as OpenAPI. |
-| `tags` | array of strings |  | Discovery and filtering labels. |
 
-Relationships between APIs and other objects belong in [ODPG](https://opendataproducts.org/odpg-v1.0/).
+## Optional attributes and options
+
+| Attribute | Type | Options | Description |
+| --- | --- | --- | --- |
+| `type` | string | `rest`, `graphql`, `grpc`, `event`, `other` | Interface style. |
+| `version` | string | optional | Version of the exposed API contract. |
+| `endpoint` | URI | optional | Base endpoint for the live service. |
+| `access` | string | `open`, `authenticated`, `restricted` | Access expectation, not a detailed security contract. |
+| `owner` | object | optional | Accountable organization, team, and role. |
+| `status` | string | `draft`, `active`, `deprecated`, `retired` | Catalog lifecycle status. |
+| `$ref` | string | optional | Authoritative API definition, such as OpenAPI or AsyncAPI. |
+| `tags` | array of strings | optional | Discovery and filtering labels. |

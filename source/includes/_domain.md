@@ -1,6 +1,6 @@
 # ODPC Domain
 
-The `Domain` object defines a reusable business, organizational, technical, or data domain in an ODPC catalog. It aligns with the ODPG `Domain` node type.
+The `Domain` object defines a reusable business, organizational, data, or technical domain in an ODPC catalog. It aligns with the ODPG `Domain` node type. Domain hierarchy and connections to other catalog objects belong in [ODPG](https://opendataproducts.org/odpg-v1.0/).
 
 ## Mandatory attributes and options
 
@@ -21,7 +21,13 @@ node:
 | `id` | string | ✓ | Stable domain identifier. |
 | `name` | language-tagged string | ✓ | Human-readable domain name. |
 | `description` | language-tagged string | ✓ | Domain purpose and scope. |
-| `$ref` | string |  | Authoritative domain definition. |
-| `tags` | array of strings |  | Discovery and filtering labels. |
 
-Relationships between domains and other objects belong in [ODPG](https://opendataproducts.org/odpg-v1.0/).
+## Optional attributes and options
+
+| Attribute | Type | Options | Description |
+| --- | --- | --- | --- |
+| `type` | string | `business`, `organizational`, `data`, `technical` | Nature of the domain. |
+| `owner` | object | optional | Accountable organization, team, and role. |
+| `status` | string | `draft`, `active`, `deprecated`, `retired` | Catalog lifecycle status. |
+| `$ref` | string | optional | Authoritative domain definition. |
+| `tags` | array of strings | optional | Discovery and filtering labels. |

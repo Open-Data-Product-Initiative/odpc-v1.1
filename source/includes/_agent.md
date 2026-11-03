@@ -1,6 +1,6 @@
 # ODPC Agent
 
-The `Agent` object defines a reusable AI agent or automation actor in an ODPC catalog. It aligns with the ODPG `Agent` node type.
+The `Agent` object defines a reusable AI, automation, human, or organizational actor in an ODPC catalog. It aligns with the ODPG `Agent` node type. Interfaces, credentials, skills, tools, prompts, and run-time settings remain in the authoritative agent definition.
 
 ## Mandatory attributes and options
 
@@ -21,7 +21,15 @@ node:
 | `id` | string | ✓ | Stable agent identifier. |
 | `name` | language-tagged string | ✓ | Human-readable agent name. |
 | `description` | language-tagged string | ✓ | Agent discovery description. |
-| `$ref` | string |  | Authoritative agent definition. |
-| `tags` | array of strings |  | Discovery and filtering labels. |
 
-Relationships between agents and other objects belong in [ODPG](https://opendataproducts.org/odpg-v1.0/).
+## Optional attributes and options
+
+| Attribute | Type | Options | Description |
+| --- | --- | --- | --- |
+| `type` | string | `ai`, `automation`, `human`, `organization` | Nature of the acting entity. |
+| `version` | string | optional | Version of the agent definition or implementation. |
+| `autonomy` | string | `assistive`, `supervised`, `autonomous` | Degree to which the agent may act without human approval. |
+| `owner` | object | optional | Accountable organization, team, and role. |
+| `status` | string | `draft`, `active`, `deprecated`, `retired` | Catalog lifecycle status. |
+| `$ref` | string | optional | Authoritative agent definition, such as an Agent Card. |
+| `tags` | array of strings | optional | Discovery and filtering labels. |

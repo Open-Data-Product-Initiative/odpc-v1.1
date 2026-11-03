@@ -1,6 +1,6 @@
 # ODPC Workflow
 
-The `Workflow` object defines a reusable business or technical workflow in an ODPC catalog. It aligns with the ODPG `Workflow` node type.
+The `Workflow` object defines a reusable business or technical workflow in an ODPC catalog. It aligns with the ODPG `Workflow` node type. Workflow steps, participants, dependencies, and input/output relationships remain in the authoritative workflow definition and ODPG.
 
 ## Mandatory attributes and options
 
@@ -21,7 +21,15 @@ node:
 | `id` | string | ✓ | Stable workflow identifier. |
 | `name` | language-tagged string | ✓ | Human-readable workflow name. |
 | `description` | language-tagged string | ✓ | Workflow discovery description. |
-| `$ref` | string |  | Authoritative workflow definition. |
-| `tags` | array of strings |  | Discovery and filtering labels. |
 
-Relationships between workflows and other objects belong in [ODPG](https://opendataproducts.org/odpg-v1.0/).
+## Optional attributes and options
+
+| Attribute | Type | Options | Description |
+| --- | --- | --- | --- |
+| `type` | string | `business`, `operational`, `data`, `automation` | Primary workflow purpose. |
+| `trigger` | string | `manual`, `schedule`, `event`, `api` | How the workflow starts. |
+| `version` | string | optional | Version of the workflow definition. |
+| `owner` | object | optional | Accountable organization, team, and role. |
+| `status` | string | `draft`, `active`, `deprecated`, `retired` | Catalog lifecycle status. |
+| `$ref` | string | optional | Authoritative workflow definition, such as BPMN or an orchestration definition. |
+| `tags` | array of strings | optional | Discovery and filtering labels. |

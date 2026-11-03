@@ -35,3 +35,17 @@ node:
 | `strategicOpportunity` | StrategicOpportunity |
 
 Standalone catalog-item files use a root `node` object. Inside a full catalog, use the same object directly in `catalog.nodes` without the extra root wrapper.
+
+## Shared metadata for new ODPG-aligned nodes
+
+The `domain`, `dataset`, `api`, `policy`, `workflow`, `agent`, `capability`, and `strategicOpportunity` nodes may use the following common optional attributes. They describe the node itself; links to other nodes belong in ODPG edges.
+
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `owner` | object | Accountable organization, team, and role. |
+| `owner.organization` | string | Accountable organization. |
+| `owner.team` | string | Accountable team. |
+| `owner.role` | string | Accountable role. |
+| `status` | string | Catalog lifecycle: `draft`, `active`, `deprecated`, or `retired`. |
+| `$ref` | string | Authoritative external definition. |
+| `tags` | array of strings | Search and filtering labels. |

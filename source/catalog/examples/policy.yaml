@@ -5,4 +5,16 @@ node:
     en: Mobility Data Retention Policy
   description:
     en: Policy governing retention of mobility data.
+  type: retention
+  effectiveFrom: "2026-01-01"
+  effectiveTo: "2028-12-31"
+  enforcement: automated
+  owner:
+    organization: Example Transport Authority
+    team: Data Governance
+    role: Policy Owner
+  status: active
   $ref: https://example.org/policies/mobility-data-retention
+  tags:
+    - retention
+    - governance

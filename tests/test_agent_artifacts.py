@@ -192,6 +192,44 @@ class AgentArtifactsTest(unittest.TestCase):
             assert_named_object(item, prefix)
             self.assertIn("$ref", item)
 
+    def test_new_odpg_nodes_have_small_discovery_metadata_profiles(self):
+        schema = load_yaml(SOURCE / "schema" / "odpc.yaml")
+        common = {"owner", "status", "$ref", "tags"}
+        expected = {
+            "Domain": {"type"},
+            "Dataset": {"version", "frequency", "classification", "access"},
+            "API": {"type", "version", "endpoint", "access"},
+            "Policy": {"type", "effectiveFrom", "effectiveTo", "enforcement"},
+            "Workflow": {"type", "trigger", "version"},
+            "Agent": {"type", "version", "autonomy"},
+            "Capability": {"type", "maturity"},
+            "StrategicOpportunity": {"type", "stage", "confidence", "impact", "timeHorizon"},
+        }
+        examples = {
+            "Domain": "domain.yaml",
+            "Dataset": "dataset.yaml",
+            "API": "api.yaml",
+            "Policy": "policy.yaml",
+            "Workflow": "workflow.yaml",
+            "Agent": "agent.yaml",
+            "Capability": "capability.yaml",
+            "StrategicOpportunity": "strategic-opportunity.yaml",
+        }
+
+        self.assertEqual(
+            schema["$defs"]["CatalogNodeStatus"]["enum"],
+            ["draft", "active", "deprecated", "retired"],
+        )
+
+        for definition, fields in expected.items():
+            properties = schema["$defs"][definition]["properties"]
+            self.assertTrue(common.issubset(properties), definition)
+            self.assertTrue(fields.issubset(properties), definition)
+
+            example = load_yaml(SOURCE / "catalog" / "examples" / examples[definition])["node"]
+            for field in fields | common:
+                self.assertIn(field, example, f"{definition} example missing {field}")
+
 
 if __name__ == "__main__":
     unittest.main()

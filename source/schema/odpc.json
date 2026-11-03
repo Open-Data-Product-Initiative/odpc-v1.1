@@ -60,6 +60,16 @@
         }
       }
     },
+    "CatalogNodeStatus": {
+      "type": "string",
+      "description": "Catalog lifecycle status for reusable ODPG-aligned nodes.",
+      "enum": [
+        "draft",
+        "active",
+        "deprecated",
+        "retired"
+      ]
+    },
     "Domain": {
       "type": "object",
       "description": "Reusable ODPC domain object aligned with an ODPG Domain node.",
@@ -83,6 +93,21 @@
         },
         "description": {
           "$ref": "#/$defs/LanguageString"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "business",
+            "organizational",
+            "data",
+            "technical"
+          ]
+        },
+        "owner": {
+          "$ref": "#/$defs/Owner"
+        },
+        "status": {
+          "$ref": "#/$defs/CatalogNodeStatus"
         },
         "$ref": {
           "type": "string"
@@ -122,6 +147,47 @@
         "description": {
           "$ref": "#/$defs/LanguageString"
         },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "frequency": {
+          "type": "string",
+          "enum": [
+            "realTime",
+            "hourly",
+            "daily",
+            "weekly",
+            "monthly",
+            "quarterly",
+            "annual",
+            "irregular",
+            "static"
+          ]
+        },
+        "classification": {
+          "type": "string",
+          "enum": [
+            "public",
+            "internal",
+            "confidential",
+            "restricted"
+          ]
+        },
+        "access": {
+          "type": "string",
+          "enum": [
+            "open",
+            "authenticated",
+            "restricted"
+          ]
+        },
+        "owner": {
+          "$ref": "#/$defs/Owner"
+        },
+        "status": {
+          "$ref": "#/$defs/CatalogNodeStatus"
+        },
         "$ref": {
           "type": "string"
         },
@@ -159,6 +225,38 @@
         },
         "description": {
           "$ref": "#/$defs/LanguageString"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "rest",
+            "graphql",
+            "grpc",
+            "event",
+            "other"
+          ]
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "endpoint": {
+          "type": "string",
+          "format": "uri"
+        },
+        "access": {
+          "type": "string",
+          "enum": [
+            "open",
+            "authenticated",
+            "restricted"
+          ]
+        },
+        "owner": {
+          "$ref": "#/$defs/Owner"
+        },
+        "status": {
+          "$ref": "#/$defs/CatalogNodeStatus"
         },
         "$ref": {
           "type": "string"
@@ -198,6 +296,40 @@
         "description": {
           "$ref": "#/$defs/LanguageString"
         },
+        "type": {
+          "type": "string",
+          "enum": [
+            "access",
+            "privacy",
+            "security",
+            "retention",
+            "quality",
+            "usage",
+            "compliance"
+          ]
+        },
+        "effectiveFrom": {
+          "type": "string",
+          "format": "date"
+        },
+        "effectiveTo": {
+          "type": "string",
+          "format": "date"
+        },
+        "enforcement": {
+          "type": "string",
+          "enum": [
+            "manual",
+            "automated",
+            "mixed"
+          ]
+        },
+        "owner": {
+          "$ref": "#/$defs/Owner"
+        },
+        "status": {
+          "$ref": "#/$defs/CatalogNodeStatus"
+        },
         "$ref": {
           "type": "string"
         },
@@ -235,6 +367,34 @@
         },
         "description": {
           "$ref": "#/$defs/LanguageString"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "business",
+            "operational",
+            "data",
+            "automation"
+          ]
+        },
+        "trigger": {
+          "type": "string",
+          "enum": [
+            "manual",
+            "schedule",
+            "event",
+            "api"
+          ]
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner": {
+          "$ref": "#/$defs/Owner"
+        },
+        "status": {
+          "$ref": "#/$defs/CatalogNodeStatus"
         },
         "$ref": {
           "type": "string"
@@ -274,6 +434,33 @@
         "description": {
           "$ref": "#/$defs/LanguageString"
         },
+        "type": {
+          "type": "string",
+          "enum": [
+            "ai",
+            "automation",
+            "human",
+            "organization"
+          ]
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "autonomy": {
+          "type": "string",
+          "enum": [
+            "assistive",
+            "supervised",
+            "autonomous"
+          ]
+        },
+        "owner": {
+          "$ref": "#/$defs/Owner"
+        },
+        "status": {
+          "$ref": "#/$defs/CatalogNodeStatus"
+        },
         "$ref": {
           "type": "string"
         },
@@ -312,6 +499,30 @@
         "description": {
           "$ref": "#/$defs/LanguageString"
         },
+        "type": {
+          "type": "string",
+          "enum": [
+            "business",
+            "data",
+            "technical",
+            "ai"
+          ]
+        },
+        "maturity": {
+          "type": "string",
+          "enum": [
+            "planned",
+            "emerging",
+            "established",
+            "retiring"
+          ]
+        },
+        "owner": {
+          "$ref": "#/$defs/Owner"
+        },
+        "status": {
+          "$ref": "#/$defs/CatalogNodeStatus"
+        },
         "$ref": {
           "type": "string"
         },
@@ -349,6 +560,77 @@
         },
         "description": {
           "$ref": "#/$defs/LanguageString"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "growth",
+            "efficiency",
+            "risk",
+            "compliance",
+            "innovation",
+            "customer"
+          ]
+        },
+        "stage": {
+          "type": "string",
+          "enum": [
+            "identified",
+            "assessed",
+            "prioritized",
+            "pursuing",
+            "realized",
+            "declined"
+          ]
+        },
+        "confidence": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "impact": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "valuePotential": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high",
+                "critical"
+              ]
+            },
+            "urgency": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high",
+                "critical"
+              ]
+            }
+          },
+          "patternProperties": {
+            "^x-": {}
+          }
+        },
+        "timeHorizon": {
+          "type": "string",
+          "enum": [
+            "nearTerm",
+            "mediumTerm",
+            "longTerm"
+          ]
+        },
+        "owner": {
+          "$ref": "#/$defs/Owner"
+        },
+        "status": {
+          "$ref": "#/$defs/CatalogNodeStatus"
         },
         "$ref": {
           "type": "string"

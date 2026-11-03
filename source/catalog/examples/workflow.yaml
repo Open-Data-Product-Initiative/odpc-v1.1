@@ -5,4 +5,15 @@ node:
     en: Incident Response Workflow
   description:
     en: Operational workflow for responding to major traffic incidents.
+  type: operational
+  trigger: event
+  version: "3.0.0"
+  owner:
+    organization: Example Transport Authority
+    team: Traffic Operations
+    role: Workflow Owner
+  status: active
   $ref: https://example.org/workflows/incident-response
+  tags:
+    - incident-response
+    - traffic
