@@ -24,6 +24,27 @@ node:
 
 ## Optional attributes and options
 
+```yml
+node:
+  kind: dataset
+  id: DS-001
+  name:
+    en: Traffic Sensor Observations
+  description:
+    en: Time-stamped observations from roadside traffic sensors.
+  version: "2.1.0"
+  frequency: realTime
+  classification: internal
+  access: authenticated
+  owner:
+    organization: Example Transport Authority
+    team: Traffic Operations
+    role: Data Steward
+  status: active
+  $ref: https://example.org/datasets/traffic-sensor-observations
+  tags: [traffic, sensors]
+```
+
 | Attribute | Type | Options | Description |
 | --- | --- | --- | --- |
 | `version` | string | optional | Version of this dataset definition or release. |

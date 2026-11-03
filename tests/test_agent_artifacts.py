@@ -1,4 +1,5 @@
 import json
+import re
 import unittest
 from pathlib import Path
 
@@ -236,6 +237,26 @@ class AgentArtifactsTest(unittest.TestCase):
             example = load_yaml(SOURCE / "catalog" / "examples" / examples[definition])["node"]
             for field in fields | common:
                 self.assertIn(field, example, f"{definition} example missing {field}")
+
+    def test_new_odpg_node_docs_include_optional_metadata_examples(self):
+        documents = {
+            "domain": "domain",
+            "dataset": "dataset",
+            "api": "api",
+            "policy": "policy",
+            "workflow": "workflow",
+            "agent": "agent",
+            "capability": "capability",
+            "strategicopportunity": "strategicOpportunity",
+        }
+        pattern = re.compile(r"## Optional attributes and options\n\n```yml\n(.*?)\n```", re.DOTALL)
+
+        for filename, kind in documents.items():
+            document = (SOURCE / "includes" / f"_{filename}.md").read_text(encoding="utf-8")
+            match = pattern.search(document)
+            self.assertIsNotNone(match, f"{filename} needs an optional-metadata YAML example")
+            example = yaml.safe_load(match.group(1))
+            self.assertEqual(example["node"]["kind"], kind)
 
 
 if __name__ == "__main__":

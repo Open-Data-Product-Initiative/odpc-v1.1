@@ -24,6 +24,25 @@ node:
 
 ## Optional attributes and options
 
+```yml
+node:
+  kind: capability
+  id: CAP-001
+  name:
+    en: Traffic Demand Forecasting
+  description:
+    en: Capability to forecast traffic demand from historical and current signals.
+  type: ai
+  maturity: emerging
+  owner:
+    organization: Example Transport Authority
+    team: Urban Analytics
+    role: Capability Owner
+  status: active
+  $ref: https://example.org/capabilities/traffic-demand-forecasting
+  tags: [forecasting, mobility]
+```
+
 | Attribute | Type | Options | Description |
 | --- | --- | --- | --- |
 | `type` | string | `business`, `data`, `technical`, `ai` | Nature of the capability. |

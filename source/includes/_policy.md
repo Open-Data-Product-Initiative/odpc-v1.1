@@ -24,6 +24,27 @@ node:
 
 ## Optional attributes and options
 
+```yml
+node:
+  kind: policy
+  id: POL-001
+  name:
+    en: Mobility Data Retention Policy
+  description:
+    en: Policy governing retention of mobility data.
+  type: retention
+  effectiveFrom: "2026-01-01"
+  effectiveTo: "2028-12-31"
+  enforcement: automated
+  owner:
+    organization: Example Transport Authority
+    team: Data Governance
+    role: Policy Owner
+  status: active
+  $ref: https://example.org/policies/mobility-data-retention
+  tags: [retention, governance]
+```
+
 | Attribute | Type | Options | Description |
 | --- | --- | --- | --- |
 | `type` | string | `access`, `privacy`, `security`, `retention`, `quality`, `usage`, `compliance` | Primary policy concern. |

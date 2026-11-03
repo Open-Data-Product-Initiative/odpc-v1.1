@@ -24,6 +24,26 @@ node:
 
 ## Optional attributes and options
 
+```yml
+node:
+  kind: workflow
+  id: WF-001
+  name:
+    en: Incident Response Workflow
+  description:
+    en: Operational workflow for responding to major traffic incidents.
+  type: operational
+  trigger: event
+  version: "3.0.0"
+  owner:
+    organization: Example Transport Authority
+    team: Traffic Operations
+    role: Workflow Owner
+  status: active
+  $ref: https://example.org/workflows/incident-response
+  tags: [incident-response, traffic]
+```
+
 | Attribute | Type | Options | Description |
 | --- | --- | --- | --- |
 | `type` | string | `business`, `operational`, `data`, `automation` | Primary workflow purpose. |

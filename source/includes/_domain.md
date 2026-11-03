@@ -24,6 +24,24 @@ node:
 
 ## Optional attributes and options
 
+```yml
+node:
+  kind: domain
+  id: DOM-001
+  name:
+    en: Urban Mobility
+  description:
+    en: Business and operational domain for city transportation services.
+  type: business
+  owner:
+    organization: Example Transport Authority
+    team: Urban Mobility
+    role: Domain Owner
+  status: active
+  $ref: https://example.org/domains/urban-mobility
+  tags: [mobility, transport]
+```
+
 | Attribute | Type | Options | Description |
 | --- | --- | --- | --- |
 | `type` | string | `business`, `organizational`, `data`, `technical` | Nature of the domain. |

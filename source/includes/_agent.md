@@ -24,6 +24,26 @@ node:
 
 ## Optional attributes and options
 
+```yml
+node:
+  kind: agent
+  id: AGENT-001
+  name:
+    en: Mobility Planning Assistant
+  description:
+    en: Automation actor that prepares planning recommendations.
+  type: ai
+  version: "0.8.0"
+  autonomy: supervised
+  owner:
+    organization: Example Transport Authority
+    team: Urban Analytics
+    role: Agent Owner
+  status: active
+  $ref: https://example.org/agents/mobility-planning-assistant
+  tags: [planning, recommendations]
+```
+
 | Attribute | Type | Options | Description |
 | --- | --- | --- | --- |
 | `type` | string | `ai`, `automation`, `human`, `organization` | Nature of the acting entity. |

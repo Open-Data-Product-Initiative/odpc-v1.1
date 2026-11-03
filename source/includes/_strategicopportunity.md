@@ -24,6 +24,30 @@ node:
 
 ## Optional attributes and options
 
+```yml
+node:
+  kind: strategicOpportunity
+  id: SO-001
+  name:
+    en: Event-aware Mobility Planning
+  description:
+    en: Opportunity to improve mobility planning using event demand signals.
+  type: efficiency
+  stage: assessed
+  confidence: high
+  impact:
+    valuePotential: high
+    urgency: medium
+  timeHorizon: mediumTerm
+  owner:
+    organization: Example Transport Authority
+    team: Business Analytics
+    role: Opportunity Owner
+  status: active
+  $ref: https://example.org/opportunities/event-aware-mobility-planning
+  tags: [mobility, events]
+```
+
 | Attribute | Type | Options | Description |
 | --- | --- | --- | --- |
 | `type` | string | `growth`, `efficiency`, `risk`, `compliance`, `innovation`, `customer` | Primary value or change theme. |
