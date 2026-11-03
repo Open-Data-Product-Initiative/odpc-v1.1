@@ -13,7 +13,6 @@ includes:
 - toolkit
 - agent_usage
 - catalog
-- node
 - productreference
 - usecase
 - businessobjective
