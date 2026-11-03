@@ -45,8 +45,9 @@ class AgentArtifactsTest(unittest.TestCase):
 
         catalog_ref = schema["properties"]["catalog"]["$ref"].split("/")[-1]
         catalog = schema["$defs"][catalog_ref]
-        self.assertEqual(catalog["required"], ["metadata"])
+        self.assertEqual(catalog["required"], ["metadata", "nodes"])
         self.assertIn("metadata", catalog["properties"])
+        self.assertIn("nodes", catalog["properties"])
         self.assertNotIn("meta", catalog["properties"])
         metadata_ref = catalog["properties"]["metadata"]["$ref"].split("/")[-1]
         metadata = schema["$defs"][metadata_ref]
@@ -57,19 +58,8 @@ class AgentArtifactsTest(unittest.TestCase):
         self.assertEqual(graph_reference["required"], ["standard", "version", "$ref"])
         self.assertIn("$ref", graph_reference["properties"])
         self.assertNotIn("uri", graph_reference["properties"])
-        for collection in ["productReferences", "useCases", "businessObjectives", "signals"]:
-            self.assertIn(collection, catalog["properties"])
-        for collection in [
-            "domains",
-            "datasets",
-            "apis",
-            "policies",
-            "workflows",
-            "agents",
-            "capabilities",
-            "strategicOpportunities",
-        ]:
-            self.assertIn(collection, catalog["properties"])
+        self.assertEqual(list(catalog["properties"]), ["metadata", "nodes"])
+        self.assertIn("Node", schema["$defs"])
 
     def test_examples_cover_minimal_full_and_each_core_object(self):
         expected = [
@@ -108,12 +98,14 @@ class AgentArtifactsTest(unittest.TestCase):
         self.assertNotIn("tags", catalog)
         self.assertIn("$ref", catalog["metadata"]["graph"])
         self.assertNotIn("uri", catalog["metadata"]["graph"])
-        assert_named_object(catalog["productReferences"][0], "DP-")
-        assert_named_object(catalog["useCases"][0], "UC-")
-        assert_named_object(catalog["businessObjectives"][0], "BO-")
-        assert_named_object(catalog["signals"][0], "SIG-")
+        nodes = {item["kind"]: item for item in catalog["nodes"]}
+        assert_named_object(nodes["productReference"], "DP-")
+        assert_named_object(nodes["useCase"], "UC-")
+        assert_named_object(nodes["businessObjective"], "BO-")
+        assert_named_object(nodes["signal"], "SIG-")
 
-        product_reference = load_yaml(SOURCE / "catalog" / "examples" / "product-reference.yaml")["productReference"]
+        product_reference = load_yaml(SOURCE / "catalog" / "examples" / "product-reference.yaml")["node"]
+        self.assertEqual(product_reference["kind"], "productReference")
         assert_named_object(product_reference, "DP-")
         self.assertEqual(product_reference["productModel"]["standard"], "ODPS")
         self.assertIn("$ref", product_reference["productModel"])
@@ -128,15 +120,18 @@ class AgentArtifactsTest(unittest.TestCase):
         self.assertNotIn("uri", product_model["properties"])
         self.assertEqual(product_model["properties"]["$ref"]["type"], "string")
 
-        use_case = load_yaml(SOURCE / "catalog" / "examples" / "use-case.yaml")["useCase"]
+        use_case = load_yaml(SOURCE / "catalog" / "examples" / "use-case.yaml")["node"]
+        self.assertEqual(use_case["kind"], "useCase")
         assert_named_object(use_case, "UC-")
         self.assertTrue(use_case["dataNeeds"]["items"])
 
-        objective = load_yaml(SOURCE / "catalog" / "examples" / "business-objective-with-kpis.yaml")["businessObjective"]
+        objective = load_yaml(SOURCE / "catalog" / "examples" / "business-objective-with-kpis.yaml")["node"]
+        self.assertEqual(objective["kind"], "businessObjective")
         assert_named_object(objective, "BO-")
         self.assertTrue(objective["kpis"][0]["id"].startswith("KPI-"))
 
-        signal = load_yaml(SOURCE / "catalog" / "examples" / "signal.yaml")["signal"]
+        signal = load_yaml(SOURCE / "catalog" / "examples" / "signal.yaml")["node"]
+        self.assertEqual(signal["kind"], "signal")
         assert_named_object(signal, "SIG-")
         self.assertIn(signal["source"]["origin"], {"internal", "external", "mixed"})
 
@@ -192,7 +187,8 @@ class AgentArtifactsTest(unittest.TestCase):
             "strategic-opportunity.yaml": ("strategicOpportunity", "SO-"),
         }
         for filename, (object_name, prefix) in expected.items():
-            item = load_yaml(SOURCE / "catalog" / "examples" / filename)[object_name]
+            item = load_yaml(SOURCE / "catalog" / "examples" / filename)["node"]
+            self.assertEqual(item["kind"], object_name)
             assert_named_object(item, prefix)
             self.assertIn("$ref", item)
 

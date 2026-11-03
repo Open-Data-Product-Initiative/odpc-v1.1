@@ -12,31 +12,48 @@ from validate_catalog import NoDatesSafeLoader, load_schema
 
 
 SCHEMA_URI = "https://opendataproducts.org/odpc-v1.0/schema/odpc.yaml"
-OBJECT_COLLECTIONS = {
-    "productReference": "productReferences",
-    "useCase": "useCases",
-    "businessObjective": "businessObjectives",
-    "signal": "signals",
-    "domain": "domains",
-    "dataset": "datasets",
-    "api": "apis",
-    "policy": "policies",
-    "workflow": "workflows",
-    "agent": "agents",
-    "capability": "capabilities",
-    "strategicOpportunity": "strategicOpportunities",
+NODE_KINDS = {
+    "productReference": "productReference",
+    "useCase": "useCase",
+    "businessObjective": "businessObjective",
+    "signal": "signal",
+    "domain": "domain",
+    "dataset": "dataset",
+    "api": "api",
+    "policy": "policy",
+    "workflow": "workflow",
+    "agent": "agent",
+    "capability": "capability",
+    "strategicOpportunity": "strategicOpportunity",
 }
-CATALOG_COLLECTIONS = tuple(OBJECT_COLLECTIONS.values())
-ODPG_CORE_COLLECTIONS = (
-    ("domains", "Domains"),
-    ("datasets", "Datasets"),
-    ("apis", "APIs"),
-    ("policies", "Policies"),
-    ("workflows", "Workflows"),
-    ("agents", "Agents"),
-    ("capabilities", "Capabilities"),
-    ("strategicOpportunities", "Strategic Opportunities"),
-)
+LEGACY_COLLECTIONS = {
+    "productReferences": "productReference",
+    "useCases": "useCase",
+    "businessObjectives": "businessObjective",
+    "signals": "signal",
+    "domains": "domain",
+    "datasets": "dataset",
+    "apis": "api",
+    "policies": "policy",
+    "workflows": "workflow",
+    "agents": "agent",
+    "capabilities": "capability",
+    "strategicOpportunities": "strategicOpportunity",
+}
+NODE_LABELS = {
+    "productReference": "Product References",
+    "useCase": "Use Cases",
+    "businessObjective": "Business Objectives",
+    "signal": "Signals",
+    "domain": "Domains",
+    "dataset": "Datasets",
+    "api": "APIs",
+    "policy": "Policies",
+    "workflow": "Workflows",
+    "agent": "Agents",
+    "capability": "Capabilities",
+    "strategicOpportunity": "Strategic Opportunities",
+}
 METADATA_KEYS = ("metadata", "catalogMetadata")
 HTML_PLACEHOLDERS = (
     "title",
@@ -89,9 +106,11 @@ def default_metadata(args):
     }
 
 
-def append_items(target, collection, items):
+def append_items(target, kind, items):
     if isinstance(items, list):
-        target[collection].extend(item for item in items if item is not None)
+        for item in items:
+            if isinstance(item, dict):
+                target["nodes"].append(item if kind is None else {**item, "kind": kind})
 
 
 def as_lang_string(value, fallback):
@@ -113,6 +132,7 @@ def product_reference_from_product(document, source_path, input_dir):
     product_format = "json" if source_path.suffix.lower() == ".json" else "yaml"
 
     return {
+        "kind": "productReference",
         "id": product.get("id") or product_id,
         "productID": product_id,
         "productVersion": str(product_version),
@@ -136,8 +156,9 @@ def collect_document(document, source_path, input_dir, catalog, metadata_candida
         metadata = nested_catalog.get("metadata")
         if isinstance(metadata, dict):
             embedded_metadata_candidates.append(metadata)
-        for collection in CATALOG_COLLECTIONS:
-            append_items(catalog, collection, nested_catalog.get(collection))
+        append_items(catalog, None, nested_catalog.get("nodes"))
+        for collection, kind in LEGACY_COLLECTIONS.items():
+            append_items(catalog, kind, nested_catalog.get(collection))
         return
 
     for metadata_key in METADATA_KEYS:
@@ -145,21 +166,25 @@ def collect_document(document, source_path, input_dir, catalog, metadata_candida
         if isinstance(metadata, dict):
             metadata_candidates.append(metadata)
 
-    for object_key, collection in OBJECT_COLLECTIONS.items():
+    node = document.get("node")
+    if isinstance(node, dict):
+        catalog["nodes"].append(node)
+
+    for object_key, kind in NODE_KINDS.items():
         item = document.get(object_key)
-        if item is not None:
-            catalog[collection].append(item)
+        if isinstance(item, dict):
+            catalog["nodes"].append({"kind": kind, **item})
 
     product_reference = product_reference_from_product(document, source_path, input_dir)
     if product_reference:
-        catalog["productReferences"].append(product_reference)
+        catalog["nodes"].append(product_reference)
 
-    for collection in CATALOG_COLLECTIONS:
-        append_items(catalog, collection, document.get(collection))
+    for collection, kind in LEGACY_COLLECTIONS.items():
+        append_items(catalog, kind, document.get(collection))
 
 
 def build_catalog(input_dir, args):
-    catalog = {collection: [] for collection in CATALOG_COLLECTIONS}
+    catalog = {"nodes": []}
     metadata_candidates = []
     embedded_metadata_candidates = []
 
@@ -236,6 +261,11 @@ def render_tags(items):
     return f'<ul class="odp-tags">{tags}</ul>'
 
 
+def nodes_by_kind(catalog, kind):
+    nodes = catalog.get("nodes", []) if isinstance(catalog, dict) else []
+    return [node for node in nodes if isinstance(node, dict) and node.get("kind") == kind]
+
+
 def render_card(item, fields):
     if not isinstance(item, dict):
         return ""
@@ -310,13 +340,7 @@ def render_catalog_header(document):
 
 def render_summary(document):
     catalog = document.get("catalog", {})
-    counts = {
-        "Product References": len(catalog.get("productReferences", [])),
-        "Use Cases": len(catalog.get("useCases", [])),
-        "Business Objectives": len(catalog.get("businessObjectives", [])),
-        "Signals": len(catalog.get("signals", [])),
-    }
-    counts.update({label: len(catalog.get(collection, [])) for collection, label in ODPG_CORE_COLLECTIONS})
+    counts = {label: len(nodes_by_kind(catalog, kind)) for kind, label in NODE_LABELS.items()}
     items = "".join(
         f'<li><span class="odp-count">{count}</span><span>{html.escape(label)}</span></li>'
         for label, count in counts.items()
@@ -333,33 +357,33 @@ def render_html_fragments(document):
         "summary": render_summary(document),
         "product_references": render_section(
             "Product References",
-            catalog.get("productReferences", []),
+            nodes_by_kind(catalog, "productReference"),
             [("Product ID", "productID"), ("Version", "productVersion"), ("Status", "status"), ("Visibility", "visibility")],
         ),
         "use_cases": render_section(
             "Use Cases",
-            catalog.get("useCases", []),
+            nodes_by_kind(catalog, "useCase"),
             [("Status", "status"), ("Priority", "priority"), ("Decision", "decision"), ("Expected outcome", "expectedOutcome")],
         ),
         "business_objectives": render_section(
             "Business Objectives",
-            catalog.get("businessObjectives", []),
+            nodes_by_kind(catalog, "businessObjective"),
             [("Status", "status"), ("Priority", "priority")],
         ),
         "signals": render_section(
             "Signals",
-            catalog.get("signals", []),
+            nodes_by_kind(catalog, "signal"),
             [("Type", "type"), ("Strength", "strength"), ("Confidence", "confidence"), ("Status", "status")],
         ),
-        "domains": render_optional_section("Domains", catalog.get("domains", []), [("Reference", "$ref")]),
-        "datasets": render_optional_section("Datasets", catalog.get("datasets", []), [("Reference", "$ref")]),
-        "apis": render_optional_section("APIs", catalog.get("apis", []), [("Reference", "$ref")]),
-        "policies": render_optional_section("Policies", catalog.get("policies", []), [("Reference", "$ref")]),
-        "workflows": render_optional_section("Workflows", catalog.get("workflows", []), [("Reference", "$ref")]),
-        "agents": render_optional_section("Agents", catalog.get("agents", []), [("Reference", "$ref")]),
-        "capabilities": render_optional_section("Capabilities", catalog.get("capabilities", []), [("Reference", "$ref")]),
+        "domains": render_optional_section("Domains", nodes_by_kind(catalog, "domain"), [("Reference", "$ref")]),
+        "datasets": render_optional_section("Datasets", nodes_by_kind(catalog, "dataset"), [("Reference", "$ref")]),
+        "apis": render_optional_section("APIs", nodes_by_kind(catalog, "api"), [("Reference", "$ref")]),
+        "policies": render_optional_section("Policies", nodes_by_kind(catalog, "policy"), [("Reference", "$ref")]),
+        "workflows": render_optional_section("Workflows", nodes_by_kind(catalog, "workflow"), [("Reference", "$ref")]),
+        "agents": render_optional_section("Agents", nodes_by_kind(catalog, "agent"), [("Reference", "$ref")]),
+        "capabilities": render_optional_section("Capabilities", nodes_by_kind(catalog, "capability"), [("Reference", "$ref")]),
         "strategic_opportunities": render_optional_section(
-            "Strategic Opportunities", catalog.get("strategicOpportunities", []), [("Reference", "$ref")]
+            "Strategic Opportunities", nodes_by_kind(catalog, "strategicOpportunity"), [("Reference", "$ref")]
         ),
     }
 
@@ -434,22 +458,16 @@ def main(argv=None):
         print(exc, file=sys.stderr)
         return 1
 
-    counts = document["catalog"]
+    nodes = document["catalog"]["nodes"]
+    node_counts = {kind: sum(node.get("kind") == kind for node in nodes if isinstance(node, dict)) for kind in NODE_KINDS.values()}
     print(
         "Generated "
         f"{args.output} "
-        f"(productReferences={len(counts.get('productReferences', []))}, "
-        f"useCases={len(counts.get('useCases', []))}, "
-        f"businessObjectives={len(counts.get('businessObjectives', []))}, "
-        f"signals={len(counts.get('signals', []))}, "
-        f"domains={len(counts.get('domains', []))}, "
-        f"datasets={len(counts.get('datasets', []))}, "
-        f"apis={len(counts.get('apis', []))}, "
-        f"policies={len(counts.get('policies', []))}, "
-        f"workflows={len(counts.get('workflows', []))}, "
-        f"agents={len(counts.get('agents', []))}, "
-        f"capabilities={len(counts.get('capabilities', []))}, "
-        f"strategicOpportunities={len(counts.get('strategicOpportunities', []))})"
+        f"nodes={len(nodes)}, "
+        f"productReferences={node_counts['productReference']}, "
+        f"useCases={node_counts['useCase']}, "
+        f"businessObjectives={node_counts['businessObjective']}, "
+        f"signals={node_counts['signal']})"
     )
     return 0
 

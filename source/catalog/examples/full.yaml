@@ -31,8 +31,9 @@ catalog:
       - smart-city
       - mobility
       - events
-  productReferences:
-    - id: DP-001
+  nodes:
+    - kind: productReference
+      id: DP-001
       productID: urbanpulse-events
       productVersion: "1.0.0"
       name:
@@ -65,8 +66,8 @@ catalog:
       outputFileFormats:
         - JSON
         - CSV
-  useCases:
-    - id: UC-001
+    - kind: useCase
+      id: UC-001
       name:
         en: Event Demand Forecasting
       description:
@@ -104,8 +105,8 @@ catalog:
         - events
         - forecasting
         - mobility
-  businessObjectives:
-    - id: BO-001
+    - kind: businessObjective
+      id: BO-001
       name:
         en: Improve Urban Mobility Efficiency
       description:
@@ -136,8 +137,8 @@ catalog:
         endDate: 2026-12-31
       status: active
       priority: high
-  signals:
-    - id: SIG-001
+    - kind: signal
+      id: SIG-001
       name:
         en: Increasing Event Demand
       description:

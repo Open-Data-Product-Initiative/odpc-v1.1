@@ -1,4 +1,5 @@
-signal:
+node:
+  kind: signal
   id: SIG-001
   name:
     en: Increasing Event Demand

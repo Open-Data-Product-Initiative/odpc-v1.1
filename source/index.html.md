@@ -13,6 +13,7 @@ includes:
 - toolkit
 - agent_usage
 - catalog
+- node
 - productreference
 - usecase
 - businessobjective
@@ -150,6 +151,7 @@ catalog:
       standard: ODPG
       version: "1.0"
       $ref: https://example.org/graphs/urban-mobility.graph.yaml
+  nodes: []
 ```
 
 The first version of ODPC focuses on these objects:

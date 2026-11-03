@@ -5,7 +5,8 @@ The `Agent` object defines a reusable AI agent or automation actor in an ODPC ca
 ## Mandatory attributes and options
 
 ```yml
-agent:
+node:
+  kind: agent
   id: AGENT-001
   name:
     en: Mobility Planning Assistant
@@ -15,7 +16,8 @@ agent:
 
 | Attribute | Type | Required | Description |
 | --- | --- | ---: | --- |
-| `agent` | object | ✓ | Top-level ODPC Agent object. |
+| `node` | object | ✓ | Top-level standalone node wrapper. |
+| `kind` | string | ✓ | `agent`. |
 | `id` | string | ✓ | Stable agent identifier. |
 | `name` | language-tagged string | ✓ | Human-readable agent name. |
 | `description` | language-tagged string | ✓ | Agent discovery description. |

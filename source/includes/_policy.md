@@ -5,7 +5,8 @@ The `Policy` object defines a reusable governance, compliance, security, or qual
 ## Mandatory attributes and options
 
 ```yml
-policy:
+node:
+  kind: policy
   id: POL-001
   name:
     en: Mobility Data Retention Policy
@@ -15,7 +16,8 @@ policy:
 
 | Attribute | Type | Required | Description |
 | --- | --- | ---: | --- |
-| `policy` | object | ✓ | Top-level ODPC Policy object. |
+| `node` | object | ✓ | Top-level standalone node wrapper. |
+| `kind` | string | ✓ | `policy`. |
 | `id` | string | ✓ | Stable policy identifier. |
 | `name` | language-tagged string | ✓ | Human-readable policy name. |
 | `description` | language-tagged string | ✓ | Policy discovery description. |

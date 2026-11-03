@@ -18,14 +18,14 @@ The terms below explain ODPC-specific usage where this specification gives a sha
 | Identifier | `Identifier` | Used in ODPC object `id` fields. |
 | Reference | `Reference` | Used in ODPC for pointers such as `ProductReference.productModel.$ref` and `Catalog.metadata.graph.$ref`. |
 | Owner | `Owner` | Used in ODPC `owner` fields for accountable organizations, teams, or roles. |
-| Domain | `Domain` | Used as a string in product, use-case, and `scope.domains` grouping fields; the top-level `domains` collection contains reusable ODPC Domain objects. |
+| Domain | `Domain` | Used as a string in product, use-case, and `scope.domains` grouping fields; Domain nodes are reusable ODPC catalog objects. |
 | ODPC top-level object | `Domain`, `Dataset`, `API`, `Policy`, `Workflow`, `Agent`, `Capability`, or `StrategicOpportunity` | Independent ODPC object aligned with the matching ODPG core node type. |
 
 ## ODPC-specific usage notes
 
 | Term | Description |
 |---|---|
-| `Catalog` | The ODPC object that implements an ODPV `DataProductCatalog`. It is the top-level portfolio container for product references, use cases, business objectives, signals, domains, datasets, APIs, policies, workflows, agents, capabilities, strategic opportunities, and catalog metadata such as ownership, scope, lifecycle status, tags, and graph implementation reference. |
+| `Catalog` | The ODPC object that implements an ODPV `DataProductCatalog`. It is the top-level portfolio container for metadata and a unified `nodes` array of reusable catalog objects. |
 | `ProductReference` | An ODPC-specific lightweight catalog object that identifies a data product and points to its authoritative product definition through `productModel`. It should not duplicate full ODPS product metadata. |
 | `ProductModel` | The authoritative model or specification used to define a referenced data product, such as `ODPS`, `DPDS`, or an internal product model. In ODPC, `productModel.$ref` points to the source product definition as a local file path or URL. |
 | `Portfolio object` | A reusable ODPC object used to manage a data product portfolio. Examples include `ProductReference`, `UseCase`, `BusinessObjective`, and `Signal`. |

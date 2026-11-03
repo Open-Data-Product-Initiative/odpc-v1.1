@@ -6,7 +6,7 @@ The `Catalog` object defines a reusable ODPC catalog. It provides the top-level 
 
 In ODPC, the `Catalog` object acts as the portfolio container. It helps organizations group related data products and demand-side objects around a domain, organization, geography, audience, or strategic theme.
 
-The `Catalog` object can include product references, use cases, business objectives, signals, domains, datasets, APIs, policies, workflows, agents, capabilities, and strategic opportunities directly as reusable catalog objects. It can also define where the catalog graph is implemented through the `metadata.graph` attribute.
+The `Catalog` object stores every reusable catalog item in one `nodes` array. Each node declares its object type through `kind`; the catalog can therefore include product references, use cases, business objectives, signals, domains, datasets, APIs, policies, workflows, agents, capabilities, and strategic opportunities in a uniform structure.
 
 The `metadata.graph` attribute identifies the graph standard, version, and reference used for the catalog graph. The graph can be implemented with [ODPG](https://opendataproducts.org/odpg-v1.0/) or another supported graph standard, such as `RDF`, `JSON-LD`, `GraphML`, `openCypher`, `GQL`, `Gremlin`, `GraphSON`, or `GeoSPARQL`.
 
@@ -30,6 +30,7 @@ catalog:
     description:
       en: Catalog of data products, use cases, objectives, 
           and signals related to urban mobility.
+  nodes: []
 ```
 
 
@@ -45,6 +46,7 @@ catalog:
 | `metadata.name.en` | string | ✓ | English catalog name. |
 | `metadata.description` | object | ✓ | Short explanation of the catalog purpose and scope using language-tagged strings. |
 | `metadata.description.en` | string | ✓ | English catalog description. |
+| `nodes` | array of objects | ✓ | Unified catalog items, each selected by its `kind`. |
 
 
 ## Optional attributes and options
@@ -88,8 +90,9 @@ catalog:
       - mobility
       - events
 
-  productReferences:
-    - id: DP-001
+  nodes:
+    - kind: productReference
+      id: DP-001
       productID: urbanpulse-events
       productVersion: "1.0.0"
       name:
@@ -103,16 +106,16 @@ catalog:
         format: yaml
         $ref: ./products/urba/odps.yaml
 
-  useCases:
-    - id: UC-001
+    - kind: useCase
+      id: UC-001
       name:
         en: Event Demand Forecasting
       description:
         en: Forecast event-related demand to improve 
             mobility planning and citizen services.
 
-  businessObjectives:
-    - id: BO-001
+    - kind: businessObjective
+      id: BO-001
       name:
         en: Improve Urban Mobility Efficiency
       description:
@@ -120,8 +123,8 @@ catalog:
             across the city through better data-driven 
             planning and operations.
 
-  signals:
-    - id: SIG-001
+    - kind: signal
+      id: SIG-001
       name:
         en: Increasing Event Demand
       description:
@@ -147,15 +150,4 @@ catalog:
 | `metadata.graph.version` | string | ✓ when `metadata.graph` is used | Version of the graph standard. |
 | `metadata.graph.$ref` | string | ✓ when `metadata.graph` is used | File path or URL pointing to the graph definition. |
 | `metadata.tags` | array of strings |  | Keywords used for search, grouping, filtering, and portfolio analysis. |
-| `productReferences` | array of objects |  | List of data product references included in the catalog. Each item follows the `ProductReference` object schema. |
-| `useCases` | array of objects |  | List of use cases included in the catalog. Each item follows the `UseCase` object schema. |
-| `businessObjectives` | array of objects |  | List of business objectives included in the catalog. Each item follows the `BusinessObjective` object schema. |
-| `signals` | array of objects |  | List of signals included in the catalog. Each item follows the `Signal` object schema. |
-| `domains` | array of objects |  | List of top-level ODPC `Domain` objects. |
-| `datasets` | array of objects |  | List of top-level ODPC `Dataset` objects. |
-| `apis` | array of objects |  | List of top-level ODPC `API` objects. |
-| `policies` | array of objects |  | List of top-level ODPC `Policy` objects. |
-| `workflows` | array of objects |  | List of top-level ODPC `Workflow` objects. |
-| `agents` | array of objects |  | List of top-level ODPC `Agent` objects. |
-| `capabilities` | array of objects |  | List of top-level ODPC `Capability` objects. |
-| `strategicOpportunities` | array of objects |  | List of top-level ODPC `StrategicOpportunity` objects. |
+| `nodes` | array of objects | ✓ | Unified catalog items. Each node uses `kind` to select its object schema. |

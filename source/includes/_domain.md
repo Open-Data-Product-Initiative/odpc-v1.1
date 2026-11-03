@@ -5,7 +5,8 @@ The `Domain` object defines a reusable business, organizational, technical, or d
 ## Mandatory attributes and options
 
 ```yml
-domain:
+node:
+  kind: domain
   id: DOM-001
   name:
     en: Urban Mobility
@@ -15,7 +16,8 @@ domain:
 
 | Attribute | Type | Required | Description |
 | --- | --- | ---: | --- |
-| `domain` | object | ✓ | Top-level ODPC Domain object. |
+| `node` | object | ✓ | Top-level standalone node wrapper. |
+| `kind` | string | ✓ | `domain`. |
 | `id` | string | ✓ | Stable domain identifier. |
 | `name` | language-tagged string | ✓ | Human-readable domain name. |
 | `description` | language-tagged string | ✓ | Domain purpose and scope. |

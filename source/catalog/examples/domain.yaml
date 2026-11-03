@@ -1,4 +1,5 @@
-domain:
+node:
+  kind: domain
   id: DOM-001
   name:
     en: Urban Mobility

@@ -5,7 +5,8 @@ The `Capability` object defines a reusable business or technical capability in a
 ## Mandatory attributes and options
 
 ```yml
-capability:
+node:
+  kind: capability
   id: CAP-001
   name:
     en: Traffic Demand Forecasting
@@ -15,7 +16,8 @@ capability:
 
 | Attribute | Type | Required | Description |
 | --- | --- | ---: | --- |
-| `capability` | object | ✓ | Top-level ODPC Capability object. |
+| `node` | object | ✓ | Top-level standalone node wrapper. |
+| `kind` | string | ✓ | `capability`. |
 | `id` | string | ✓ | Stable capability identifier. |
 | `name` | language-tagged string | ✓ | Human-readable capability name. |
 | `description` | language-tagged string | ✓ | Capability discovery description. |

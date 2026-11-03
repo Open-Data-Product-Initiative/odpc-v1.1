@@ -5,7 +5,8 @@ The `API` object defines a reusable service interface in an ODPC catalog. It ali
 ## Mandatory attributes and options
 
 ```yml
-api:
+node:
+  kind: api
   id: API-001
   name:
     en: Traffic Conditions API
@@ -15,7 +16,8 @@ api:
 
 | Attribute | Type | Required | Description |
 | --- | --- | ---: | --- |
-| `api` | object | ✓ | Top-level ODPC API object. |
+| `node` | object | ✓ | Top-level standalone node wrapper. |
+| `kind` | string | ✓ | `api`. |
 | `id` | string | ✓ | Stable API identifier. |
 | `name` | language-tagged string | ✓ | Human-readable API name. |
 | `description` | language-tagged string | ✓ | API discovery description. |

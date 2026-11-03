@@ -108,21 +108,12 @@ class AgentScriptsTest(unittest.TestCase):
             generated = yaml.safe_load(output_path.read_text(encoding="utf-8"))
             self.assertEqual(generated["kind"], "Catalog")
             self.assertEqual(generated["catalog"]["metadata"]["id"], "CAT-GENERATED")
-            self.assertEqual(len(generated["catalog"]["productReferences"]), 1)
-            self.assertEqual(len(generated["catalog"]["useCases"]), 1)
-            self.assertEqual(len(generated["catalog"]["businessObjectives"]), 1)
-            self.assertEqual(len(generated["catalog"]["signals"]), 1)
-            for collection in [
-                "domains",
-                "datasets",
-                "apis",
-                "policies",
-                "workflows",
-                "agents",
-                "capabilities",
-                "strategicOpportunities",
-            ]:
-                self.assertEqual(len(generated["catalog"][collection]), 1)
+            nodes = generated["catalog"]["nodes"]
+            self.assertEqual(len(nodes), 12)
+            self.assertEqual({node["kind"] for node in nodes}, {
+                "productReference", "useCase", "businessObjective", "signal", "domain", "dataset",
+                "api", "policy", "workflow", "agent", "capability", "strategicOpportunity",
+            })
 
     def test_build_catalog_uses_metadata_file_and_full_catalog_inputs(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -151,10 +142,7 @@ class AgentScriptsTest(unittest.TestCase):
             generated = yaml.safe_load(output_path.read_text(encoding="utf-8"))
             self.assertEqual(generated["catalog"]["metadata"]["id"], "CAT-META")
             self.assertEqual(generated["catalog"]["metadata"]["name"]["en"], "Metadata File Catalog")
-            self.assertEqual(len(generated["catalog"]["productReferences"]), 1)
-            self.assertEqual(len(generated["catalog"]["useCases"]), 1)
-            self.assertEqual(len(generated["catalog"]["businessObjectives"]), 1)
-            self.assertEqual(len(generated["catalog"]["signals"]), 1)
+            self.assertEqual(len(generated["catalog"]["nodes"]), 4)
 
     def test_build_catalog_turns_product_yaml_into_product_reference(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -195,7 +183,7 @@ class AgentScriptsTest(unittest.TestCase):
 
             self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
             generated = yaml.safe_load(output_path.read_text(encoding="utf-8"))
-            references = generated["catalog"]["productReferences"]
+            references = [node for node in generated["catalog"]["nodes"] if node["kind"] == "productReference"]
             self.assertEqual(len(references), 1)
             self.assertEqual(references[0]["productID"], "weather-observations")
             self.assertEqual(references[0]["productVersion"], "2.0.0")
@@ -271,6 +259,65 @@ class AgentScriptsTest(unittest.TestCase):
             self.assertIn("<title>Custom Catalog</title>", html)
             self.assertIn("Increasing Event Demand", html)
             self.assertNotIn("{{ signals }}", html)
+
+    def test_migrate_catalog_nodes_converts_legacy_collections(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            input_path = Path(tmp_dir) / "legacy.yaml"
+            output_path = Path(tmp_dir) / "catalog.yaml"
+            input_path.write_text(
+                "\n".join(
+                    [
+                        "schema: https://opendataproducts.org/odpc-v1.0/schema/odpc.yaml",
+                        'version: "1.0"',
+                        "kind: Catalog",
+                        "catalog:",
+                        "  metadata:",
+                        "    id: CAT-LEGACY",
+                        "    name:",
+                        "      en: Legacy Catalog",
+                        "    description:",
+                        "      en: Legacy collection-based catalog.",
+                        "  productReferences:",
+                        "    - id: DP-001",
+                        "      productID: events",
+                        '      productVersion: "1.0.0"',
+                        "      name:",
+                        "        en: Events",
+                        "      description:",
+                        "        en: Event data.",
+                        "      productModel:",
+                        "        standard: ODPS",
+                        '        version: "4.1"',
+                        "        format: yaml",
+                        "        $ref: ./events.yaml",
+                        "  signals:",
+                        "    - id: SIG-001",
+                        "      name:",
+                        "        en: Demand",
+                        "      description:",
+                        "        en: Demand signal.",
+                        "      type: demand",
+                        "      source:",
+                        "        origin: internal",
+                        "        method: review",
+                        "      observedAt: 2026-01-01T00:00:00Z",
+                    ]
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            result = run_script(
+                "scripts/migrate_catalog_nodes.py",
+                str(input_path),
+                "--output",
+                str(output_path),
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+            migrated = yaml.safe_load(output_path.read_text(encoding="utf-8"))
+            nodes = migrated["catalog"]["nodes"]
+            self.assertEqual({node["kind"] for node in nodes}, {"productReference", "signal"})
+            self.assertNotIn("productReferences", migrated["catalog"])
 
 
 if __name__ == "__main__":

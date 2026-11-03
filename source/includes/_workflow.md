@@ -5,7 +5,8 @@ The `Workflow` object defines a reusable business or technical workflow in an OD
 ## Mandatory attributes and options
 
 ```yml
-workflow:
+node:
+  kind: workflow
   id: WF-001
   name:
     en: Incident Response Workflow
@@ -15,7 +16,8 @@ workflow:
 
 | Attribute | Type | Required | Description |
 | --- | --- | ---: | --- |
-| `workflow` | object | ✓ | Top-level ODPC Workflow object. |
+| `node` | object | ✓ | Top-level standalone node wrapper. |
+| `kind` | string | ✓ | `workflow`. |
 | `id` | string | ✓ | Stable workflow identifier. |
 | `name` | language-tagged string | ✓ | Human-readable workflow name. |
 | `description` | language-tagged string | ✓ | Workflow discovery description. |

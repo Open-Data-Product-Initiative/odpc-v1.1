@@ -19,7 +19,8 @@ By defining product references as catalog objects, ODPC supports product discove
 > Example of productReference object usage:
 
 ```yml
-productReference:
+node:
+  kind: productReference
   id: DP-001
   productID: urbanpulse-events
   productVersion: "1.0.0"
@@ -37,7 +38,8 @@ productReference:
 
 | Attribute               | Type   | Options                           | Description                                                                                      |
 | ----------------------- | ------ | --------------------------------- | ------------------------------------------------------------------------------------------------ |
-| `productReference`      | object | required                          | Top-level object that defines a lightweight catalog reference to a data product.                 |
+| `node`                  | object | required                          | Top-level standalone node wrapper.                 |
+| `kind`                  | string | required                          | `productReference`.                 |
 | `id`                    | string | required                          | Stable identifier for the product reference inside ODPC.                                         |
 | `productID`             | string | required                          | Product identifier aligned with the referenced data product.                                     |
 | `productVersion`        | string | required                          | Version of the data product shown in the catalog.                                                |
@@ -58,7 +60,8 @@ productReference:
 > Example of productReference object usage:
 
 ```yml
-productReference:
+node:
+  kind: productReference
   id: DP-001
   productID: urbanpulse-events
   productVersion: "1.0.0"

@@ -47,7 +47,8 @@ Example files:
 Agent-oriented source scripts:
 - scripts/check_agent_artifacts.py checks schema alignment, example files, object JSONL records, and llms.txt references.
 - scripts/generate_catalog_artifacts.py regenerates derived catalog artifacts such as source/schema/odpc.json from canonical source/schema/odpc.yaml. Use `python scripts/generate_catalog_artifacts.py --check` to detect drift.
-- scripts/build_catalog.py builds one ODPC catalog from a folder of standalone ProductReference, UseCase, BusinessObjective, Signal, metadata, ODPS product, or full catalog YAML/JSON files. Use `python scripts/build_catalog.py ./inputs --output catalog.yaml`. Add `--html catalog.html` to render a browser-viewable page, and `--html-template source/catalog/templates/catalog.html` or another HTML file to control the look and feel.
+- scripts/build_catalog.py builds one ODPC catalog with a unified `catalog.nodes` array from standalone node, metadata, ODPS product, or full catalog YAML/JSON files. Use `python scripts/build_catalog.py ./inputs --output catalog.yaml`. Add `--html catalog.html` to render a browser-viewable page, and `--html-template source/catalog/templates/catalog.html` or another HTML file to control the look and feel.
+- scripts/migrate_catalog_nodes.py migrates a legacy collection-based catalog into the canonical `catalog.nodes` structure. Use `python scripts/migrate_catalog_nodes.py legacy.yaml --output catalog.yaml`.
 - scripts/search_objects.py searches /catalog/objects.jsonl by keyword or exact object id. Use `--json` for machine-readable results.
 - scripts/validate_catalog.py validates ODPC YAML or JSON catalog files against /schema/odpc.yaml. Install dependencies with `python -m pip install -r scripts/requirements-agent.txt`.
 - scripts/explain_catalog.py summarizes an ODPC catalog file for humans or AI agents, including object counts, ids, graph reference, and modeling hints.
@@ -59,7 +60,7 @@ Knowledge base:
 - https://opendataproducts.org/howto/
 
 Core ODPC objects:
-- Catalog: top-level portfolio container for organizing product references, use cases, business objectives, signals, and catalog metadata such as ownership, scope, lifecycle status, tags, and graph implementation reference.
+- Catalog: top-level portfolio container for metadata and a unified `nodes` array of reusable catalog objects.
 - ProductReference: lightweight catalog reference to a data product. It identifies the product and points to the authoritative product definition through productModel. Detailed product metadata belongs in ODPS or another referenced product model.
 - UseCase: reusable demand-side object describing a business, operational, analytical, policy, or user need that data products may support.
 - BusinessObjective: reusable outcome object describing a higher-level business, operational, policy, or strategic objective. KPIs are nested inside BusinessObjective, not defined as top-level ODPC objects.
@@ -103,7 +104,7 @@ Object selection guidance:
 - Use BusinessObjective when describing measurable strategic, policy, business, or operational outcomes.
 - Use KPI only inside BusinessObjective.kpis when measuring progress toward an objective.
 - Use Signal when describing evidence that may affect discovery, prioritization, risk assessment, opportunity detection, or portfolio planning.
-- Use `domains`, `datasets`, `apis`, `policies`, `workflows`, `agents`, `capabilities`, or `strategicOpportunities` only for the matching top-level ODPC object type. Point to an authoritative source through `$ref` when one exists.
+- Use `node.kind` to select the ODPC object type. Point to an authoritative source through `$ref` when one exists.
 - Use [ODPG](https://opendataproducts.org/odpg-v1.0/) relationships when connecting products, use cases, objectives, KPIs, signals, providers, consumers, or governance concepts.
 
 Modeling constraints:

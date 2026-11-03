@@ -91,7 +91,7 @@ def check_schema():
     assert "product" not in json_schema["properties"], "JSON schema must not use product root"
 
     catalog = schema["$defs"][schema["properties"]["catalog"]["$ref"].split("/")[-1]]
-    assert catalog["required"] == ["metadata"], "Catalog must require metadata"
+    assert catalog["required"] == ["metadata", "nodes"], "Catalog must require metadata and nodes"
     assert "metadata" in catalog["properties"], "Catalog must define metadata"
     assert "meta" not in catalog["properties"], "Catalog must not define meta"
     metadata = schema["$defs"][catalog["properties"]["metadata"]["$ref"].split("/")[-1]]
@@ -102,21 +102,9 @@ def check_schema():
     assert graph_reference["required"] == ["standard", "version", "$ref"], "GraphReference must require $ref"
     assert "$ref" in graph_reference["properties"], "GraphReference must define $ref"
     assert "uri" not in graph_reference["properties"], "GraphReference must not define uri"
-    for collection in [
-        "productReferences",
-        "useCases",
-        "businessObjectives",
-        "signals",
-        "domains",
-        "datasets",
-        "apis",
-        "policies",
-        "workflows",
-        "agents",
-        "capabilities",
-        "strategicOpportunities",
-    ]:
-        assert collection in catalog["properties"], f"Catalog missing {collection}"
+    assert list(catalog["properties"]) == ["metadata", "nodes"], "Catalog must use a unified nodes collection"
+    assert catalog["required"] == ["metadata", "nodes"], "Catalog must require nodes"
+    assert "Node" in schema["$defs"], "Schema must define a discriminated Node object"
 
 
 def check_examples():
@@ -141,10 +129,11 @@ def check_examples():
     assert "tags" not in full, "full catalog example must not put tags at catalog root"
     assert "$ref" in full["metadata"]["graph"], "full catalog example graph must use $ref"
     assert "uri" not in full["metadata"]["graph"], "full catalog example graph must not use uri"
-    assert_named_object(full["productReferences"][0], "DP-", "productReferences[0]")
-    assert_named_object(full["useCases"][0], "UC-", "useCases[0]")
-    assert_named_object(full["businessObjectives"][0], "BO-", "businessObjectives[0]")
-    assert_named_object(full["signals"][0], "SIG-", "signals[0]")
+    nodes = {item["kind"]: item for item in full["nodes"]}
+    assert_named_object(nodes["productReference"], "DP-", "nodes.productReference")
+    assert_named_object(nodes["useCase"], "UC-", "nodes.useCase")
+    assert_named_object(nodes["businessObjective"], "BO-", "nodes.businessObjective")
+    assert_named_object(nodes["signal"], "SIG-", "nodes.signal")
 
     examples = {
         "domain.yaml": ("domain", "DOM-"),
@@ -157,7 +146,9 @@ def check_examples():
         "strategic-opportunity.yaml": ("strategicOpportunity", "SO-"),
     }
     for filename, (object_name, prefix) in examples.items():
-        item = load_yaml(EXAMPLES_DIR / filename)[object_name]
+        node = load_yaml(EXAMPLES_DIR / filename)["node"]
+        assert node["kind"] == object_name, f"Expected {object_name} node kind"
+        item = node
         assert_named_object(item, prefix, object_name)
         assert "$ref" in item, f"{object_name} must include an authoritative reference"
 

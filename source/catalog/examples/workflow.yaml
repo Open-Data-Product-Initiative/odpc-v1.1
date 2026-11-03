@@ -1,4 +1,5 @@
-workflow:
+node:
+  kind: workflow
   id: WF-001
   name:
     en: Incident Response Workflow

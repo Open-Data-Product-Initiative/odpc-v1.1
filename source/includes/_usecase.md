@@ -20,7 +20,8 @@ By defining use cases as reusable catalog objects, ODPC enables discovery, prior
 > Example of useCase object usage:
 
 ```yml
-useCase:
+node:
+  kind: useCase
   id: UC-001
   name:
     en: Predictive Maintenance for Aircraft Fleet
@@ -31,7 +32,8 @@ useCase:
 
 | Attribute        | Type   | Options                           | Description                                                         |
 | ---------------- | ------ | --------------------------------- | ------------------------------------------------------------------- |
-| `useCase`        | object | required                          | Top-level object that defines a use case in ODPC.                   |
+| `node`           | object | required                          | Top-level standalone node wrapper.                   |
+| `kind`           | string | required                          | `useCase`.                   |
 | `id`             | string | required                          | Stable identifier for the use case.                                 |
 | `name`           | object | required, language-tagged strings | Human-readable use case name.                                       |
 | `name.en`        | string | required                          | English name of the use case.                                       |
@@ -44,7 +46,8 @@ useCase:
 > Example of useCase object usage:
 
 ```yml
-useCase:
+node:
+  kind: useCase
   id: UC-001
   name:
     en: Predictive Maintenance for Healthcare Revenue Growth

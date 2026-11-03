@@ -1,4 +1,5 @@
-capability:
+node:
+  kind: capability
   id: CAP-001
   name:
     en: Traffic Demand Forecasting

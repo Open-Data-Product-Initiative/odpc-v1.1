@@ -5,7 +5,8 @@ The `Dataset` object defines a reusable dataset resource in an ODPC catalog. It 
 ## Mandatory attributes and options
 
 ```yml
-dataset:
+node:
+  kind: dataset
   id: DS-001
   name:
     en: Traffic Sensor Observations
@@ -15,7 +16,8 @@ dataset:
 
 | Attribute | Type | Required | Description |
 | --- | --- | ---: | --- |
-| `dataset` | object | ✓ | Top-level ODPC Dataset object. |
+| `node` | object | ✓ | Top-level standalone node wrapper. |
+| `kind` | string | ✓ | `dataset`. |
 | `id` | string | ✓ | Stable dataset identifier. |
 | `name` | language-tagged string | ✓ | Human-readable dataset name. |
 | `description` | language-tagged string | ✓ | Dataset discovery description. |

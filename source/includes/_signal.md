@@ -20,7 +20,8 @@ By defining signals as reusable catalog objects, ODPC supports opportunity disco
 > Example of catalog object usage:
 
 ```yml
-signal:
+node:
+  kind: signal
   id: SIG-001
   name:
     en: Competitors expanding real-time event intelligence
@@ -38,7 +39,8 @@ signal:
 
 | Attribute        | Type     | Required | Description                                                                                  |
 | ---------------- | -------- | -------: | -------------------------------------------------------------------------------------------- |
-| `signal`         | object   |        ✓ | Top-level object that defines an ODPC signal.                                                |
+| `node`           | object   |        ✓ | Top-level standalone node wrapper.                                                |
+| `kind`           | string   |        ✓ | `signal`.                                                |
 | `id`             | string   |        ✓ | Stable identifier for the signal.                                                            |
 | `name`           | object   |        ✓ | Human-readable signal name using language-tagged strings.                                    |
 | `name.en`        | string   |        ✓ | English signal name.                                                                         |
@@ -71,7 +73,8 @@ signal:
 > Example of catalog object usage:
 
 ```yml
-signal:
+node:
+  kind: signal
   id: SIG-TRAFFIC-CONGESTION-001
   name:
     en: Increasing Traffic Congestion During Peak Hours

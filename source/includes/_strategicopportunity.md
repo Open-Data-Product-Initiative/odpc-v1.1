@@ -5,7 +5,8 @@ The `StrategicOpportunity` object defines a reusable declared or inferred strate
 ## Mandatory attributes and options
 
 ```yml
-strategicOpportunity:
+node:
+  kind: strategicOpportunity
   id: SO-001
   name:
     en: Event-aware Mobility Planning
@@ -15,7 +16,8 @@ strategicOpportunity:
 
 | Attribute | Type | Required | Description |
 | --- | --- | ---: | --- |
-| `strategicOpportunity` | object | ✓ | Top-level ODPC StrategicOpportunity object. |
+| `node` | object | ✓ | Top-level standalone node wrapper. |
+| `kind` | string | ✓ | `strategicOpportunity`. |
 | `id` | string | ✓ | Stable opportunity identifier. |
 | `name` | language-tagged string | ✓ | Human-readable opportunity name. |
 | `description` | language-tagged string | ✓ | Opportunity discovery description. |

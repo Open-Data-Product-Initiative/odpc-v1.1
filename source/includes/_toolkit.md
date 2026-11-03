@@ -44,9 +44,9 @@ Use ODPV when stable vocabulary terms or relationship names are needed.
 | [`objects.jsonl`](/catalog/objects.jsonl) | JSONL | Agent-friendly one-object-per-line file for retrieval, classification, and lightweight tools |
 | [`minimal.yaml`](/catalog/examples/minimal.yaml) | YAML | Minimal valid ODPC catalog example |
 | [`full.yaml`](/catalog/examples/full.yaml) | YAML | Full catalog example with product references, use cases, business objectives, KPIs, and signals |
-| [`product-reference.yaml`](/catalog/examples/product-reference.yaml) | YAML | Standalone ProductReference example |
-| [`use-case.yaml`](/catalog/examples/use-case.yaml) | YAML | Standalone UseCase example |
-| [`business-objective-with-kpis.yaml`](/catalog/examples/business-objective-with-kpis.yaml) | YAML | Standalone BusinessObjective example with nested KPIs |
+| [`product-reference.yaml`](/catalog/examples/product-reference.yaml) | YAML | Standalone `node` with `kind: productReference` |
+| [`use-case.yaml`](/catalog/examples/use-case.yaml) | YAML | Standalone `node` with `kind: useCase` |
+| [`business-objective-with-kpis.yaml`](/catalog/examples/business-objective-with-kpis.yaml) | YAML | Standalone `node` with `kind: businessObjective` and nested KPIs |
 | [`domain.yaml`](/catalog/examples/domain.yaml) | YAML | Standalone Domain example |
 | [`dataset.yaml`](/catalog/examples/dataset.yaml) | YAML | Standalone Dataset example |
 | [`api.yaml`](/catalog/examples/api.yaml) | YAML | Standalone API example |
@@ -63,7 +63,8 @@ Agent-oriented helper scripts are available in the source repository for maintai
 When working from the source repository, use scripts/search_objects.py for repeatable local ODPC object lookup.
 Use scripts/search_objects.py --json when another tool or agent will consume the result.
 Use scripts/validate_catalog.py to validate ODPC YAML or JSON catalog files against source/schema/odpc.yaml.
-Use scripts/build_catalog.py to generate one ODPC catalog from a folder of standalone ProductReference, UseCase, BusinessObjective, Signal, metadata, ODPS product, or full catalog YAML files.
+Use scripts/build_catalog.py to generate one ODPC catalog with a unified `catalog.nodes` array from standalone node, metadata, ODPS product, or full catalog YAML files.
+Use scripts/migrate_catalog_nodes.py to migrate a legacy collection-based catalog into the unified node structure.
 Use scripts/build_catalog.py --html to also generate a standalone browser-viewable catalog page; use --html-template to apply a custom editable HTML template.
 Use scripts/check_agent_artifacts.py in CI or review workflows to detect drift between schema, catalog artifacts, examples, and llms.txt.
 Use scripts/generate_catalog_artifacts.py after editing source/schema/odpc.yaml to regenerate source/schema/odpc.json; use --check in CI or review workflows.

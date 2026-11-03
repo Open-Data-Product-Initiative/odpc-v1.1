@@ -17,7 +17,8 @@ By defining objectives as catalog objects, ODPC supports prioritization, investm
 > Example of BusinessObjective object usage:
 
 ```yml
-businessObjective:
+node:
+  kind: businessObjective
   id: BO-001
   name:
     en: Improve Urban Mobility Efficiency
@@ -41,7 +42,8 @@ businessObjective:
 > Example of BusinessObjective object usage:
 
 ```yml
-businessObjective:
+node:
+  kind: businessObjective
   id: BO-001
   name:
     en: Improve Urban Mobility Efficiency

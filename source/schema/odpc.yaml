@@ -50,8 +50,9 @@ $defs:
     type: object
     description: Reusable ODPC domain object aligned with an ODPG Domain node.
     additionalProperties: false
-    required: [id, name, description]
+    required: [kind, id, name, description]
     properties:
+      kind: {const: domain}
       id: {type: string, minLength: 1}
       name: {$ref: "#/$defs/LanguageString"}
       description: {$ref: "#/$defs/LanguageString"}
@@ -63,8 +64,9 @@ $defs:
     type: object
     description: Reusable ODPC dataset object aligned with an ODPG Dataset node.
     additionalProperties: false
-    required: [id, name, description]
+    required: [kind, id, name, description]
     properties:
+      kind: {const: dataset}
       id: {type: string, minLength: 1}
       name: {$ref: "#/$defs/LanguageString"}
       description: {$ref: "#/$defs/LanguageString"}
@@ -76,8 +78,9 @@ $defs:
     type: object
     description: Reusable ODPC API object aligned with an ODPG API node.
     additionalProperties: false
-    required: [id, name, description]
+    required: [kind, id, name, description]
     properties:
+      kind: {const: api}
       id: {type: string, minLength: 1}
       name: {$ref: "#/$defs/LanguageString"}
       description: {$ref: "#/$defs/LanguageString"}
@@ -89,8 +92,9 @@ $defs:
     type: object
     description: Reusable ODPC policy object aligned with an ODPG Policy node.
     additionalProperties: false
-    required: [id, name, description]
+    required: [kind, id, name, description]
     properties:
+      kind: {const: policy}
       id: {type: string, minLength: 1}
       name: {$ref: "#/$defs/LanguageString"}
       description: {$ref: "#/$defs/LanguageString"}
@@ -102,8 +106,9 @@ $defs:
     type: object
     description: Reusable ODPC workflow object aligned with an ODPG Workflow node.
     additionalProperties: false
-    required: [id, name, description]
+    required: [kind, id, name, description]
     properties:
+      kind: {const: workflow}
       id: {type: string, minLength: 1}
       name: {$ref: "#/$defs/LanguageString"}
       description: {$ref: "#/$defs/LanguageString"}
@@ -115,8 +120,9 @@ $defs:
     type: object
     description: Reusable ODPC agent object aligned with an ODPG Agent node.
     additionalProperties: false
-    required: [id, name, description]
+    required: [kind, id, name, description]
     properties:
+      kind: {const: agent}
       id: {type: string, minLength: 1}
       name: {$ref: "#/$defs/LanguageString"}
       description: {$ref: "#/$defs/LanguageString"}
@@ -128,8 +134,9 @@ $defs:
     type: object
     description: Reusable ODPC capability object aligned with an ODPG Capability node.
     additionalProperties: false
-    required: [id, name, description]
+    required: [kind, id, name, description]
     properties:
+      kind: {const: capability}
       id: {type: string, minLength: 1}
       name: {$ref: "#/$defs/LanguageString"}
       description: {$ref: "#/$defs/LanguageString"}
@@ -141,8 +148,9 @@ $defs:
     type: object
     description: Reusable ODPC strategic opportunity object aligned with an ODPG StrategicOpportunity node.
     additionalProperties: false
-    required: [id, name, description]
+    required: [kind, id, name, description]
     properties:
+      kind: {const: strategicOpportunity}
       id: {type: string, minLength: 1}
       name: {$ref: "#/$defs/LanguageString"}
       description: {$ref: "#/$defs/LanguageString"}
@@ -222,6 +230,7 @@ $defs:
     type: object
     additionalProperties: false
     required:
+      - kind
       - id
       - productID
       - productVersion
@@ -229,6 +238,8 @@ $defs:
       - description
       - productModel
     properties:
+      kind:
+        const: productReference
       id:
         type: string
         minLength: 1
@@ -298,10 +309,13 @@ $defs:
     type: object
     additionalProperties: false
     required:
+      - kind
       - id
       - name
       - description
     properties:
+      kind:
+        const: useCase
       id:
         type: string
         minLength: 1
@@ -434,10 +448,13 @@ $defs:
     type: object
     additionalProperties: false
     required:
+      - kind
       - id
       - name
       - description
     properties:
+      kind:
+        const: businessObjective
       id:
         type: string
         minLength: 1
@@ -493,6 +510,7 @@ $defs:
     type: object
     additionalProperties: false
     required:
+      - kind
       - id
       - name
       - description
@@ -500,6 +518,8 @@ $defs:
       - source
       - observedAt
     properties:
+      kind:
+        const: signal
       id:
         type: string
         minLength: 1
@@ -671,56 +691,29 @@ $defs:
     additionalProperties: false
     required:
       - metadata
+      - nodes
     properties:
       metadata:
         $ref: "#/$defs/CatalogMeta"
-      productReferences:
+      nodes:
         type: array
         items:
-          $ref: "#/$defs/ProductReference"
-      useCases:
-        type: array
-        items:
-          $ref: "#/$defs/UseCase"
-      businessObjectives:
-        type: array
-        items:
-          $ref: "#/$defs/BusinessObjective"
-      signals:
-        type: array
-        items:
-          $ref: "#/$defs/Signal"
-      domains:
-        type: array
-        items:
-          $ref: "#/$defs/Domain"
-      datasets:
-        type: array
-        items:
-          $ref: "#/$defs/Dataset"
-      apis:
-        type: array
-        items:
-          $ref: "#/$defs/API"
-      policies:
-        type: array
-        items:
-          $ref: "#/$defs/Policy"
-      workflows:
-        type: array
-        items:
-          $ref: "#/$defs/Workflow"
-      agents:
-        type: array
-        items:
-          $ref: "#/$defs/Agent"
-      capabilities:
-        type: array
-        items:
-          $ref: "#/$defs/Capability"
-      strategicOpportunities:
-        type: array
-        items:
-          $ref: "#/$defs/StrategicOpportunity"
+          $ref: "#/$defs/Node"
     patternProperties:
       "^x-": {}
+
+  Node:
+    description: A catalog item discriminated by its `kind` attribute.
+    oneOf:
+      - $ref: "#/$defs/ProductReference"
+      - $ref: "#/$defs/UseCase"
+      - $ref: "#/$defs/BusinessObjective"
+      - $ref: "#/$defs/Signal"
+      - $ref: "#/$defs/Domain"
+      - $ref: "#/$defs/Dataset"
+      - $ref: "#/$defs/API"
+      - $ref: "#/$defs/Policy"
+      - $ref: "#/$defs/Workflow"
+      - $ref: "#/$defs/Agent"
+      - $ref: "#/$defs/Capability"
+      - $ref: "#/$defs/StrategicOpportunity"

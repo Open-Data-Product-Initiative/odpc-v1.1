@@ -6,15 +6,19 @@ from pathlib import Path
 import yaml
 
 
-ODPG_CORE_COLLECTIONS = (
-    ("domains", "Domains", "Domain"),
-    ("datasets", "Datasets", "Dataset"),
-    ("apis", "APIs", "API"),
-    ("policies", "Policies", "Policy"),
-    ("workflows", "Workflows", "Workflow"),
-    ("agents", "Agents", "Agent"),
-    ("capabilities", "Capabilities", "Capability"),
-    ("strategicOpportunities", "Strategic opportunities", "Strategic opportunity"),
+NODE_KINDS = (
+    ("productReference", "Product references", "Product reference"),
+    ("useCase", "Use cases", "Use case"),
+    ("businessObjective", "Business objectives", "Business objective"),
+    ("signal", "Signals", "Signal"),
+    ("domain", "Domains", "Domain"),
+    ("dataset", "Datasets", "Dataset"),
+    ("api", "APIs", "API"),
+    ("policy", "Policies", "Policy"),
+    ("workflow", "Workflows", "Workflow"),
+    ("agent", "Agents", "Agent"),
+    ("capability", "Capabilities", "Capability"),
+    ("strategicOpportunity", "Strategic opportunities", "Strategic opportunity"),
 )
 
 
@@ -45,9 +49,9 @@ def lang_en(value, fallback="(unnamed)"):
     return fallback
 
 
-def count_items(catalog, key):
-    value = catalog.get(key, [])
-    return len(value) if isinstance(value, list) else 0
+def nodes_by_kind(catalog, kind):
+    nodes = catalog.get("nodes", []) if isinstance(catalog, dict) else []
+    return [node for node in nodes if isinstance(node, dict) and node.get("kind") == kind]
 
 
 def collect_ids(items):
@@ -66,11 +70,10 @@ def render_summary(document, path):
         f"Catalog id: {metadata.get('id', '(missing)')}",
         f"Catalog name: {lang_en(metadata.get('name'))}",
         f"Status: {metadata.get('status', '(not set)')}",
-        f"Product references: {count_items(catalog, 'productReferences')}",
-        f"Use cases: {count_items(catalog, 'useCases')}",
-        f"Business objectives: {count_items(catalog, 'businessObjectives')}",
-        f"Signals: {count_items(catalog, 'signals')}",
     ]
+    for kind, label, singular in NODE_KINDS:
+        nodes = nodes_by_kind(catalog, kind)
+        lines.append(f"{label}: {len(nodes)}")
 
     graph = metadata.get("graph")
     if isinstance(graph, dict):
@@ -78,24 +81,18 @@ def render_summary(document, path):
     else:
         lines.append("Graph: (not set)")
 
-    ids = {
-        "Product reference ids": collect_ids(catalog.get("productReferences", [])),
-        "Use case ids": collect_ids(catalog.get("useCases", [])),
-        "Business objective ids": collect_ids(catalog.get("businessObjectives", [])),
-        "Signal ids": collect_ids(catalog.get("signals", [])),
-    }
-    for collection, label, singular in ODPG_CORE_COLLECTIONS:
-        count = count_items(catalog, collection)
-        if count:
-            lines.append(f"{label}: {count}")
-            ids[f"{singular} ids"] = collect_ids(catalog.get(collection, []))
+    ids = {}
+    for kind, _label, singular in NODE_KINDS:
+        values = collect_ids(nodes_by_kind(catalog, kind))
+        if values:
+            ids[f"{singular} ids"] = values
     for label, values in ids.items():
         if values:
             lines.append(f"{label}: {', '.join(values)}")
 
     hints = []
-    if count_items(catalog, "productReferences") == 0:
-        hints.append("No productReferences found; add ProductReference objects when cataloging data products.")
+    if not nodes_by_kind(catalog, "productReference"):
+        hints.append("No productReference nodes found; add one when cataloging data products.")
     if graph is None:
         hints.append("No graph reference found; use Catalog.metadata.graph when relationships are implemented in ODPG or another graph standard.")
     if hints:

@@ -1,4 +1,5 @@
-strategicOpportunity:
+node:
+  kind: strategicOpportunity
   id: SO-001
   name:
     en: Event-aware Mobility Planning
