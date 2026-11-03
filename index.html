@@ -414,6 +414,9 @@
                   <li>
                     <a href="#shared-metadata-for-new-odpg-aligned-nodes" class="toc-h2 toc-link" data-title="Shared metadata for new ODPG-aligned nodes">Shared metadata for new ODPG-aligned nodes</a>
                   </li>
+                  <li>
+                    <a href="#cross-object-attribute-patterns" class="toc-h2 toc-link" data-title="Cross-object attribute patterns">Cross-object attribute patterns</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -1430,6 +1433,44 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <td>Search and filtering labels.</td>
 </tr>
 </tbody></table>
+<h2 id='cross-object-attribute-patterns'>Cross-object attribute patterns</h2>
+<p>ODPC uses the same shape for repeated catalog concepts wherever their meaning is the same. This avoids making tools interpret equivalent metadata differently across object kinds.</p>
+
+<table><thead>
+<tr>
+<th>Attribute pattern</th>
+<th>Shared shape</th>
+<th>Notes</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>owner</code></td>
+<td><code>organization</code>, <code>team</code>, <code>role</code></td>
+<td>Used for catalog, product, objective, and supported ODPG-aligned node ownership.</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>array of strings</td>
+<td>Used for catalog discovery and filtering.</td>
+</tr>
+<tr>
+<td><code>$ref</code></td>
+<td>local path or URI string</td>
+<td>Used for an authoritative external definition. <code>metadata.graph.$ref</code> remains URI-only because a graph declaration must be remotely resolvable.</td>
+</tr>
+<tr>
+<td><code>priority</code></td>
+<td><code>low</code>, <code>medium</code>, <code>high</code>, <code>critical</code></td>
+<td>Used by product references, use cases, and business objectives.</td>
+</tr>
+<tr>
+<td>lifecycle <code>status</code></td>
+<td>context-specific controlled value</td>
+<td>Catalog and new ODPG-aligned nodes use <code>draft</code>, <code>active</code>, <code>deprecated</code>, and <code>retired</code>. Use cases and objectives retain <code>paused</code> and <code>completed</code>; signals retain their evidence-review states.</td>
+</tr>
+</tbody></table>
+
+<p>The <code>version</code> attribute identifies the version of the object or contract in the context where it appears. It does not replace the ODPC specification <code>version</code> at the catalog root.</p>
 <h1 id='odpc-productreference'>ODPC ProductReference</h1>
 <p>The <code>ProductReference</code> object defines a lightweight catalog reference to a data product. It identifies the product, provides the key information needed for catalog discovery, and points to the authoritative product definition through <code>productModel</code>.</p>
 

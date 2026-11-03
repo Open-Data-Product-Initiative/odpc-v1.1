@@ -60,7 +60,7 @@
         }
       }
     },
-    "CatalogNodeStatus": {
+    "LifecycleStatus": {
       "type": "string",
       "description": "Catalog lifecycle status for reusable ODPG-aligned nodes.",
       "enum": [
@@ -69,6 +69,49 @@
         "deprecated",
         "retired"
       ]
+    },
+    "WorkItemStatus": {
+      "type": "string",
+      "description": "Lifecycle status for use cases and business objectives.",
+      "enum": [
+        "draft",
+        "active",
+        "paused",
+        "completed",
+        "retired"
+      ]
+    },
+    "Priority": {
+      "type": "string",
+      "description": "Relative portfolio importance.",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
+    },
+    "TagList": {
+      "type": "array",
+      "description": "Keywords used for search, grouping, and filtering.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "Reference": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Local path or URI that resolves to an authoritative external definition."
+    },
+    "UriReference": {
+      "type": "string",
+      "format": "uri",
+      "minLength": 1,
+      "description": "URI that resolves to an authoritative external definition."
+    },
+    "Date": {
+      "type": "string",
+      "format": "date"
     },
     "Domain": {
       "type": "object",
@@ -107,16 +150,13 @@
           "$ref": "#/$defs/Owner"
         },
         "status": {
-          "$ref": "#/$defs/CatalogNodeStatus"
+          "$ref": "#/$defs/LifecycleStatus"
         },
         "$ref": {
-          "type": "string"
+          "$ref": "#/$defs/Reference"
         },
         "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "$ref": "#/$defs/TagList"
         }
       },
       "patternProperties": {
@@ -186,16 +226,13 @@
           "$ref": "#/$defs/Owner"
         },
         "status": {
-          "$ref": "#/$defs/CatalogNodeStatus"
+          "$ref": "#/$defs/LifecycleStatus"
         },
         "$ref": {
-          "type": "string"
+          "$ref": "#/$defs/Reference"
         },
         "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "$ref": "#/$defs/TagList"
         }
       },
       "patternProperties": {
@@ -256,16 +293,13 @@
           "$ref": "#/$defs/Owner"
         },
         "status": {
-          "$ref": "#/$defs/CatalogNodeStatus"
+          "$ref": "#/$defs/LifecycleStatus"
         },
         "$ref": {
-          "type": "string"
+          "$ref": "#/$defs/Reference"
         },
         "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "$ref": "#/$defs/TagList"
         }
       },
       "patternProperties": {
@@ -309,12 +343,10 @@
           ]
         },
         "effectiveFrom": {
-          "type": "string",
-          "format": "date"
+          "$ref": "#/$defs/Date"
         },
         "effectiveTo": {
-          "type": "string",
-          "format": "date"
+          "$ref": "#/$defs/Date"
         },
         "enforcement": {
           "type": "string",
@@ -328,16 +360,13 @@
           "$ref": "#/$defs/Owner"
         },
         "status": {
-          "$ref": "#/$defs/CatalogNodeStatus"
+          "$ref": "#/$defs/LifecycleStatus"
         },
         "$ref": {
-          "type": "string"
+          "$ref": "#/$defs/Reference"
         },
         "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "$ref": "#/$defs/TagList"
         }
       },
       "patternProperties": {
@@ -394,16 +423,13 @@
           "$ref": "#/$defs/Owner"
         },
         "status": {
-          "$ref": "#/$defs/CatalogNodeStatus"
+          "$ref": "#/$defs/LifecycleStatus"
         },
         "$ref": {
-          "type": "string"
+          "$ref": "#/$defs/Reference"
         },
         "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "$ref": "#/$defs/TagList"
         }
       },
       "patternProperties": {
@@ -459,16 +485,13 @@
           "$ref": "#/$defs/Owner"
         },
         "status": {
-          "$ref": "#/$defs/CatalogNodeStatus"
+          "$ref": "#/$defs/LifecycleStatus"
         },
         "$ref": {
-          "type": "string"
+          "$ref": "#/$defs/Reference"
         },
         "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "$ref": "#/$defs/TagList"
         }
       },
       "patternProperties": {
@@ -521,16 +544,13 @@
           "$ref": "#/$defs/Owner"
         },
         "status": {
-          "$ref": "#/$defs/CatalogNodeStatus"
+          "$ref": "#/$defs/LifecycleStatus"
         },
         "$ref": {
-          "type": "string"
+          "$ref": "#/$defs/Reference"
         },
         "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "$ref": "#/$defs/TagList"
         }
       },
       "patternProperties": {
@@ -630,16 +650,13 @@
           "$ref": "#/$defs/Owner"
         },
         "status": {
-          "$ref": "#/$defs/CatalogNodeStatus"
+          "$ref": "#/$defs/LifecycleStatus"
         },
         "$ref": {
-          "type": "string"
+          "$ref": "#/$defs/Reference"
         },
         "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "$ref": "#/$defs/TagList"
         }
       },
       "patternProperties": {
@@ -691,8 +708,7 @@
           "type": "string"
         },
         "$ref": {
-          "type": "string",
-          "format": "uri"
+          "$ref": "#/$defs/UriReference"
         }
       },
       "patternProperties": {
@@ -727,7 +743,7 @@
           ]
         },
         "$ref": {
-          "type": "string"
+          "$ref": "#/$defs/Reference"
         }
       },
       "patternProperties": {
@@ -805,19 +821,10 @@
           }
         },
         "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "$ref": "#/$defs/TagList"
         },
         "portfolioPriority": {
-          "type": "string",
-          "enum": [
-            "low",
-            "medium",
-            "high",
-            "critical"
-          ]
+          "$ref": "#/$defs/Priority"
         },
         "governanceProfile": {
           "type": "string"
@@ -956,29 +963,13 @@
           }
         },
         "status": {
-          "type": "string",
-          "enum": [
-            "draft",
-            "active",
-            "paused",
-            "completed",
-            "retired"
-          ]
+          "$ref": "#/$defs/WorkItemStatus"
         },
         "priority": {
-          "type": "string",
-          "enum": [
-            "low",
-            "medium",
-            "high",
-            "critical"
-          ]
+          "$ref": "#/$defs/Priority"
         },
         "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "$ref": "#/$defs/TagList"
         }
       },
       "patternProperties": {
@@ -1087,12 +1078,10 @@
           "additionalProperties": false,
           "properties": {
             "startDate": {
-              "type": "string",
-              "format": "date"
+              "$ref": "#/$defs/Date"
             },
             "endDate": {
-              "type": "string",
-              "format": "date"
+              "$ref": "#/$defs/Date"
             }
           },
           "patternProperties": {
@@ -1100,23 +1089,10 @@
           }
         },
         "status": {
-          "type": "string",
-          "enum": [
-            "draft",
-            "active",
-            "paused",
-            "completed",
-            "retired"
-          ]
+          "$ref": "#/$defs/WorkItemStatus"
         },
         "priority": {
-          "type": "string",
-          "enum": [
-            "low",
-            "medium",
-            "high",
-            "critical"
-          ]
+          "$ref": "#/$defs/Priority"
         }
       },
       "patternProperties": {
@@ -1287,10 +1263,7 @@
           ]
         },
         "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "$ref": "#/$defs/TagList"
         }
       },
       "patternProperties": {
@@ -1347,22 +1320,13 @@
           "type": "string"
         },
         "status": {
-          "type": "string",
-          "enum": [
-            "draft",
-            "active",
-            "deprecated",
-            "retired"
-          ]
+          "$ref": "#/$defs/LifecycleStatus"
         },
         "graph": {
           "$ref": "#/$defs/GraphReference"
         },
         "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "$ref": "#/$defs/TagList"
         }
       },
       "patternProperties": {

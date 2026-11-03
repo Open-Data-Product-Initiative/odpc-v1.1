@@ -46,7 +46,7 @@ $defs:
       "^x-":
         description: Implementation-specific extension property.
 
-  CatalogNodeStatus:
+  LifecycleStatus:
     type: string
     description: Catalog lifecycle status for reusable ODPG-aligned nodes.
     enum:
@@ -54,6 +54,37 @@ $defs:
       - active
       - deprecated
       - retired
+
+  WorkItemStatus:
+    type: string
+    description: Lifecycle status for use cases and business objectives.
+    enum: [draft, active, paused, completed, retired]
+
+  Priority:
+    type: string
+    description: Relative portfolio importance.
+    enum: [low, medium, high, critical]
+
+  TagList:
+    type: array
+    description: Keywords used for search, grouping, and filtering.
+    items:
+      type: string
+
+  Reference:
+    type: string
+    minLength: 1
+    description: Local path or URI that resolves to an authoritative external definition.
+
+  UriReference:
+    type: string
+    format: uri
+    minLength: 1
+    description: URI that resolves to an authoritative external definition.
+
+  Date:
+    type: string
+    format: date
 
   Domain:
     type: object
@@ -69,9 +100,9 @@ $defs:
         type: string
         enum: [business, organizational, data, technical]
       owner: {$ref: "#/$defs/Owner"}
-      status: {$ref: "#/$defs/CatalogNodeStatus"}
-      "$ref": {type: string}
-      tags: {type: array, items: {type: string}}
+      status: {$ref: "#/$defs/LifecycleStatus"}
+      "$ref": {$ref: "#/$defs/Reference"}
+      tags: {$ref: "#/$defs/TagList"}
     patternProperties: {"^x-": {}}
 
   Dataset:
@@ -95,9 +126,9 @@ $defs:
         type: string
         enum: [open, authenticated, restricted]
       owner: {$ref: "#/$defs/Owner"}
-      status: {$ref: "#/$defs/CatalogNodeStatus"}
-      "$ref": {type: string}
-      tags: {type: array, items: {type: string}}
+      status: {$ref: "#/$defs/LifecycleStatus"}
+      "$ref": {$ref: "#/$defs/Reference"}
+      tags: {$ref: "#/$defs/TagList"}
     patternProperties: {"^x-": {}}
 
   API:
@@ -119,9 +150,9 @@ $defs:
         type: string
         enum: [open, authenticated, restricted]
       owner: {$ref: "#/$defs/Owner"}
-      status: {$ref: "#/$defs/CatalogNodeStatus"}
-      "$ref": {type: string}
-      tags: {type: array, items: {type: string}}
+      status: {$ref: "#/$defs/LifecycleStatus"}
+      "$ref": {$ref: "#/$defs/Reference"}
+      tags: {$ref: "#/$defs/TagList"}
     patternProperties: {"^x-": {}}
 
   Policy:
@@ -137,15 +168,15 @@ $defs:
       type:
         type: string
         enum: [access, privacy, security, retention, quality, usage, compliance]
-      effectiveFrom: {type: string, format: date}
-      effectiveTo: {type: string, format: date}
+      effectiveFrom: {$ref: "#/$defs/Date"}
+      effectiveTo: {$ref: "#/$defs/Date"}
       enforcement:
         type: string
         enum: [manual, automated, mixed]
       owner: {$ref: "#/$defs/Owner"}
-      status: {$ref: "#/$defs/CatalogNodeStatus"}
-      "$ref": {type: string}
-      tags: {type: array, items: {type: string}}
+      status: {$ref: "#/$defs/LifecycleStatus"}
+      "$ref": {$ref: "#/$defs/Reference"}
+      tags: {$ref: "#/$defs/TagList"}
     patternProperties: {"^x-": {}}
 
   Workflow:
@@ -166,9 +197,9 @@ $defs:
         enum: [manual, schedule, event, api]
       version: {type: string, minLength: 1}
       owner: {$ref: "#/$defs/Owner"}
-      status: {$ref: "#/$defs/CatalogNodeStatus"}
-      "$ref": {type: string}
-      tags: {type: array, items: {type: string}}
+      status: {$ref: "#/$defs/LifecycleStatus"}
+      "$ref": {$ref: "#/$defs/Reference"}
+      tags: {$ref: "#/$defs/TagList"}
     patternProperties: {"^x-": {}}
 
   Agent:
@@ -189,9 +220,9 @@ $defs:
         type: string
         enum: [assistive, supervised, autonomous]
       owner: {$ref: "#/$defs/Owner"}
-      status: {$ref: "#/$defs/CatalogNodeStatus"}
-      "$ref": {type: string}
-      tags: {type: array, items: {type: string}}
+      status: {$ref: "#/$defs/LifecycleStatus"}
+      "$ref": {$ref: "#/$defs/Reference"}
+      tags: {$ref: "#/$defs/TagList"}
     patternProperties: {"^x-": {}}
 
   Capability:
@@ -211,9 +242,9 @@ $defs:
         type: string
         enum: [planned, emerging, established, retiring]
       owner: {$ref: "#/$defs/Owner"}
-      status: {$ref: "#/$defs/CatalogNodeStatus"}
-      "$ref": {type: string}
-      tags: {type: array, items: {type: string}}
+      status: {$ref: "#/$defs/LifecycleStatus"}
+      "$ref": {$ref: "#/$defs/Reference"}
+      tags: {$ref: "#/$defs/TagList"}
     patternProperties: {"^x-": {}}
 
   StrategicOpportunity:
@@ -250,9 +281,9 @@ $defs:
         type: string
         enum: [nearTerm, mediumTerm, longTerm]
       owner: {$ref: "#/$defs/Owner"}
-      status: {$ref: "#/$defs/CatalogNodeStatus"}
-      "$ref": {type: string}
-      tags: {type: array, items: {type: string}}
+      status: {$ref: "#/$defs/LifecycleStatus"}
+      "$ref": {$ref: "#/$defs/Reference"}
+      tags: {$ref: "#/$defs/TagList"}
     patternProperties: {"^x-": {}}
 
   Owner:
@@ -291,8 +322,7 @@ $defs:
       version:
         type: string
       "$ref":
-        type: string
-        format: uri
+        $ref: "#/$defs/UriReference"
     patternProperties:
       "^x-": {}
 
@@ -319,7 +349,7 @@ $defs:
           - api
           - other
       "$ref":
-        type: string
+        $ref: "#/$defs/Reference"
     patternProperties:
       "^x-": {}
 
@@ -376,16 +406,9 @@ $defs:
         items:
           type: string
       tags:
-        type: array
-        items:
-          type: string
+        $ref: "#/$defs/TagList"
       portfolioPriority:
-        type: string
-        enum:
-          - low
-          - medium
-          - high
-          - critical
+        $ref: "#/$defs/Priority"
       governanceProfile:
         type: string
       owner:
@@ -483,24 +506,11 @@ $defs:
         patternProperties:
           "^x-": {}
       status:
-        type: string
-        enum:
-          - draft
-          - active
-          - paused
-          - completed
-          - retired
+        $ref: "#/$defs/WorkItemStatus"
       priority:
-        type: string
-        enum:
-          - low
-          - medium
-          - high
-          - critical
+        $ref: "#/$defs/Priority"
       tags:
-        type: array
-        items:
-          type: string
+        $ref: "#/$defs/TagList"
     patternProperties:
       "^x-": {}
 
@@ -578,28 +588,15 @@ $defs:
         additionalProperties: false
         properties:
           startDate:
-            type: string
-            format: date
+            $ref: "#/$defs/Date"
           endDate:
-            type: string
-            format: date
+            $ref: "#/$defs/Date"
         patternProperties:
           "^x-": {}
       status:
-        type: string
-        enum:
-          - draft
-          - active
-          - paused
-          - completed
-          - retired
+        $ref: "#/$defs/WorkItemStatus"
       priority:
-        type: string
-        enum:
-          - low
-          - medium
-          - high
-          - critical
+        $ref: "#/$defs/Priority"
     patternProperties:
       "^x-": {}
 
@@ -726,9 +723,7 @@ $defs:
           - converted
           - archived
       tags:
-        type: array
-        items:
-          type: string
+        $ref: "#/$defs/TagList"
     patternProperties:
       "^x-": {}
 
@@ -768,18 +763,11 @@ $defs:
       version:
         type: string
       status:
-        type: string
-        enum:
-          - draft
-          - active
-          - deprecated
-          - retired
+        $ref: "#/$defs/LifecycleStatus"
       graph:
         $ref: "#/$defs/GraphReference"
       tags:
-        type: array
-        items:
-          type: string
+        $ref: "#/$defs/TagList"
     patternProperties:
       "^x-": {}
 
