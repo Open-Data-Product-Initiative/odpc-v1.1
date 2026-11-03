@@ -5,4 +5,16 @@ node:
     en: Traffic Conditions API
   description:
     en: Service interface for current traffic conditions.
+  type: rest
+  version: "1.4.0"
+  endpoint: https://api.example.org/traffic/v1
+  access: authenticated
+  owner:
+    organization: Example Transport Authority
+    team: Digital Services
+    role: API Owner
+  status: active
   $ref: https://example.org/apis/traffic-conditions/openapi.yaml
+  tags:
+    - traffic
+    - conditions

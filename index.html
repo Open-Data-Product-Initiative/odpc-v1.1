@@ -410,6 +410,11 @@
           </li>
           <li>
             <a href="#odpc-node" class="toc-h1 toc-link" data-title="ODPC Node">ODPC Node</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#shared-metadata-for-new-odpg-aligned-nodes" class="toc-h2 toc-link" data-title="Shared metadata for new ODPG-aligned nodes">Shared metadata for new ODPG-aligned nodes</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#odpc-productreference" class="toc-h1 toc-link" data-title="ODPC ProductReference">ODPC ProductReference</a>
@@ -464,6 +469,9 @@
                   <li>
                     <a href="#mandatory-attributes-and-options" class="toc-h2 toc-link" data-title="Mandatory attributes and options">Mandatory attributes and options</a>
                   </li>
+                  <li>
+                    <a href="#optional-attributes-and-options" class="toc-h2 toc-link" data-title="Optional attributes and options">Optional attributes and options</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -471,6 +479,9 @@
               <ul class="toc-list-h2">
                   <li>
                     <a href="#mandatory-attributes-and-options" class="toc-h2 toc-link" data-title="Mandatory attributes and options">Mandatory attributes and options</a>
+                  </li>
+                  <li>
+                    <a href="#optional-attributes-and-options" class="toc-h2 toc-link" data-title="Optional attributes and options">Optional attributes and options</a>
                   </li>
               </ul>
           </li>
@@ -480,6 +491,9 @@
                   <li>
                     <a href="#mandatory-attributes-and-options" class="toc-h2 toc-link" data-title="Mandatory attributes and options">Mandatory attributes and options</a>
                   </li>
+                  <li>
+                    <a href="#optional-attributes-and-options" class="toc-h2 toc-link" data-title="Optional attributes and options">Optional attributes and options</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -487,6 +501,9 @@
               <ul class="toc-list-h2">
                   <li>
                     <a href="#mandatory-attributes-and-options" class="toc-h2 toc-link" data-title="Mandatory attributes and options">Mandatory attributes and options</a>
+                  </li>
+                  <li>
+                    <a href="#optional-attributes-and-options" class="toc-h2 toc-link" data-title="Optional attributes and options">Optional attributes and options</a>
                   </li>
               </ul>
           </li>
@@ -496,6 +513,9 @@
                   <li>
                     <a href="#mandatory-attributes-and-options" class="toc-h2 toc-link" data-title="Mandatory attributes and options">Mandatory attributes and options</a>
                   </li>
+                  <li>
+                    <a href="#optional-attributes-and-options" class="toc-h2 toc-link" data-title="Optional attributes and options">Optional attributes and options</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -503,6 +523,9 @@
               <ul class="toc-list-h2">
                   <li>
                     <a href="#mandatory-attributes-and-options" class="toc-h2 toc-link" data-title="Mandatory attributes and options">Mandatory attributes and options</a>
+                  </li>
+                  <li>
+                    <a href="#optional-attributes-and-options" class="toc-h2 toc-link" data-title="Optional attributes and options">Optional attributes and options</a>
                   </li>
               </ul>
           </li>
@@ -512,6 +535,9 @@
                   <li>
                     <a href="#mandatory-attributes-and-options" class="toc-h2 toc-link" data-title="Mandatory attributes and options">Mandatory attributes and options</a>
                   </li>
+                  <li>
+                    <a href="#optional-attributes-and-options" class="toc-h2 toc-link" data-title="Optional attributes and options">Optional attributes and options</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -519,6 +545,9 @@
               <ul class="toc-list-h2">
                   <li>
                     <a href="#mandatory-attributes-and-options" class="toc-h2 toc-link" data-title="Mandatory attributes and options">Mandatory attributes and options</a>
+                  </li>
+                  <li>
+                    <a href="#optional-attributes-and-options" class="toc-h2 toc-link" data-title="Optional attributes and options">Optional attributes and options</a>
                   </li>
               </ul>
           </li>
@@ -1355,6 +1384,52 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 </tbody></table>
 
 <p>Standalone catalog-item files use a root <code>node</code> object. Inside a full catalog, use the same object directly in <code>catalog.nodes</code> without the extra root wrapper.</p>
+<h2 id='shared-metadata-for-new-odpg-aligned-nodes'>Shared metadata for new ODPG-aligned nodes</h2>
+<p>The <code>domain</code>, <code>dataset</code>, <code>api</code>, <code>policy</code>, <code>workflow</code>, <code>agent</code>, <code>capability</code>, and <code>strategicOpportunity</code> nodes may use the following common optional attributes. They describe the node itself; links to other nodes belong in ODPG edges.</p>
+
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>owner</code></td>
+<td>object</td>
+<td>Accountable organization, team, and role.</td>
+</tr>
+<tr>
+<td><code>owner.organization</code></td>
+<td>string</td>
+<td>Accountable organization.</td>
+</tr>
+<tr>
+<td><code>owner.team</code></td>
+<td>string</td>
+<td>Accountable team.</td>
+</tr>
+<tr>
+<td><code>owner.role</code></td>
+<td>string</td>
+<td>Accountable role.</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>string</td>
+<td>Catalog lifecycle: <code>draft</code>, <code>active</code>, <code>deprecated</code>, or <code>retired</code>.</td>
+</tr>
+<tr>
+<td><code>$ref</code></td>
+<td>string</td>
+<td>Authoritative external definition.</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>array of strings</td>
+<td>Search and filtering labels.</td>
+</tr>
+</tbody></table>
 <h1 id='odpc-productreference'>ODPC ProductReference</h1>
 <p>The <code>ProductReference</code> object defines a lightweight catalog reference to a data product. It identifies the product, provides the key information needed for catalog discovery, and points to the authoritative product definition through <code>productModel</code>.</p>
 
@@ -2561,7 +2636,7 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 </tr>
 </tbody></table>
 <h1 id='odpc-domain'>ODPC Domain</h1>
-<p>The <code>Domain</code> object defines a reusable business, organizational, technical, or data domain in an ODPC catalog. It aligns with the ODPG <code>Domain</code> node type.</p>
+<p>The <code>Domain</code> object defines a reusable business, organizational, data, or technical domain in an ODPC catalog. It aligns with the ODPG <code>Domain</code> node type. Domain hierarchy and connections to other catalog objects belong in <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a>.</p>
 <h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
   <span class="na">kind</span><span class="pi">:</span> <span class="s">domain</span>
   <span class="na">id</span><span class="pi">:</span> <span class="s">DOM-001</span>
@@ -2608,23 +2683,49 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <td style="text-align: right">✓</td>
 <td>Domain purpose and scope.</td>
 </tr>
+</tbody></table>
+<h2 id='optional-attributes-and-options'>Optional attributes and options</h2>
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Options</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>type</code></td>
+<td>string</td>
+<td><code>business</code>, <code>organizational</code>, <code>data</code>, <code>technical</code></td>
+<td>Nature of the domain.</td>
+</tr>
+<tr>
+<td><code>owner</code></td>
+<td>object</td>
+<td>optional</td>
+<td>Accountable organization, team, and role.</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>string</td>
+<td><code>draft</code>, <code>active</code>, <code>deprecated</code>, <code>retired</code></td>
+<td>Catalog lifecycle status.</td>
+</tr>
 <tr>
 <td><code>$ref</code></td>
 <td>string</td>
-<td style="text-align: right"></td>
+<td>optional</td>
 <td>Authoritative domain definition.</td>
 </tr>
 <tr>
 <td><code>tags</code></td>
 <td>array of strings</td>
-<td style="text-align: right"></td>
+<td>optional</td>
 <td>Discovery and filtering labels.</td>
 </tr>
 </tbody></table>
-
-<p>Relationships between domains and other objects belong in <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a>.</p>
 <h1 id='odpc-dataset'>ODPC Dataset</h1>
-<p>The <code>Dataset</code> object defines a reusable dataset resource in an ODPC catalog. It aligns with the ODPG <code>Dataset</code> node type and does not replace a full dataset specification.</p>
+<p>The <code>Dataset</code> object defines a reusable dataset resource in an ODPC catalog. It aligns with the ODPG <code>Dataset</code> node type and does not replace a full dataset specification. APIs that expose the dataset are separate <code>API</code> nodes connected through ODPG.</p>
 <h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
   <span class="na">kind</span><span class="pi">:</span> <span class="s">dataset</span>
   <span class="na">id</span><span class="pi">:</span> <span class="s">DS-001</span>
@@ -2671,23 +2772,67 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <td style="text-align: right">✓</td>
 <td>Dataset discovery description.</td>
 </tr>
+</tbody></table>
+<h2 id='optional-attributes-and-options'>Optional attributes and options</h2>
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Options</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>version</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Version of this dataset definition or release.</td>
+</tr>
+<tr>
+<td><code>frequency</code></td>
+<td>string</td>
+<td><code>realTime</code>, <code>hourly</code>, <code>daily</code>, <code>weekly</code>, <code>monthly</code>, <code>quarterly</code>, <code>annual</code>, <code>irregular</code>, <code>static</code></td>
+<td>Expected update cadence.</td>
+</tr>
+<tr>
+<td><code>classification</code></td>
+<td>string</td>
+<td><code>public</code>, <code>internal</code>, <code>confidential</code>, <code>restricted</code></td>
+<td>Sensitivity classification of the dataset content.</td>
+</tr>
+<tr>
+<td><code>access</code></td>
+<td>string</td>
+<td><code>open</code>, <code>authenticated</code>, <code>restricted</code></td>
+<td>How a consumer may obtain the dataset.</td>
+</tr>
+<tr>
+<td><code>owner</code></td>
+<td>object</td>
+<td>optional</td>
+<td>Accountable organization, team, and role.</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>string</td>
+<td><code>draft</code>, <code>active</code>, <code>deprecated</code>, <code>retired</code></td>
+<td>Catalog lifecycle status.</td>
+</tr>
 <tr>
 <td><code>$ref</code></td>
 <td>string</td>
-<td style="text-align: right"></td>
+<td>optional</td>
 <td>Authoritative dataset definition.</td>
 </tr>
 <tr>
 <td><code>tags</code></td>
 <td>array of strings</td>
-<td style="text-align: right"></td>
+<td>optional</td>
 <td>Discovery and filtering labels.</td>
 </tr>
 </tbody></table>
-
-<p>Relationships between datasets and other objects belong in <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a>.</p>
 <h1 id='odpc-api'>ODPC API</h1>
-<p>The <code>API</code> object defines a reusable service interface in an ODPC catalog. It aligns with the ODPG <code>API</code> node type and should point to an authoritative API definition when one exists.</p>
+<p>The <code>API</code> object defines a reusable service interface in an ODPC catalog. It aligns with the ODPG <code>API</code> node type and should point to an authoritative API definition when one exists. Operations, schemas, authentication details, and service-to-dataset relationships remain in that definition or ODPG.</p>
 <h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
   <span class="na">kind</span><span class="pi">:</span> <span class="s">api</span>
   <span class="na">id</span><span class="pi">:</span> <span class="s">API-001</span>
@@ -2734,23 +2879,67 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <td style="text-align: right">✓</td>
 <td>API discovery description.</td>
 </tr>
+</tbody></table>
+<h2 id='optional-attributes-and-options'>Optional attributes and options</h2>
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Options</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>type</code></td>
+<td>string</td>
+<td><code>rest</code>, <code>graphql</code>, <code>grpc</code>, <code>event</code>, <code>other</code></td>
+<td>Interface style.</td>
+</tr>
+<tr>
+<td><code>version</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Version of the exposed API contract.</td>
+</tr>
+<tr>
+<td><code>endpoint</code></td>
+<td>URI</td>
+<td>optional</td>
+<td>Base endpoint for the live service.</td>
+</tr>
+<tr>
+<td><code>access</code></td>
+<td>string</td>
+<td><code>open</code>, <code>authenticated</code>, <code>restricted</code></td>
+<td>Access expectation, not a detailed security contract.</td>
+</tr>
+<tr>
+<td><code>owner</code></td>
+<td>object</td>
+<td>optional</td>
+<td>Accountable organization, team, and role.</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>string</td>
+<td><code>draft</code>, <code>active</code>, <code>deprecated</code>, <code>retired</code></td>
+<td>Catalog lifecycle status.</td>
+</tr>
 <tr>
 <td><code>$ref</code></td>
 <td>string</td>
-<td style="text-align: right"></td>
-<td>Authoritative API definition, such as OpenAPI.</td>
+<td>optional</td>
+<td>Authoritative API definition, such as OpenAPI or AsyncAPI.</td>
 </tr>
 <tr>
 <td><code>tags</code></td>
 <td>array of strings</td>
-<td style="text-align: right"></td>
+<td>optional</td>
 <td>Discovery and filtering labels.</td>
 </tr>
 </tbody></table>
-
-<p>Relationships between APIs and other objects belong in <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a>.</p>
 <h1 id='odpc-policy'>ODPC Policy</h1>
-<p>The <code>Policy</code> object defines a reusable governance, compliance, security, or quality policy in an ODPC catalog. It aligns with the ODPG <code>Policy</code> node type.</p>
+<p>The <code>Policy</code> object defines a reusable governance, compliance, security, or quality policy in an ODPC catalog. It aligns with the ODPG <code>Policy</code> node type. Policy rules, targets, duties, and governed objects belong in the authoritative policy definition and ODPG.</p>
 <h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
   <span class="na">kind</span><span class="pi">:</span> <span class="s">policy</span>
   <span class="na">id</span><span class="pi">:</span> <span class="s">POL-001</span>
@@ -2797,23 +2986,67 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <td style="text-align: right">✓</td>
 <td>Policy discovery description.</td>
 </tr>
+</tbody></table>
+<h2 id='optional-attributes-and-options'>Optional attributes and options</h2>
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Options</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>type</code></td>
+<td>string</td>
+<td><code>access</code>, <code>privacy</code>, <code>security</code>, <code>retention</code>, <code>quality</code>, <code>usage</code>, <code>compliance</code></td>
+<td>Primary policy concern.</td>
+</tr>
+<tr>
+<td><code>effectiveFrom</code></td>
+<td>date</td>
+<td>optional</td>
+<td>Date from which the policy applies.</td>
+</tr>
+<tr>
+<td><code>effectiveTo</code></td>
+<td>date</td>
+<td>optional</td>
+<td>Date after which the policy no longer applies.</td>
+</tr>
+<tr>
+<td><code>enforcement</code></td>
+<td>string</td>
+<td><code>manual</code>, <code>automated</code>, <code>mixed</code></td>
+<td>How the policy is enforced.</td>
+</tr>
+<tr>
+<td><code>owner</code></td>
+<td>object</td>
+<td>optional</td>
+<td>Accountable organization, team, and role.</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>string</td>
+<td><code>draft</code>, <code>active</code>, <code>deprecated</code>, <code>retired</code></td>
+<td>Catalog lifecycle status.</td>
+</tr>
 <tr>
 <td><code>$ref</code></td>
 <td>string</td>
-<td style="text-align: right"></td>
+<td>optional</td>
 <td>Authoritative policy definition.</td>
 </tr>
 <tr>
 <td><code>tags</code></td>
 <td>array of strings</td>
-<td style="text-align: right"></td>
+<td>optional</td>
 <td>Discovery and filtering labels.</td>
 </tr>
 </tbody></table>
-
-<p>Relationships between policies and other objects belong in <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a>.</p>
 <h1 id='odpc-workflow'>ODPC Workflow</h1>
-<p>The <code>Workflow</code> object defines a reusable business or technical workflow in an ODPC catalog. It aligns with the ODPG <code>Workflow</code> node type.</p>
+<p>The <code>Workflow</code> object defines a reusable business or technical workflow in an ODPC catalog. It aligns with the ODPG <code>Workflow</code> node type. Workflow steps, participants, dependencies, and input/output relationships remain in the authoritative workflow definition and ODPG.</p>
 <h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
   <span class="na">kind</span><span class="pi">:</span> <span class="s">workflow</span>
   <span class="na">id</span><span class="pi">:</span> <span class="s">WF-001</span>
@@ -2860,23 +3093,61 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <td style="text-align: right">✓</td>
 <td>Workflow discovery description.</td>
 </tr>
+</tbody></table>
+<h2 id='optional-attributes-and-options'>Optional attributes and options</h2>
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Options</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>type</code></td>
+<td>string</td>
+<td><code>business</code>, <code>operational</code>, <code>data</code>, <code>automation</code></td>
+<td>Primary workflow purpose.</td>
+</tr>
+<tr>
+<td><code>trigger</code></td>
+<td>string</td>
+<td><code>manual</code>, <code>schedule</code>, <code>event</code>, <code>api</code></td>
+<td>How the workflow starts.</td>
+</tr>
+<tr>
+<td><code>version</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Version of the workflow definition.</td>
+</tr>
+<tr>
+<td><code>owner</code></td>
+<td>object</td>
+<td>optional</td>
+<td>Accountable organization, team, and role.</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>string</td>
+<td><code>draft</code>, <code>active</code>, <code>deprecated</code>, <code>retired</code></td>
+<td>Catalog lifecycle status.</td>
+</tr>
 <tr>
 <td><code>$ref</code></td>
 <td>string</td>
-<td style="text-align: right"></td>
-<td>Authoritative workflow definition.</td>
+<td>optional</td>
+<td>Authoritative workflow definition, such as BPMN or an orchestration definition.</td>
 </tr>
 <tr>
 <td><code>tags</code></td>
 <td>array of strings</td>
-<td style="text-align: right"></td>
+<td>optional</td>
 <td>Discovery and filtering labels.</td>
 </tr>
 </tbody></table>
-
-<p>Relationships between workflows and other objects belong in <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a>.</p>
 <h1 id='odpc-agent'>ODPC Agent</h1>
-<p>The <code>Agent</code> object defines a reusable AI agent or automation actor in an ODPC catalog. It aligns with the ODPG <code>Agent</code> node type.</p>
+<p>The <code>Agent</code> object defines a reusable AI, automation, human, or organizational actor in an ODPC catalog. It aligns with the ODPG <code>Agent</code> node type. Interfaces, credentials, skills, tools, prompts, and run-time settings remain in the authoritative agent definition.</p>
 <h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
   <span class="na">kind</span><span class="pi">:</span> <span class="s">agent</span>
   <span class="na">id</span><span class="pi">:</span> <span class="s">AGENT-001</span>
@@ -2923,23 +3194,61 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <td style="text-align: right">✓</td>
 <td>Agent discovery description.</td>
 </tr>
+</tbody></table>
+<h2 id='optional-attributes-and-options'>Optional attributes and options</h2>
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Options</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>type</code></td>
+<td>string</td>
+<td><code>ai</code>, <code>automation</code>, <code>human</code>, <code>organization</code></td>
+<td>Nature of the acting entity.</td>
+</tr>
+<tr>
+<td><code>version</code></td>
+<td>string</td>
+<td>optional</td>
+<td>Version of the agent definition or implementation.</td>
+</tr>
+<tr>
+<td><code>autonomy</code></td>
+<td>string</td>
+<td><code>assistive</code>, <code>supervised</code>, <code>autonomous</code></td>
+<td>Degree to which the agent may act without human approval.</td>
+</tr>
+<tr>
+<td><code>owner</code></td>
+<td>object</td>
+<td>optional</td>
+<td>Accountable organization, team, and role.</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>string</td>
+<td><code>draft</code>, <code>active</code>, <code>deprecated</code>, <code>retired</code></td>
+<td>Catalog lifecycle status.</td>
+</tr>
 <tr>
 <td><code>$ref</code></td>
 <td>string</td>
-<td style="text-align: right"></td>
-<td>Authoritative agent definition.</td>
+<td>optional</td>
+<td>Authoritative agent definition, such as an Agent Card.</td>
 </tr>
 <tr>
 <td><code>tags</code></td>
 <td>array of strings</td>
-<td style="text-align: right"></td>
+<td>optional</td>
 <td>Discovery and filtering labels.</td>
 </tr>
 </tbody></table>
-
-<p>Relationships between agents and other objects belong in <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a>.</p>
 <h1 id='odpc-capability'>ODPC Capability</h1>
-<p>The <code>Capability</code> object defines a reusable business or technical capability in an ODPC catalog. It aligns with the ODPG <code>Capability</code> node type.</p>
+<p>The <code>Capability</code> object defines a reusable business, data, technical, or AI capability in an ODPC catalog. It aligns with the ODPG <code>Capability</code> node type. Capability decomposition and relationships to enabling assets belong in ODPG.</p>
 <h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
   <span class="na">kind</span><span class="pi">:</span> <span class="s">capability</span>
   <span class="na">id</span><span class="pi">:</span> <span class="s">CAP-001</span>
@@ -2986,23 +3295,55 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <td style="text-align: right">✓</td>
 <td>Capability discovery description.</td>
 </tr>
+</tbody></table>
+<h2 id='optional-attributes-and-options'>Optional attributes and options</h2>
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Options</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>type</code></td>
+<td>string</td>
+<td><code>business</code>, <code>data</code>, <code>technical</code>, <code>ai</code></td>
+<td>Nature of the capability.</td>
+</tr>
+<tr>
+<td><code>maturity</code></td>
+<td>string</td>
+<td><code>planned</code>, <code>emerging</code>, <code>established</code>, <code>retiring</code></td>
+<td>Current maturity of the capability.</td>
+</tr>
+<tr>
+<td><code>owner</code></td>
+<td>object</td>
+<td>optional</td>
+<td>Accountable organization, team, and role.</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>string</td>
+<td><code>draft</code>, <code>active</code>, <code>deprecated</code>, <code>retired</code></td>
+<td>Catalog lifecycle status.</td>
+</tr>
 <tr>
 <td><code>$ref</code></td>
 <td>string</td>
-<td style="text-align: right"></td>
+<td>optional</td>
 <td>Authoritative capability definition.</td>
 </tr>
 <tr>
 <td><code>tags</code></td>
 <td>array of strings</td>
-<td style="text-align: right"></td>
+<td>optional</td>
 <td>Discovery and filtering labels.</td>
 </tr>
 </tbody></table>
-
-<p>Relationships between capabilities and other objects belong in <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a>.</p>
 <h1 id='odpc-strategicopportunity'>ODPC StrategicOpportunity</h1>
-<p>The <code>StrategicOpportunity</code> object defines a reusable declared or inferred strategic opportunity in an ODPC catalog. It aligns with the ODPG <code>StrategicOpportunity</code> node type.</p>
+<p>The <code>StrategicOpportunity</code> object defines a reusable declared or inferred strategic opportunity in an ODPC catalog. It aligns with the ODPG <code>StrategicOpportunity</code> node type. Supporting signals, affected capabilities, objectives, and product relationships belong in ODPG.</p>
 <h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
   <span class="na">kind</span><span class="pi">:</span> <span class="s">strategicOpportunity</span>
   <span class="na">id</span><span class="pi">:</span> <span class="s">SO-001</span>
@@ -3049,21 +3390,83 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <td style="text-align: right">✓</td>
 <td>Opportunity discovery description.</td>
 </tr>
+</tbody></table>
+<h2 id='optional-attributes-and-options'>Optional attributes and options</h2>
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Options</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>type</code></td>
+<td>string</td>
+<td><code>growth</code>, <code>efficiency</code>, <code>risk</code>, <code>compliance</code>, <code>innovation</code>, <code>customer</code></td>
+<td>Primary value or change theme.</td>
+</tr>
+<tr>
+<td><code>stage</code></td>
+<td>string</td>
+<td><code>identified</code>, <code>assessed</code>, <code>prioritized</code>, <code>pursuing</code>, <code>realized</code>, <code>declined</code></td>
+<td>Decision and realization stage.</td>
+</tr>
+<tr>
+<td><code>confidence</code></td>
+<td>string</td>
+<td><code>low</code>, <code>medium</code>, <code>high</code></td>
+<td>Confidence in the opportunity assessment.</td>
+</tr>
+<tr>
+<td><code>impact</code></td>
+<td>object</td>
+<td>optional</td>
+<td>Expected value and urgency.</td>
+</tr>
+<tr>
+<td><code>impact.valuePotential</code></td>
+<td>string</td>
+<td><code>low</code>, <code>medium</code>, <code>high</code>, <code>critical</code></td>
+<td>Estimated value potential.</td>
+</tr>
+<tr>
+<td><code>impact.urgency</code></td>
+<td>string</td>
+<td><code>low</code>, <code>medium</code>, <code>high</code>, <code>critical</code></td>
+<td>Estimated urgency.</td>
+</tr>
+<tr>
+<td><code>timeHorizon</code></td>
+<td>string</td>
+<td><code>nearTerm</code>, <code>mediumTerm</code>, <code>longTerm</code></td>
+<td>Expected horizon for realizing value.</td>
+</tr>
+<tr>
+<td><code>owner</code></td>
+<td>object</td>
+<td>optional</td>
+<td>Accountable organization, team, and role.</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>string</td>
+<td><code>draft</code>, <code>active</code>, <code>deprecated</code>, <code>retired</code></td>
+<td>Catalog lifecycle status, distinct from opportunity <code>stage</code>.</td>
+</tr>
 <tr>
 <td><code>$ref</code></td>
 <td>string</td>
-<td style="text-align: right"></td>
+<td>optional</td>
 <td>Authoritative opportunity definition.</td>
 </tr>
 <tr>
 <td><code>tags</code></td>
 <td>array of strings</td>
-<td style="text-align: right"></td>
+<td>optional</td>
 <td>Discovery and filtering labels.</td>
 </tr>
 </tbody></table>
-
-<p>Relationships between strategic opportunities and other objects belong in <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a>.</p>
 <h1 id='specification-extensions'>Specification extensions</h1>
 <p>While the Open Data Product Catalog Specification defines the core catalog objects and attributes, organizations may need to add implementation-specific metadata for local tools, internal workflows, or platform-specific requirements.</p>
 
