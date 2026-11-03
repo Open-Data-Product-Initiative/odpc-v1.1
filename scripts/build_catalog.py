@@ -110,7 +110,13 @@ def append_items(target, kind, items):
     if isinstance(items, list):
         for item in items:
             if isinstance(item, dict):
-                target["nodes"].append(item if kind is None else {**item, "kind": kind})
+                if kind is None:
+                    if isinstance(item.get("node"), dict):
+                        target["nodes"].append(item)
+                    else:
+                        target["nodes"].append({"node": item})
+                else:
+                    target["nodes"].append({"node": {**item, "kind": kind}})
 
 
 def as_lang_string(value, fallback):
@@ -168,16 +174,16 @@ def collect_document(document, source_path, input_dir, catalog, metadata_candida
 
     node = document.get("node")
     if isinstance(node, dict):
-        catalog["nodes"].append(node)
+        catalog["nodes"].append({"node": node})
 
     for object_key, kind in NODE_KINDS.items():
         item = document.get(object_key)
         if isinstance(item, dict):
-            catalog["nodes"].append({"kind": kind, **item})
+            catalog["nodes"].append({"node": {"kind": kind, **item}})
 
     product_reference = product_reference_from_product(document, source_path, input_dir)
     if product_reference:
-        catalog["nodes"].append(product_reference)
+        catalog["nodes"].append({"node": product_reference})
 
     for collection, kind in LEGACY_COLLECTIONS.items():
         append_items(catalog, kind, document.get(collection))
@@ -263,7 +269,7 @@ def render_tags(items):
 
 def nodes_by_kind(catalog, kind):
     nodes = catalog.get("nodes", []) if isinstance(catalog, dict) else []
-    return [node for node in nodes if isinstance(node, dict) and node.get("kind") == kind]
+    return [entry["node"] for entry in nodes if isinstance(entry, dict) and isinstance(entry.get("node"), dict) and entry["node"].get("kind") == kind]
 
 
 def render_card(item, fields):
@@ -459,7 +465,14 @@ def main(argv=None):
         return 1
 
     nodes = document["catalog"]["nodes"]
-    node_counts = {kind: sum(node.get("kind") == kind for node in nodes if isinstance(node, dict)) for kind in NODE_KINDS.values()}
+    node_counts = {
+        kind: sum(
+            entry.get("node", {}).get("kind") == kind
+            for entry in nodes
+            if isinstance(entry, dict) and isinstance(entry.get("node"), dict)
+        )
+        for kind in NODE_KINDS.values()
+    }
     print(
         "Generated "
         f"{args.output} "

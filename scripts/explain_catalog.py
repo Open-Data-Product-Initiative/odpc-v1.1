@@ -51,7 +51,7 @@ def lang_en(value, fallback="(unnamed)"):
 
 def nodes_by_kind(catalog, kind):
     nodes = catalog.get("nodes", []) if isinstance(catalog, dict) else []
-    return [node for node in nodes if isinstance(node, dict) and node.get("kind") == kind]
+    return [entry["node"] for entry in nodes if isinstance(entry, dict) and isinstance(entry.get("node"), dict) and entry["node"].get("kind") == kind]
 
 
 def collect_ids(items):

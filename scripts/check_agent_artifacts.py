@@ -104,7 +104,10 @@ def check_schema():
     assert "uri" not in graph_reference["properties"], "GraphReference must not define uri"
     assert list(catalog["properties"]) == ["metadata", "nodes"], "Catalog must use a unified nodes collection"
     assert catalog["required"] == ["metadata", "nodes"], "Catalog must require nodes"
-    assert "Node" in schema["$defs"], "Schema must define a discriminated Node object"
+    node = schema["$defs"].get("Node")
+    assert isinstance(node, dict), "Schema must define a Node envelope"
+    assert node["required"] == ["node"], "Each catalog entry must contain node"
+    assert "node" in node["properties"], "Node envelope must define node"
 
 
 def check_examples():
@@ -129,7 +132,8 @@ def check_examples():
     assert "tags" not in full, "full catalog example must not put tags at catalog root"
     assert "$ref" in full["metadata"]["graph"], "full catalog example graph must use $ref"
     assert "uri" not in full["metadata"]["graph"], "full catalog example graph must not use uri"
-    nodes = {item["kind"]: item for item in full["nodes"]}
+    assert all(set(item) == {"node"} for item in full["nodes"]), "Catalog nodes must use node envelopes"
+    nodes = {item["node"]["kind"]: item["node"] for item in full["nodes"]}
     assert_named_object(nodes["productReference"], "DP-", "nodes.productReference")
     assert_named_object(nodes["useCase"], "UC-", "nodes.useCase")
     assert_named_object(nodes["businessObjective"], "BO-", "nodes.businessObjective")

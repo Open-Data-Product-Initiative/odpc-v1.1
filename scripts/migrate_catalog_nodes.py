@@ -29,9 +29,15 @@ def migrate(document):
 
     catalog = document["catalog"]
     if "nodes" in catalog:
-        if not isinstance(catalog["nodes"], list):
+        existing_nodes = catalog["nodes"]
+        if not isinstance(existing_nodes, list):
             raise ValueError("catalog.nodes must be an array when present.")
-        return document, 0
+        if all(isinstance(entry, dict) and isinstance(entry.get("node"), dict) for entry in existing_nodes):
+            return document, 0
+        if not all(isinstance(entry, dict) for entry in existing_nodes):
+            raise ValueError("catalog.nodes entries must be objects.")
+        catalog["nodes"] = [{"node": entry} for entry in existing_nodes]
+        return document, len(existing_nodes)
 
     nodes = []
     for collection, kind in LEGACY_COLLECTIONS:
@@ -43,7 +49,7 @@ def migrate(document):
         for item in items:
             if not isinstance(item, dict):
                 raise ValueError(f"catalog.{collection} entries must be objects.")
-            nodes.append({**item, "kind": kind})
+            nodes.append({"node": {**item, "kind": kind}})
     catalog["nodes"] = nodes
     return document, len(nodes)
 

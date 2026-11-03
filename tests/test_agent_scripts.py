@@ -110,7 +110,8 @@ class AgentScriptsTest(unittest.TestCase):
             self.assertEqual(generated["catalog"]["metadata"]["id"], "CAT-GENERATED")
             nodes = generated["catalog"]["nodes"]
             self.assertEqual(len(nodes), 12)
-            self.assertEqual({node["kind"] for node in nodes}, {
+            self.assertTrue(all(set(entry) == {"node"} for entry in nodes))
+            self.assertEqual({entry["node"]["kind"] for entry in nodes}, {
                 "productReference", "useCase", "businessObjective", "signal", "domain", "dataset",
                 "api", "policy", "workflow", "agent", "capability", "strategicOpportunity",
             })
@@ -187,7 +188,11 @@ class AgentScriptsTest(unittest.TestCase):
 
             self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
             generated = yaml.safe_load(output_path.read_text(encoding="utf-8"))
-            references = [node for node in generated["catalog"]["nodes"] if node["kind"] == "productReference"]
+            references = [
+                entry["node"]
+                for entry in generated["catalog"]["nodes"]
+                if entry["node"]["kind"] == "productReference"
+            ]
             self.assertEqual(len(references), 1)
             self.assertEqual(references[0]["productID"], "weather-observations")
             self.assertEqual(references[0]["productVersion"], "2.0.0")
@@ -320,8 +325,55 @@ class AgentScriptsTest(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
             migrated = yaml.safe_load(output_path.read_text(encoding="utf-8"))
             nodes = migrated["catalog"]["nodes"]
-            self.assertEqual({node["kind"] for node in nodes}, {"productReference", "signal"})
+            self.assertEqual({entry["node"]["kind"] for entry in nodes}, {"productReference", "signal"})
+            self.assertTrue(all(set(entry) == {"node"} for entry in nodes))
             self.assertNotIn("productReferences", migrated["catalog"])
+
+    def test_migrate_catalog_nodes_wraps_flattened_nodes(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            input_path = Path(tmp_dir) / "flattened.yaml"
+            output_path = Path(tmp_dir) / "catalog.yaml"
+            input_path.write_text(
+                "\n".join(
+                    [
+                        "schema: https://opendataproducts.org/odpc-v1.0/schema/odpc.yaml",
+                        'version: "1.0"',
+                        "kind: Catalog",
+                        "catalog:",
+                        "  metadata:",
+                        "    id: CAT-FLATTENED",
+                        "    name:",
+                        "      en: Flattened catalog",
+                        "    description:",
+                        "      en: Catalog using flattened nodes.",
+                        "  nodes:",
+                        "    - kind: domain",
+                        "      id: DOM-001",
+                        "      name:",
+                        "        en: Mobility",
+                        "      description:",
+                        "        en: Mobility domain.",
+                    ]
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            result = run_script(
+                "scripts/migrate_catalog_nodes.py",
+                str(input_path),
+                "--output",
+                str(output_path),
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+            migrated = yaml.safe_load(output_path.read_text(encoding="utf-8"))
+            self.assertEqual(migrated["catalog"]["nodes"], [{"node": {
+                "kind": "domain",
+                "id": "DOM-001",
+                "name": {"en": "Mobility"},
+                "description": {"en": "Mobility domain."},
+            }}])
 
 
 if __name__ == "__main__":

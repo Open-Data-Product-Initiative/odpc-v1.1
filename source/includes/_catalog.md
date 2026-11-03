@@ -6,7 +6,7 @@ The `Catalog` object defines a reusable ODPC catalog. It provides the top-level 
 
 In ODPC, the `Catalog` object acts as the portfolio container. It helps organizations group related data products and demand-side objects around a domain, organization, geography, audience, or strategic theme.
 
-The `Catalog` object stores every reusable catalog item in one `nodes` array. Each node declares its object type through `kind`; the catalog can therefore include product references, use cases, business objectives, signals, domains, datasets, APIs, policies, workflows, agents, capabilities, and strategic opportunities in a uniform structure.
+The `Catalog` object stores every reusable catalog item in one `nodes` array. Each array entry contains one `node` object, which declares its object type through `kind`; the catalog can therefore include product references, use cases, business objectives, signals, domains, datasets, APIs, policies, workflows, agents, capabilities, and strategic opportunities in the same structure used by standalone node files.
 
 The `metadata.graph` attribute identifies the graph standard, version, and reference used for the catalog graph. The graph can be implemented with [ODPG](https://opendataproducts.org/odpg-v1.0/) or another supported graph standard, such as `RDF`, `JSON-LD`, `GraphML`, `openCypher`, `GQL`, `Gremlin`, `GraphSON`, or `GeoSPARQL`.
 
@@ -46,7 +46,7 @@ catalog:
 | `metadata.name.en` | string | ✓ | English catalog name. |
 | `metadata.description` | object | ✓ | Short explanation of the catalog purpose and scope using language-tagged strings. |
 | `metadata.description.en` | string | ✓ | English catalog description. |
-| `nodes` | array of objects | ✓ | Unified catalog items, each selected by its `kind`. |
+| `nodes` | array of objects | ✓ | Unified catalog entries. Each entry contains a `node` selected by its `kind`. |
 
 
 ## Optional attributes and options
@@ -91,45 +91,49 @@ catalog:
       - events
 
   nodes:
-    - kind: productReference
-      id: DP-001
-      productID: urbanpulse-events
-      productVersion: "1.0.0"
-      name:
-        en: UrbanPulse Events Data Product
-      description:
-        en: Data product providing event information for 
-            urban analytics and citizen services.
-      productModel:
-        standard: ODPS
-        version: "4.1"
-        format: yaml
-        $ref: ./products/urba/odps.yaml
+    - node:
+        kind: productReference
+        id: DP-001
+        productID: urbanpulse-events
+        productVersion: "1.0.0"
+        name:
+          en: UrbanPulse Events Data Product
+        description:
+          en: Data product providing event information for
+              urban analytics and citizen services.
+        productModel:
+          standard: ODPS
+          version: "4.1"
+          format: yaml
+          $ref: ./products/urba/odps.yaml
 
-    - kind: useCase
-      id: UC-001
-      name:
-        en: Event Demand Forecasting
-      description:
-        en: Forecast event-related demand to improve 
-            mobility planning and citizen services.
+    - node:
+        kind: useCase
+        id: UC-001
+        name:
+          en: Event Demand Forecasting
+        description:
+          en: Forecast event-related demand to improve
+              mobility planning and citizen services.
 
-    - kind: businessObjective
-      id: BO-001
-      name:
-        en: Improve Urban Mobility Efficiency
-      description:
-        en: Reduce travel delays and improve movement 
-            across the city through better data-driven 
-            planning and operations.
+    - node:
+        kind: businessObjective
+        id: BO-001
+        name:
+          en: Improve Urban Mobility Efficiency
+        description:
+          en: Reduce travel delays and improve movement
+              across the city through better data-driven
+              planning and operations.
 
-    - kind: signal
-      id: SIG-001
-      name:
-        en: Increasing Event Demand
-      description:
-        en: Indicates rising demand for event-related 
-            mobility and public service planning.
+    - node:
+        kind: signal
+        id: SIG-001
+        name:
+          en: Increasing Event Demand
+        description:
+          en: Indicates rising demand for event-related
+              mobility and public service planning.
 
 ```
 
@@ -150,4 +154,4 @@ catalog:
 | `metadata.graph.version` | string | ✓ when `metadata.graph` is used | Version of the graph standard. |
 | `metadata.graph.$ref` | string | ✓ when `metadata.graph` is used | File path or URL pointing to the graph definition. |
 | `metadata.tags` | array of strings |  | Keywords used for search, grouping, filtering, and portfolio analysis. |
-| `nodes` | array of objects | ✓ | Unified catalog items. Each node uses `kind` to select its object schema. |
+| `nodes` | array of objects | ✓ | Unified catalog entries. Each entry contains a `node`; `node.kind` selects its object schema. |

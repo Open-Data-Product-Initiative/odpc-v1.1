@@ -63,8 +63,8 @@ Agent-oriented helper scripts are available in the source repository for maintai
 When working from the source repository, use scripts/search_objects.py for repeatable local ODPC object lookup.
 Use scripts/search_objects.py --json when another tool or agent will consume the result.
 Use scripts/validate_catalog.py to validate ODPC YAML or JSON catalog files against source/schema/odpc.yaml.
-Use scripts/build_catalog.py to generate one ODPC catalog with a unified `catalog.nodes` array from standalone node, metadata, ODPS product, or full catalog YAML files.
-Use scripts/migrate_catalog_nodes.py to migrate a legacy collection-based catalog into the unified node structure.
+Use scripts/build_catalog.py to generate one ODPC catalog with a unified `catalog.nodes[]` array of `node` envelopes from standalone node, metadata, ODPS product, or full catalog YAML files.
+Use scripts/migrate_catalog_nodes.py to migrate a legacy collection-based or flattened-node catalog into the canonical `catalog.nodes[].node` structure.
 Use scripts/build_catalog.py --html to also generate a standalone browser-viewable catalog page; use --html-template to apply a custom editable HTML template.
 Use scripts/check_agent_artifacts.py in CI or review workflows to detect drift between schema, catalog artifacts, examples, and llms.txt.
 Use scripts/generate_catalog_artifacts.py after editing source/schema/odpc.yaml to regenerate source/schema/odpc.json; use --check in CI or review workflows.

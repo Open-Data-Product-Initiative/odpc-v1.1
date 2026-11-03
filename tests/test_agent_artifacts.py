@@ -61,6 +61,9 @@ class AgentArtifactsTest(unittest.TestCase):
         self.assertNotIn("uri", graph_reference["properties"])
         self.assertEqual(list(catalog["properties"]), ["metadata", "nodes"])
         self.assertIn("Node", schema["$defs"])
+        node = schema["$defs"]["Node"]
+        self.assertEqual(node["required"], ["node"])
+        self.assertIn("node", node["properties"])
 
     def test_examples_cover_minimal_full_and_each_core_object(self):
         expected = [
@@ -99,7 +102,8 @@ class AgentArtifactsTest(unittest.TestCase):
         self.assertNotIn("tags", catalog)
         self.assertIn("$ref", catalog["metadata"]["graph"])
         self.assertNotIn("uri", catalog["metadata"]["graph"])
-        nodes = {item["kind"]: item for item in catalog["nodes"]}
+        self.assertTrue(all(set(item) == {"node"} for item in catalog["nodes"]))
+        nodes = {item["node"]["kind"]: item["node"] for item in catalog["nodes"]}
         assert_named_object(nodes["productReference"], "DP-")
         assert_named_object(nodes["useCase"], "UC-")
         assert_named_object(nodes["businessObjective"], "BO-")
