@@ -788,17 +788,23 @@ $defs:
       "^x-": {}
 
   Node:
-    description: A catalog item discriminated by its `kind` attribute.
-    oneOf:
-      - $ref: "#/$defs/ProductReference"
-      - $ref: "#/$defs/UseCase"
-      - $ref: "#/$defs/BusinessObjective"
-      - $ref: "#/$defs/Signal"
-      - $ref: "#/$defs/Domain"
-      - $ref: "#/$defs/Dataset"
-      - $ref: "#/$defs/API"
-      - $ref: "#/$defs/Policy"
-      - $ref: "#/$defs/Workflow"
-      - $ref: "#/$defs/Agent"
-      - $ref: "#/$defs/Capability"
-      - $ref: "#/$defs/StrategicOpportunity"
+    description: A catalog entry containing one reusable node discriminated by its `kind` attribute.
+    type: object
+    additionalProperties: false
+    required:
+      - node
+    properties:
+      node:
+        oneOf:
+          - $ref: "#/$defs/ProductReference"
+          - $ref: "#/$defs/UseCase"
+          - $ref: "#/$defs/BusinessObjective"
+          - $ref: "#/$defs/Signal"
+          - $ref: "#/$defs/Domain"
+          - $ref: "#/$defs/Dataset"
+          - $ref: "#/$defs/API"
+          - $ref: "#/$defs/Policy"
+          - $ref: "#/$defs/Workflow"
+          - $ref: "#/$defs/Agent"
+          - $ref: "#/$defs/Capability"
+          - $ref: "#/$defs/StrategicOpportunity"

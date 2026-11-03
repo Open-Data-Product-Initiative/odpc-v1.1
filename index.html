@@ -871,8 +871,8 @@ Use ODPV when stable vocabulary terms or relationship names are needed.
 When working from the source repository, use scripts/search_objects.py for repeatable local ODPC object lookup.
 Use scripts/search_objects.py --json when another tool or agent will consume the result.
 Use scripts/validate_catalog.py to validate ODPC YAML or JSON catalog files against source/schema/odpc.yaml.
-Use scripts/build_catalog.py to generate one ODPC catalog with a unified `catalog.nodes` array from standalone node, metadata, ODPS product, or full catalog YAML files.
-Use scripts/migrate_catalog_nodes.py to migrate a legacy collection-based catalog into the unified node structure.
+Use scripts/build_catalog.py to generate one ODPC catalog with a unified `catalog.nodes[]` array of `node` envelopes from standalone node, metadata, ODPS product, or full catalog YAML files.
+Use scripts/migrate_catalog_nodes.py to migrate a legacy collection-based or flattened-node catalog into the canonical `catalog.nodes[].node` structure.
 Use scripts/build_catalog.py --html to also generate a standalone browser-viewable catalog page; use --html-template to apply a custom editable HTML template.
 Use scripts/check_agent_artifacts.py in CI or review workflows to detect drift between schema, catalog artifacts, examples, and llms.txt.
 Use scripts/generate_catalog_artifacts.py after editing source/schema/odpc.yaml to regenerate source/schema/odpc.json; use --check in CI or review workflows.
@@ -1016,7 +1016,7 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 
 <p>In ODPC, the <code>Catalog</code> object acts as the portfolio container. It helps organizations group related data products and demand-side objects around a domain, organization, geography, audience, or strategic theme.</p>
 
-<p>The <code>Catalog</code> object stores every reusable catalog item in one <code>nodes</code> array. Each node declares its object type through <code>kind</code>; the catalog can therefore include product references, use cases, business objectives, signals, domains, datasets, APIs, policies, workflows, agents, capabilities, and strategic opportunities in a uniform structure.</p>
+<p>The <code>Catalog</code> object stores every reusable catalog item in one <code>nodes</code> array. Each array entry contains one <code>node</code> object, which declares its object type through <code>kind</code>; the catalog can therefore include product references, use cases, business objectives, signals, domains, datasets, APIs, policies, workflows, agents, capabilities, and strategic opportunities in the same structure used by standalone node files.</p>
 
 <p>The <code>metadata.graph</code> attribute identifies the graph standard, version, and reference used for the catalog graph. The graph can be implemented with <a href="https://opendataproducts.org/odpg-v1.0/">ODPG</a> or another supported graph standard, such as <code>RDF</code>, <code>JSON-LD</code>, <code>GraphML</code>, <code>openCypher</code>, <code>GQL</code>, <code>Gremlin</code>, <code>GraphSON</code>, or <code>GeoSPARQL</code>.</p>
 
@@ -1112,7 +1112,7 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <td><code>nodes</code></td>
 <td>array of objects</td>
 <td style="text-align: right">✓</td>
-<td>Unified catalog items, each selected by its <code>kind</code>.</td>
+<td>Unified catalog entries. Each entry contains a <code>node</code> selected by its <code>kind</code>.</td>
 </tr>
 </tbody></table>
 <h2 id='optional-attributes-and-options'>Optional attributes and options</h2>
@@ -1156,45 +1156,49 @@ Use ODPV for stable shared vocabulary terms and relationship names.
       <span class="pi">-</span> <span class="s">events</span>
 
   <span class="na">nodes</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="na">kind</span><span class="pi">:</span> <span class="s">productReference</span>
-      <span class="na">id</span><span class="pi">:</span> <span class="s">DP-001</span>
-      <span class="na">productID</span><span class="pi">:</span> <span class="s">urbanpulse-events</span>
-      <span class="na">productVersion</span><span class="pi">:</span> <span class="s2">"</span><span class="s">1.0.0"</span>
-      <span class="na">name</span><span class="pi">:</span>
-        <span class="na">en</span><span class="pi">:</span> <span class="s">UrbanPulse Events Data Product</span>
-      <span class="na">description</span><span class="pi">:</span>
-        <span class="na">en</span><span class="pi">:</span> <span class="s">Data product providing event information for</span> 
-            <span class="s">urban analytics and citizen services.</span>
-      <span class="na">productModel</span><span class="pi">:</span>
-        <span class="na">standard</span><span class="pi">:</span> <span class="s">ODPS</span>
-        <span class="na">version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">4.1"</span>
-        <span class="na">format</span><span class="pi">:</span> <span class="s">yaml</span>
-        <span class="s">$ref</span><span class="pi">:</span> <span class="s">./products/urba/odps.yaml</span>
+    <span class="pi">-</span> <span class="na">node</span><span class="pi">:</span>
+        <span class="na">kind</span><span class="pi">:</span> <span class="s">productReference</span>
+        <span class="na">id</span><span class="pi">:</span> <span class="s">DP-001</span>
+        <span class="na">productID</span><span class="pi">:</span> <span class="s">urbanpulse-events</span>
+        <span class="na">productVersion</span><span class="pi">:</span> <span class="s2">"</span><span class="s">1.0.0"</span>
+        <span class="na">name</span><span class="pi">:</span>
+          <span class="na">en</span><span class="pi">:</span> <span class="s">UrbanPulse Events Data Product</span>
+        <span class="na">description</span><span class="pi">:</span>
+          <span class="na">en</span><span class="pi">:</span> <span class="s">Data product providing event information for</span>
+              <span class="s">urban analytics and citizen services.</span>
+        <span class="na">productModel</span><span class="pi">:</span>
+          <span class="na">standard</span><span class="pi">:</span> <span class="s">ODPS</span>
+          <span class="na">version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">4.1"</span>
+          <span class="na">format</span><span class="pi">:</span> <span class="s">yaml</span>
+          <span class="s">$ref</span><span class="pi">:</span> <span class="s">./products/urba/odps.yaml</span>
 
-    <span class="pi">-</span> <span class="na">kind</span><span class="pi">:</span> <span class="s">useCase</span>
-      <span class="na">id</span><span class="pi">:</span> <span class="s">UC-001</span>
-      <span class="na">name</span><span class="pi">:</span>
-        <span class="na">en</span><span class="pi">:</span> <span class="s">Event Demand Forecasting</span>
-      <span class="na">description</span><span class="pi">:</span>
-        <span class="na">en</span><span class="pi">:</span> <span class="s">Forecast event-related demand to improve</span> 
-            <span class="s">mobility planning and citizen services.</span>
+    <span class="pi">-</span> <span class="na">node</span><span class="pi">:</span>
+        <span class="na">kind</span><span class="pi">:</span> <span class="s">useCase</span>
+        <span class="na">id</span><span class="pi">:</span> <span class="s">UC-001</span>
+        <span class="na">name</span><span class="pi">:</span>
+          <span class="na">en</span><span class="pi">:</span> <span class="s">Event Demand Forecasting</span>
+        <span class="na">description</span><span class="pi">:</span>
+          <span class="na">en</span><span class="pi">:</span> <span class="s">Forecast event-related demand to improve</span>
+              <span class="s">mobility planning and citizen services.</span>
 
-    <span class="pi">-</span> <span class="na">kind</span><span class="pi">:</span> <span class="s">businessObjective</span>
-      <span class="na">id</span><span class="pi">:</span> <span class="s">BO-001</span>
-      <span class="na">name</span><span class="pi">:</span>
-        <span class="na">en</span><span class="pi">:</span> <span class="s">Improve Urban Mobility Efficiency</span>
-      <span class="na">description</span><span class="pi">:</span>
-        <span class="na">en</span><span class="pi">:</span> <span class="s">Reduce travel delays and improve movement</span> 
-            <span class="s">across the city through better data-driven</span> 
-            <span class="s">planning and operations.</span>
+    <span class="pi">-</span> <span class="na">node</span><span class="pi">:</span>
+        <span class="na">kind</span><span class="pi">:</span> <span class="s">businessObjective</span>
+        <span class="na">id</span><span class="pi">:</span> <span class="s">BO-001</span>
+        <span class="na">name</span><span class="pi">:</span>
+          <span class="na">en</span><span class="pi">:</span> <span class="s">Improve Urban Mobility Efficiency</span>
+        <span class="na">description</span><span class="pi">:</span>
+          <span class="na">en</span><span class="pi">:</span> <span class="s">Reduce travel delays and improve movement</span>
+              <span class="s">across the city through better data-driven</span>
+              <span class="s">planning and operations.</span>
 
-    <span class="pi">-</span> <span class="na">kind</span><span class="pi">:</span> <span class="s">signal</span>
-      <span class="na">id</span><span class="pi">:</span> <span class="s">SIG-001</span>
-      <span class="na">name</span><span class="pi">:</span>
-        <span class="na">en</span><span class="pi">:</span> <span class="s">Increasing Event Demand</span>
-      <span class="na">description</span><span class="pi">:</span>
-        <span class="na">en</span><span class="pi">:</span> <span class="s">Indicates rising demand for event-related</span> 
-            <span class="s">mobility and public service planning.</span>
+    <span class="pi">-</span> <span class="na">node</span><span class="pi">:</span>
+        <span class="na">kind</span><span class="pi">:</span> <span class="s">signal</span>
+        <span class="na">id</span><span class="pi">:</span> <span class="s">SIG-001</span>
+        <span class="na">name</span><span class="pi">:</span>
+          <span class="na">en</span><span class="pi">:</span> <span class="s">Increasing Event Demand</span>
+        <span class="na">description</span><span class="pi">:</span>
+          <span class="na">en</span><span class="pi">:</span> <span class="s">Indicates rising demand for event-related</span>
+              <span class="s">mobility and public service planning.</span>
 
 </code></pre></div>
 <table><thead>
@@ -1299,7 +1303,7 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <td><code>nodes</code></td>
 <td>array of objects</td>
 <td style="text-align: right">✓</td>
-<td>Unified catalog items. Each node uses <code>kind</code> to select its object schema.</td>
+<td>Unified catalog entries. Each entry contains a <code>node</code>; <code>node.kind</code> selects its object schema.</td>
 </tr>
 </tbody></table>
 <h1 id='odpc-productreference'>ODPC ProductReference</h1>
