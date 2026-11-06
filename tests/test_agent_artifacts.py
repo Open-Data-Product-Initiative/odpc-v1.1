@@ -167,6 +167,7 @@ class AgentArtifactsTest(unittest.TestCase):
                 "Policy",
                 "Workflow",
                 "Agent",
+                "AIProduct",
                 "Capability",
                 "StrategicOpportunity",
             },
@@ -261,6 +262,17 @@ class AgentArtifactsTest(unittest.TestCase):
             self.assertIsNotNone(match, f"{filename} needs an optional-metadata YAML example")
             example = yaml.safe_load(match.group(1))
             self.assertEqual(example["node"]["kind"], kind)
+
+    def test_ai_product_is_a_first_class_include_backed_catalog_object(self):
+        index = (SOURCE / "index.html.md").read_text(encoding="utf-8")
+        document = (SOURCE / "includes" / "_ai_product.md").read_text(encoding="utf-8")
+        records = [json.loads(line) for line in (SOURCE / "catalog" / "objects.jsonl").read_text(encoding="utf-8").splitlines() if line]
+
+        self.assertIn("- ai_product", index)
+        self.assertIn("* AIProduct", index)
+        self.assertIn("kind: aiProduct", document)
+        self.assertIn("Top-level ODPC object", document)
+        self.assertIn("AIProduct", {record["id"] for record in records})
 
 
 if __name__ == "__main__":

@@ -37,6 +37,7 @@ EXPECTED_OBJECT_IDS = {
     "Policy",
     "Workflow",
     "Agent",
+    "AIProduct",
     "Capability",
     "StrategicOpportunity",
 }

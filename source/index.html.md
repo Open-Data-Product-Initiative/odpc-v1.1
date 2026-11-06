@@ -23,6 +23,7 @@ includes:
 - policy
 - workflow
 - agent
+- ai_product
 - capability
 - strategicopportunity
 - extensions
@@ -168,6 +169,7 @@ The first version of ODPC focuses on these objects:
 * Policy
 * Workflow
 * Agent
+* AIProduct
 * Capability
 * StrategicOpportunity
 * Catalog
