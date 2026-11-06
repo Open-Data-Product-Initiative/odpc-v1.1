@@ -103,6 +103,7 @@ ODPC v1.1 AI Product Profile:
 - Catalog an AI product with ProductReference.productCategory: ai_product and a productModel with standard ODPC, version 1.1, profile AIProduct, schema, and $ref.
 - productModel.schema identifies the referenced content structure; productModel.$ref identifies the referenced content instance.
 - AIProduct describes the governed product. The existing Agent object remains a component-level catalog object. Use implementationReferences for external technical component specifications.
+- Use node.kind: aiProduct when the AI product itself is a top-level ODPC catalog object; do not model it as an Agent.
 - Use ODPG, not ODPC implementationReferences, for portfolio relationships.
 
 Object selection guidance:
