@@ -4,7 +4,7 @@ title: ODPC v1.1 AI Product Profile
 
 # ODPC v1.1 AI Product Profile
 
-`AIProduct` is a normative ODPC v1.1 product-definition profile. It describes business identity, capabilities, governance, evaluation, operations, and references to implementation components. It does not define a new OAPS or ODPC-AI specification.
+`AIProduct` is a normative ODPC v1.1 product-definition profile and `aiProduct` is a first-class top-level catalog node. Both describe business identity, capabilities, governance, evaluation, operations, and references to implementation components. They do not define a new OAPS or ODPC-AI specification.
 
 An AI product is listed in an ODPC catalog through `ProductReference` with `productCategory: ai_product`. Its `productModel.schema` identifies the validation structure; `productModel.$ref` identifies the actual AI product document. `type` remains available for finer product classification.
 

@@ -15,6 +15,50 @@
     "nodes": [
       {
         "node": {
+          "kind": "aiProduct",
+          "id": "AI-001",
+          "productID": "procurement-review-assistant",
+          "productVersion": "1.0.0",
+          "name": {
+            "en": "Procurement Review Assistant"
+          },
+          "description": {
+            "en": "Prepares procurement review material for accountable human decision makers."
+          },
+          "purpose": {
+            "en": "Reduce review preparation effort without delegating approval authority."
+          },
+          "owner": {
+            "organization": "Example Authority",
+            "team": "Procurement",
+            "role": "AI Product Owner"
+          },
+          "productType": "agentic",
+          "governance": {
+            "autonomyLevel": "supervised",
+            "humanOversight": "required",
+            "consequentialActionApproval": "required",
+            "riskClassification": "high"
+          },
+          "evaluation": [
+            {
+              "id": "EVIDENCE-COVERAGE",
+              "name": "Evidence coverage"
+            }
+          ],
+          "implementationReferences": [
+            {
+              "role": "agent_card",
+              "standard": "A2A Agent Card",
+              "version": "0.3",
+              "format": "json",
+              "$ref": "./components/procurement-agent-card.json"
+            }
+          ]
+        }
+      },
+      {
+        "node": {
           "kind": "productReference",
           "id": "AI-PR-001",
           "productID": "procurement-review-assistant",

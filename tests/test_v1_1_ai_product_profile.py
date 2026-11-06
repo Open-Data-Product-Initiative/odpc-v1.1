@@ -40,7 +40,11 @@ class AIProductProfileTest(unittest.TestCase):
         validator = jsonschema.Draft202012Validator(catalog_schema)
 
         self.assertEqual(list(validator.iter_errors(catalog)), [])
-        reference = catalog["catalog"]["nodes"][0]["node"]
+        reference = next(
+            entry["node"]
+            for entry in catalog["catalog"]["nodes"]
+            if entry["node"]["kind"] == "productReference"
+        )
         self.assertEqual(reference["productCategory"], "ai_product")
         self.assertEqual(reference["productModel"]["standard"], "ODPC")
         self.assertEqual(reference["productModel"]["version"], "1.1")
@@ -48,17 +52,31 @@ class AIProductProfileTest(unittest.TestCase):
 
         for field in ("schema", "profile"):
             invalid_catalog = copy.deepcopy(catalog)
-            del invalid_catalog["catalog"]["nodes"][0]["node"]["productModel"][field]
+            invalid_reference = next(
+                entry["node"]
+                for entry in invalid_catalog["catalog"]["nodes"]
+                if entry["node"]["kind"] == "productReference"
+            )
+            del invalid_reference["productModel"][field]
             self.assertNotEqual(list(validator.iter_errors(invalid_catalog)), [])
 
         invalid_catalog = copy.deepcopy(catalog)
-        invalid_catalog["catalog"]["nodes"][0]["node"]["productModel"]["standard"] = "OASF"
+        invalid_reference = next(
+            entry["node"]
+            for entry in invalid_catalog["catalog"]["nodes"]
+            if entry["node"]["kind"] == "productReference"
+        )
+        invalid_reference["productModel"]["standard"] = "OASF"
         self.assertNotEqual(list(validator.iter_errors(invalid_catalog)), [])
 
     def test_data_product_references_keep_flexible_standard_and_optional_schema(self):
         catalog_schema = load_yaml(V11_SCHEMA_DIR / "odpc.yaml")
         catalog = load_yaml(V11_EXAMPLES / "catalog-ai-products.yaml")
-        reference = catalog["catalog"]["nodes"][0]["node"]
+        reference = next(
+            entry["node"]
+            for entry in catalog["catalog"]["nodes"]
+            if entry["node"]["kind"] == "productReference"
+        )
         reference["productCategory"] = "data_product"
         reference["productModel"] = {
             "standard": "Internal Product Definition",
@@ -91,10 +109,24 @@ class AIProductProfileTest(unittest.TestCase):
     def test_catalog_and_profile_identity_agree(self):
         catalog = load_yaml(V11_EXAMPLES / "catalog-ai-products.yaml")
         profile = load_yaml(V11_EXAMPLES / "agentic-procurement-review.yaml")
-        reference = catalog["catalog"]["nodes"][0]["node"]
+        reference = next(
+            entry["node"]
+            for entry in catalog["catalog"]["nodes"]
+            if entry["node"]["kind"] == "productReference"
+        )
 
         self.assertEqual(reference["productID"], profile["aiProduct"]["productID"])
         self.assertEqual(reference["productVersion"], profile["aiProduct"]["productVersion"])
+
+    def test_ai_product_is_a_top_level_catalog_node(self):
+        catalog = load_yaml(V11_EXAMPLES / "catalog-ai-products.yaml")
+        validator = jsonschema.Draft202012Validator(load_yaml(V11_SCHEMA_DIR / "odpc.yaml"))
+        nodes = [entry["node"] for entry in catalog["catalog"]["nodes"]]
+        ai_product = next(node for node in nodes if node["kind"] == "aiProduct")
+
+        self.assertEqual(ai_product["productID"], "procurement-review-assistant")
+        self.assertEqual(ai_product["productVersion"], "1.0.0")
+        self.assertEqual(list(validator.iter_errors(catalog)), [])
 
     def test_generated_json_schemas_match_their_canonical_yaml(self):
         for stem in ("odpc", "ai-product"):
