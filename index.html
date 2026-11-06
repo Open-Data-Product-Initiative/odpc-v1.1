@@ -522,6 +522,17 @@
               </ul>
           </li>
           <li>
+            <a href="#odpc-aiproduct" class="toc-h1 toc-link" data-title="ODPC AIProduct">ODPC AIProduct</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#mandatory-attributes-and-options" class="toc-h2 toc-link" data-title="Mandatory attributes and options">Mandatory attributes and options</a>
+                  </li>
+                  <li>
+                    <a href="#optional-attributes-and-implementation-references" class="toc-h2 toc-link" data-title="Optional attributes and implementation references">Optional attributes and implementation references</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#odpc-capability" class="toc-h1 toc-link" data-title="ODPC Capability">ODPC Capability</a>
               <ul class="toc-list-h2">
                   <li>
@@ -718,6 +729,7 @@ ODPC should also not define graph traversal, graph analytics, or relationship se
 <li>Policy</li>
 <li>Workflow</li>
 <li>Agent</li>
+<li>AIProduct</li>
 <li>Capability</li>
 <li>StrategicOpportunity</li>
 <li>Catalog</li>
@@ -3226,6 +3238,118 @@ Use ODPV for stable shared vocabulary terms and relationship names.
 <td>Discovery and filtering labels.</td>
 </tr>
 </tbody></table>
+<h1 id='odpc-aiproduct'>ODPC AIProduct</h1>
+<p>The <code>AIProduct</code> object defines an accountable AI product as a first-class Top-level ODPC object in a catalog. It is distinct from <code>Agent</code>: an agent is a component or actor, while an AI product owns the business purpose, governance, evaluation, operations, and implementation references for the product as a whole.</p>
+
+<p>Use <code>AIProduct</code> for predictive, generative, RAG, agentic, hybrid, and other AI products. Use ODPG for relationships between the product, business objectives, use cases, data products, and agents. Use external specifications for detailed model, Agent Card, workflow, tool, service, and evaluation definitions.</p>
+<h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">aiProduct</span>
+  <span class="na">id</span><span class="pi">:</span> <span class="s">AI-001</span>
+  <span class="na">productID</span><span class="pi">:</span> <span class="s">procurement-review-assistant</span>
+  <span class="na">productVersion</span><span class="pi">:</span> <span class="s2">"</span><span class="s">1.0.0"</span>
+  <span class="na">name</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Procurement Review Assistant</span>
+  <span class="na">description</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Prepares procurement review material for accountable human decision makers.</span>
+  <span class="na">purpose</span><span class="pi">:</span>
+    <span class="na">en</span><span class="pi">:</span> <span class="s">Reduce review preparation effort without delegating approval authority.</span>
+  <span class="na">owner</span><span class="pi">:</span>
+    <span class="na">organization</span><span class="pi">:</span> <span class="s">Example Authority</span>
+    <span class="na">team</span><span class="pi">:</span> <span class="s">Procurement</span>
+    <span class="na">role</span><span class="pi">:</span> <span class="s">AI Product Owner</span>
+  <span class="na">productType</span><span class="pi">:</span> <span class="s">agentic</span>
+  <span class="na">governance</span><span class="pi">:</span>
+    <span class="na">autonomyLevel</span><span class="pi">:</span> <span class="s">supervised</span>
+    <span class="na">humanOversight</span><span class="pi">:</span> <span class="s">required</span>
+    <span class="na">consequentialActionApproval</span><span class="pi">:</span> <span class="s">required</span>
+    <span class="na">riskClassification</span><span class="pi">:</span> <span class="s">high</span>
+  <span class="na">evaluation</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">id</span><span class="pi">:</span> <span class="s">EVIDENCE-COVERAGE</span>
+      <span class="na">name</span><span class="pi">:</span> <span class="s">Evidence coverage</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th style="text-align: right">Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>node.kind</code></td>
+<td>string</td>
+<td style="text-align: right">✓</td>
+<td><code>aiProduct</code>.</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td>string</td>
+<td style="text-align: right">✓</td>
+<td>Stable ODPC catalog object identifier.</td>
+</tr>
+<tr>
+<td><code>productID</code> / <code>productVersion</code></td>
+<td>string</td>
+<td style="text-align: right">✓</td>
+<td>Stable identity and version of the AI product.</td>
+</tr>
+<tr>
+<td><code>name</code>, <code>description</code>, <code>purpose</code></td>
+<td>language-tagged string</td>
+<td style="text-align: right">✓</td>
+<td>Business identity and purpose.</td>
+</tr>
+<tr>
+<td><code>owner</code></td>
+<td>object</td>
+<td style="text-align: right">✓</td>
+<td>Accountable organization, team, and role.</td>
+</tr>
+<tr>
+<td><code>productType</code></td>
+<td>string</td>
+<td style="text-align: right">✓</td>
+<td><code>predictive</code>, <code>generative</code>, <code>rag</code>, <code>agentic</code>, <code>hybrid</code>, or <code>other</code>.</td>
+</tr>
+<tr>
+<td><code>governance</code></td>
+<td>object</td>
+<td style="text-align: right">✓</td>
+<td>Product autonomy, human oversight, consequential-action approval, and risk.</td>
+</tr>
+<tr>
+<td><code>evaluation</code></td>
+<td>array</td>
+<td style="text-align: right">✓</td>
+<td>Measurable evaluation requirements, not observed results.</td>
+</tr>
+</tbody></table>
+<h2 id='optional-attributes-and-implementation-references'>Optional attributes and implementation references</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
+  <span class="na">kind</span><span class="pi">:</span> <span class="s">aiProduct</span>
+  <span class="na">id</span><span class="pi">:</span> <span class="s">AI-001</span>
+  <span class="na">productID</span><span class="pi">:</span> <span class="s">procurement-review-assistant</span>
+  <span class="na">productVersion</span><span class="pi">:</span> <span class="s2">"</span><span class="s">1.0.0"</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="pi">{</span><span class="nv">en</span><span class="pi">:</span> <span class="nv">Procurement Review Assistant</span><span class="pi">}</span>
+  <span class="na">description</span><span class="pi">:</span> <span class="pi">{</span><span class="nv">en</span><span class="pi">:</span> <span class="nv">Prepares procurement review material.</span><span class="pi">}</span>
+  <span class="na">purpose</span><span class="pi">:</span> <span class="pi">{</span><span class="nv">en</span><span class="pi">:</span> <span class="nv">Support accountable procurement review.</span><span class="pi">}</span>
+  <span class="na">owner</span><span class="pi">:</span> <span class="pi">{</span><span class="nv">organization</span><span class="pi">:</span> <span class="nv">Example Authority</span><span class="pi">,</span> <span class="nv">team</span><span class="pi">:</span> <span class="nv">Procurement</span><span class="pi">,</span> <span class="nv">role</span><span class="pi">:</span> <span class="nv">AI Product Owner</span><span class="pi">}</span>
+  <span class="na">productType</span><span class="pi">:</span> <span class="s">agentic</span>
+  <span class="na">governance</span><span class="pi">:</span> <span class="pi">{</span><span class="nv">autonomyLevel</span><span class="pi">:</span> <span class="nv">supervised</span><span class="pi">,</span> <span class="nv">humanOversight</span><span class="pi">:</span> <span class="nv">required</span><span class="pi">,</span> <span class="nv">consequentialActionApproval</span><span class="pi">:</span> <span class="nv">required</span><span class="pi">,</span> <span class="nv">riskClassification</span><span class="pi">:</span> <span class="nv">high</span><span class="pi">}</span>
+  <span class="na">evaluation</span><span class="pi">:</span> <span class="pi">[{</span><span class="nv">id</span><span class="pi">:</span> <span class="nv">EVIDENCE-COVERAGE</span><span class="pi">,</span> <span class="nv">name</span><span class="pi">:</span> <span class="nv">Evidence coverage</span><span class="pi">}]</span>
+  <span class="na">capabilities</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">id</span><span class="pi">:</span> <span class="s">CAP-PROCUREMENT-REVIEW</span>
+      <span class="na">name</span><span class="pi">:</span> <span class="pi">{</span><span class="nv">en</span><span class="pi">:</span> <span class="nv">Procurement review preparation</span><span class="pi">}</span>
+      <span class="na">description</span><span class="pi">:</span> <span class="pi">{</span><span class="nv">en</span><span class="pi">:</span> <span class="nv">Identifies evidence gaps for analyst review.</span><span class="pi">}</span>
+  <span class="na">operations</span><span class="pi">:</span>
+    <span class="na">lifecycleStatus</span><span class="pi">:</span> <span class="s">pilot</span>
+  <span class="na">implementationReferences</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">role</span><span class="pi">:</span> <span class="s">agent_card</span>
+      <span class="na">standard</span><span class="pi">:</span> <span class="s">A2A Agent Card</span>
+      <span class="na">version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">0.3"</span>
+      <span class="na">format</span><span class="pi">:</span> <span class="s">json</span>
+      <span class="s">$ref</span><span class="pi">:</span> <span class="s">./components/procurement-agent-card.json</span>
+</code></pre></div>
+<p><code>implementationReferences</code> identify externally governed technical components. <code>schema</code> identifies a referenced content structure and <code>$ref</code> identifies the referenced content instance. Do not embed prompts, credentials, model weights, arbitrary agent configuration, deployment configuration, runtime orchestration, or ODPG relationships in <code>AIProduct</code>.</p>
 <h1 id='odpc-capability'>ODPC Capability</h1>
 <p>The <code>Capability</code> object defines a reusable business, data, technical, or AI capability in an ODPC catalog. It aligns with the ODPG <code>Capability</code> node type. Capability decomposition and relationships to enabling assets belong in ODPG.</p>
 <h2 id='mandatory-attributes-and-options'>Mandatory attributes and options</h2><div class="highlight"><pre class="highlight yaml"><code><span class="na">node</span><span class="pi">:</span>
