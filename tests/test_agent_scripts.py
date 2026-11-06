@@ -54,6 +54,21 @@ class AgentScriptsTest(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
             self.assertIn("valid", result.stdout.lower())
 
+    def test_validate_ai_product_accepts_v1_1_yaml(self):
+        result = run_script(
+            "scripts/validate_ai_product.py",
+            "source/v1.1/examples/rag-knowledge-assistant.yaml",
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertIn("valid AI Product", result.stdout)
+
+    def test_check_v1_1_artifacts_passes(self):
+        result = run_script("scripts/check_v1_1_artifacts.py")
+
+        self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+        self.assertIn("OK", result.stdout)
+
     def test_generate_catalog_artifacts_check_passes(self):
         result = run_script("scripts/generate_catalog_artifacts.py", "--check")
 

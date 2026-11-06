@@ -97,6 +97,14 @@ Recommended agent workflow:
 16. Include the ODPC version when generating structured catalog outputs.
 17. If no ODPC object fits a concept, treat it as an extension candidate instead of inventing a new meaning for an official ODPC object.
 
+ODPC v1.1 AI Product Profile:
+- Use /schema/v1.1/odpc.yaml for ODPC v1.1 catalogs and /schema/v1.1/ai-product.yaml for standalone AIProduct validation.
+- Use /v1.1/examples/ for predictive, RAG, agentic, and hybrid AI product examples.
+- Catalog an AI product with ProductReference.productCategory: ai_product and a productModel with standard ODPC, version 1.1, profile AIProduct, schema, and $ref.
+- productModel.schema identifies the referenced content structure; productModel.$ref identifies the referenced content instance.
+- AIProduct describes the governed product. The existing Agent object remains a component-level catalog object. Use implementationReferences for external technical component specifications.
+- Use ODPG, not ODPC implementationReferences, for portfolio relationships.
+
 Object selection guidance:
 - Use Catalog when describing the portfolio, catalog metadata, scope, audience, domains, owner, status, tags, included reusable objects, or graph implementation reference.
 - Use ProductReference when describing a data product in catalog form and pointing to the authoritative product definition.

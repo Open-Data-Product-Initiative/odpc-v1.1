@@ -1,0 +1,46 @@
+schema: https://opendataproducts.org/odpc-v1.1/schema/ai-product.yaml
+version: "1.1"
+kind: AIProduct
+aiProduct:
+  productID: procurement-review-assistant
+  productVersion: "1.0.0"
+  name: {en: Procurement Review Assistant}
+  description: {en: Prepares procurement review material for accountable human decision makers.}
+  purpose: {en: Reduce review preparation effort without delegating approval authority.}
+  valueProposition: {en: Faster and more consistent review preparation.}
+  owner: {organization: Example Authority, team: Procurement, role: AI Product Owner}
+  productType: agentic
+  capabilities:
+    - id: CAP-PROCUREMENT-REVIEW
+      name: {en: Procurement review preparation}
+      description: {en: Summarizes submitted material and identifies missing evidence.}
+      intendedUsers: [Procurement analysts]
+      expectedInputs: [Supplier submission, procurement policy]
+      expectedOutputs: [Review brief, evidence gaps]
+      operationalLimitations: [{en: "Cannot approve, reject, or send decisions."}]
+  governance:
+    autonomyLevel: supervised
+    humanOversight: {required: true, requirements: [{en: An analyst verifies every generated review brief.}]}
+    consequentialActionApproval: {required: true, requirements: [{en: An authorized procurement officer approves every consequential decision.}]}
+    riskClassification: high
+    policyComplianceReferences: [https://example.org/policies/procurement-review]
+    knownLimitations: [{en: The assistant cannot determine policy exceptions.}]
+  evaluation:
+    - id: EVIDENCE-COVERAGE
+      name: {en: Evidence coverage}
+      measurementMethod: {en: Analysts compare detected evidence gaps with an approved review checklist.}
+      methodType: mixed
+      targetValue: 95
+      unit: percent
+      status: planned
+  operations:
+    lifecycleStatus: pilot
+    availabilityExpectations: {en: Available during business hours for approved cases.}
+    monitoringRequirements: [{en: Monitor escalation and reviewer-correction rates.}]
+    operationalOwner: {organization: Example Authority, team: Procurement, role: Service Owner}
+    supportAndIncidentHandling: {en: Procurement Operations handles incidents and disables the assistant when needed.}
+    costOrResourceExpectations: {en: Usage is reviewed monthly against the pilot budget.}
+  implementationReferences:
+    - {role: agent_card, standard: A2A Agent Card, version: "0.3", format: json, $ref: ./components/procurement-agent-card.json}
+    - {role: workflow, standard: Internal Workflow Definition, version: "2.0", format: yaml, $ref: ./components/procurement-review-workflow.yaml}
+    - {role: evaluation, standard: Internal Evaluation Protocol, version: "1.0", format: markdown, $ref: ./components/procurement-evaluation.md}
