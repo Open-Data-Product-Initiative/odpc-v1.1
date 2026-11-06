@@ -1,0 +1,133 @@
+{
+  "schema": "https://opendataproducts.org/odpc-v1.1/schema/ai-product.yaml",
+  "version": "1.1",
+  "kind": "AIProduct",
+  "aiProduct": {
+    "productID": "demand-forecasting",
+    "productVersion": "1.0.0",
+    "name": {
+      "en": "Demand Forecasting"
+    },
+    "description": {
+      "en": "Forecasts weekly demand for inventory planning."
+    },
+    "purpose": {
+      "en": "Help planners reduce stock-outs with evidence-based forecasts."
+    },
+    "valueProposition": {
+      "en": "Earlier replenishment decisions with measurable forecast quality."
+    },
+    "owner": {
+      "organization": "Example Retail",
+      "team": "Planning Analytics",
+      "role": "AI Product Owner"
+    },
+    "productType": "predictive",
+    "capabilities": [
+      {
+        "id": "CAP-DEMAND-FORECAST",
+        "name": {
+          "en": "Weekly demand forecast"
+        },
+        "description": {
+          "en": "Produces product and location demand forecasts."
+        },
+        "intendedUsers": [
+          "Inventory planners"
+        ],
+        "expectedInputs": [
+          "Historical sales",
+          "planned promotions"
+        ],
+        "expectedOutputs": [
+          "Weekly demand forecast"
+        ],
+        "operationalLimitations": [
+          {
+            "en": "Does not account for unrecorded disruptions."
+          }
+        ]
+      }
+    ],
+    "governance": {
+      "autonomyLevel": "assistive",
+      "humanOversight": {
+        "required": true,
+        "requirements": [
+          {
+            "en": "Planners review forecasts before replenishment decisions."
+          }
+        ]
+      },
+      "consequentialActionApproval": {
+        "required": true,
+        "requirements": [
+          {
+            "en": "A planner approves replenishment orders."
+          }
+        ]
+      },
+      "riskClassification": "limited",
+      "policyComplianceReferences": [
+        "https://example.org/policies/model-risk"
+      ],
+      "knownLimitations": [
+        {
+          "en": "Forecast performance declines for newly introduced products."
+        }
+      ]
+    },
+    "evaluation": [
+      {
+        "id": "MAPE",
+        "name": {
+          "en": "Mean absolute percentage error"
+        },
+        "measurementMethod": {
+          "en": "Compare weekly forecasts with settled sales each month."
+        },
+        "methodType": "quantitative",
+        "targetValue": 12,
+        "unit": "percent",
+        "status": "active",
+        "evidenceReference": "https://example.org/evidence/demand-forecast-mape"
+      }
+    ],
+    "operations": {
+      "lifecycleStatus": "active",
+      "availabilityExpectations": {
+        "en": "Weekly forecasts are available before Monday planning."
+      },
+      "monitoringRequirements": [
+        {
+          "en": "Monitor forecast error by product category."
+        }
+      ],
+      "operationalOwner": {
+        "organization": "Example Retail",
+        "team": "Planning Analytics",
+        "role": "Service Owner"
+      },
+      "supportAndIncidentHandling": {
+        "en": "Planning Analytics triages missed forecast runs."
+      }
+    },
+    "implementationReferences": [
+      {
+        "role": "model",
+        "standard": "Model Card",
+        "version": "1.0",
+        "format": "markdown",
+        "$ref": "./components/demand-model-card.md"
+      },
+      {
+        "role": "service",
+        "standard": "OpenAPI",
+        "version": "3.1",
+        "format": "yaml",
+        "schema": "https://spec.openapis.org/oas/3.1/schema/2022-10-07",
+        "$ref": "./components/demand-api.yaml"
+      }
+    ]
+  }
+}

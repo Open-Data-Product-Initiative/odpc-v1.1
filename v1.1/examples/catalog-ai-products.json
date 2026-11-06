@@ -1,0 +1,41 @@
+{
+  "schema": "https://opendataproducts.org/odpc-v1.1/schema/odpc.yaml",
+  "version": "1.1",
+  "kind": "Catalog",
+  "catalog": {
+    "metadata": {
+      "id": "CAT-AI-001",
+      "name": {
+        "en": "AI Product Portfolio"
+      },
+      "description": {
+        "en": "A catalog with AI product references."
+      }
+    },
+    "nodes": [
+      {
+        "node": {
+          "kind": "productReference",
+          "id": "AI-PR-001",
+          "productID": "procurement-review-assistant",
+          "productVersion": "1.0.0",
+          "name": {
+            "en": "Procurement Review Assistant"
+          },
+          "description": {
+            "en": "An agentic application that prepares procurement reviews for human approval."
+          },
+          "productCategory": "ai_product",
+          "productModel": {
+            "standard": "ODPC",
+            "version": "1.1",
+            "profile": "AIProduct",
+            "format": "yaml",
+            "schema": "./schema/ai-product.yaml",
+            "$ref": "./agentic-procurement-review.yaml"
+          }
+        }
+      }
+    ]
+  }
+}

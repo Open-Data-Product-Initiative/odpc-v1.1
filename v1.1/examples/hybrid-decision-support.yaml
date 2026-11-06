@@ -1,0 +1,41 @@
+schema: https://opendataproducts.org/odpc-v1.1/schema/ai-product.yaml
+version: "1.1"
+kind: AIProduct
+aiProduct:
+  productID: service-capacity-decision-support
+  productVersion: "1.0.0"
+  name: {en: Service Capacity Decision Support}
+  description: {en: "Combines demand prediction, generated scenarios, and accountable human planning."}
+  purpose: {en: Help service managers select defensible capacity plans.}
+  owner: {organization: Example City, team: Service Planning, role: AI Product Owner}
+  productType: hybrid
+  capabilities:
+    - id: CAP-CAPACITY-SCENARIOS
+      name: {en: Capacity scenarios}
+      description: {en: Produces forecast-based planning scenarios.}
+      intendedUsers: [Service managers]
+      expectedInputs: [Demand history, planning constraints]
+      expectedOutputs: [Forecast, scenario narrative, decision brief]
+      operationalLimitations: [{en: Managers retain final planning authority.}]
+  governance:
+    autonomyLevel: supervised
+    humanOversight: {required: true, requirements: [{en: Managers review assumptions and outputs.}]}
+    consequentialActionApproval: {required: true, requirements: [{en: A service manager approves capacity changes.}]}
+    riskClassification: high
+    knownLimitations: [{en: Scenarios depend on available planning constraints.}]
+  evaluation:
+    - id: PLAN-USEFULNESS
+      name: {en: Planning usefulness}
+      measurementMethod: {en: Managers score whether scenarios support a documented decision.}
+      methodType: qualitative
+      targetValue: Useful
+      unit: review outcome
+      status: active
+  operations:
+    lifecycleStatus: pilot
+    monitoringRequirements: [{en: Monitor forecast drift and scenario review outcomes.}]
+    operationalOwner: {organization: Example City, team: Service Planning, role: Service Owner}
+  implementationReferences:
+    - {role: model, standard: Model Card, version: "1.0", format: markdown, $ref: ./components/capacity-model-card.md}
+    - {role: service, standard: OpenAPI, version: "3.1", format: yaml, $ref: ./components/capacity-scenario-api.yaml}
+    - {role: tool, standard: Internal Planning Tool Contract, version: "1.0", format: json, $ref: ./components/planning-tool.json}

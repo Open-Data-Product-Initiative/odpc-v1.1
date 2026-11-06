@@ -1,0 +1,41 @@
+schema: https://opendataproducts.org/odpc-v1.1/schema/ai-product.yaml
+version: "1.1"
+kind: AIProduct
+aiProduct:
+  productID: policy-knowledge-assistant
+  productVersion: "1.0.0"
+  name: {en: Policy Knowledge Assistant}
+  description: {en: Answers employee policy questions using approved source material.}
+  purpose: {en: Improve access to current policy guidance while retaining human escalation.}
+  owner: {organization: Example Services, team: Knowledge Management, role: AI Product Owner}
+  productType: rag
+  capabilities:
+    - id: CAP-POLICY-ANSWER
+      name: {en: Grounded policy answer}
+      description: {en: Returns an answer with source references.}
+      intendedUsers: [Employees]
+      expectedInputs: [Policy question]
+      expectedOutputs: [Answer with source citations]
+      operationalLimitations: [{en: Escalates questions outside approved sources.}]
+  governance:
+    autonomyLevel: assistive
+    humanOversight: {required: true, requirements: [{en: Knowledge owners review source collection changes.}]}
+    consequentialActionApproval: {required: false, requirements: [{en: The assistant cannot take consequential actions.}]}
+    riskClassification: limited
+    policyComplianceReferences: [https://example.org/policies/knowledge-use]
+    knownLimitations: [{en: Answers may be incomplete when source documents are outdated.}]
+  evaluation:
+    - id: GROUNDEDNESS
+      name: {en: Grounded answer review}
+      measurementMethod: {en: Expert reviewers assess whether sampled answers are supported by cited sources.}
+      methodType: qualitative
+      targetValue: Pass
+      unit: review outcome
+      status: active
+  operations:
+    lifecycleStatus: active
+    monitoringRequirements: [{en: Monitor unanswered questions and failed retrievals.}]
+    operationalOwner: {organization: Example Services, team: Knowledge Management, role: Service Owner}
+  implementationReferences:
+    - {role: model, standard: Model Card, version: "1.0", format: markdown, $ref: ./components/assistant-model-card.md}
+    - {role: service, standard: OpenAPI, version: "3.1", format: yaml, $ref: ./components/knowledge-api.yaml}
